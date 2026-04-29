@@ -25,7 +25,7 @@ public class Ordine {
 	
 	
 	public float getTotale() {
-		return id;
+		return totale;
 	}
 	public void setTotale(float t) {
 		this.totale = t;
