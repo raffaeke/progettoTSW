@@ -6,7 +6,7 @@ public class Prodotto {
 	private float prezzo;
 	private Categoria cat;
 	
-	public Utente() {}
+	public Prodotto() {}
 	
 	
 	
