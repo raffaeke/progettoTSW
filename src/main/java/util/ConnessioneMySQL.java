@@ -2,10 +2,16 @@ package util;
 import java.sql.*;
 public class ConnessioneMySQL {
     private static String url="jdbc:mysql://localhost:3306/kickoff";
-    private static String user="root";
-    private static String pass="progettoBD2026!";
+    private static String user="kickoff_user";
+    private static String pass="1234";
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, user, pass);
+    	 try {
+    	        Class.forName("com.mysql.cj.jdbc.Driver");
+    	    } catch (ClassNotFoundException e) {
+    	        e.printStackTrace();
+    	    }
+
+    	    return DriverManager.getConnection(url, user, pass);
     }
 }

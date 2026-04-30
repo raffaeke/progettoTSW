@@ -3,7 +3,7 @@ import java.sql.*;
 import util.ConnessioneMySQL;
 public class UtenteDAO {
 	public Utente doRetrieveByEmailPassword(String email, String password) {
-        String query = "SELECT * FROM utente WHERE email = ? AND pass = ?";
+        String query = "SELECT * FROM utente WHERE email = ? AND password_hash = ?";
         
         try (Connection con = ConnessioneMySQL.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -16,13 +16,13 @@ public class UtenteDAO {
                 return mapper(rs); 
             }
         } catch (SQLException e) {
-           // e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }
 	
 	public boolean doSave(Utente utente) {
-        String query = "INSERT INTO utente (username, email, pass, indirizzo, ruolo) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO utente (username, email, password_hash, indirizzo, ruolo) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection con = ConnessioneMySQL.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -36,6 +36,7 @@ public class UtenteDAO {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+        	e.printStackTrace();
            return false;
         }
     }
@@ -45,7 +46,7 @@ public class UtenteDAO {
         u.setId(rs.getInt("id"));
         u.setUsername(rs.getString("username"));
         u.setEmail(rs.getString("email"));
-        u.setPassword(rs.getString("pass"));
+        u.setPassword(rs.getString("password_hash"));
         u.setIndirizzo(rs.getString("indirizzo"));
         u.setRuolo(Ruolo.valueOf(rs.getString("ruolo")));
         return u;

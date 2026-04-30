@@ -47,12 +47,8 @@
 
       <form class="auth-form" action="Registrazione" method="post">
         <div class="form-group">
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" name="nome" placeholder="Mario" required autocomplete="given-name">
-        </div>
-        <div class="form-group">
-          <label for="cognome">Cognome</label>
-          <input type="text" id="cognome" name="cognome" placeholder="Rossi" required autocomplete="family-name">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="NomeCognome00" required autocomplete="username">
         </div>
         <div class="form-group">
           <label for="email">Email</label>
@@ -65,6 +61,10 @@
         <div class="form-group">
           <label for="confermaPassword">Conferma password</label>
           <input type="password" id="confermaPassword" name="confermaPassword" placeholder="••••••••" required autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label for="indirizzo">Indirizzo</label>
+          <input type="text" id="indirizzo" name="indirizzo" placeholder="Via Roma 1" required autocomplete="country">
         </div>
         <button type="submit" class="btn-auth">Crea account</button>
       </form>

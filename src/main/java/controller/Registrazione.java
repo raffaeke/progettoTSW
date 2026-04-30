@@ -17,10 +17,10 @@ public class Registrazione extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException{
-		String username = request.getAttribute("username").toString();
-		String email = request.getAttribute("email").toString();
-		String password = request.getAttribute("password").toString();
-		String indirizzo = request.getAttribute("indirizzo").toString();
+		String username = request.getParameter("username");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String indirizzo = request.getParameter("indirizzo");
 		RequestDispatcher dispatcherToRegPage=request.getRequestDispatcher("registrazione.jsp");
 		
 		List<String> errors=new ArrayList<>();
@@ -36,7 +36,7 @@ public class Registrazione extends HttpServlet{
 		}
 		
 		if(!errors.isEmpty()) {
-			request.setAttribute("errors", errors);
+			request.setAttribute("errore", errors);
 			dispatcherToRegPage.forward(request, response);
 			return;
 		}
@@ -46,13 +46,13 @@ public class Registrazione extends HttpServlet{
 		user.setEmail(email.trim());
 		user.setPassword(password.trim());
 		user.setIndirizzo(indirizzo);
-		user.setRuolo(Ruolo.UTENTE);
+		user.setRuolo(Ruolo.customer);
 		
 		UtenteDAO dao= new UtenteDAO();
 		if(dao.doSave(user)) {
 			response.sendRedirect("login.jsp");
 		}	else {
-			request.setAttribute("errors","Registrazione fallita. Riprova");
+			request.setAttribute("errore","Registrazione fallita. Riprova");
 			dispatcherToRegPage.forward(request, response);
 		}
 		

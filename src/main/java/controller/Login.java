@@ -42,7 +42,7 @@ public class Login extends HttpServlet{
 		if(logged != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("utente", logged);
-			if(logged.getRuolo().equals(Ruolo.ADMIN)) {
+			if(logged.getRuolo().equals(Ruolo.admin)) {
 				/*TODO*/response.sendRedirect("");
 			}	else {
 				response.sendRedirect("index.jsp");

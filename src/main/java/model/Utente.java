@@ -63,6 +63,6 @@ public class Utente implements Serializable{
     
     
     public boolean isAdmin() {
-    	return Ruolo.ADMIN.equals(r);
+    	return Ruolo.admin.equals(r);
     }
 }
