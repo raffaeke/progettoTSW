@@ -1,4 +1,4 @@
-
+package model;
 public enum Stato {
  IN_ELABORAZIONE,
  SPEDITO,

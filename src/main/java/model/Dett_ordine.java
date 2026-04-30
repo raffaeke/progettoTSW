@@ -1,3 +1,4 @@
+package model;
 import java.io.Serializable;
 
 public class Dett_ordine implements Serializable{

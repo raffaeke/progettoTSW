@@ -1,3 +1,4 @@
+package model;
 import java.io.Serializable;
 
 public class Spec_prodotto implements Serializable{

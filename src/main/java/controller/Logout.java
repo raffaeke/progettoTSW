@@ -1,10 +1,11 @@
+package controller;
 import java.io.IOException;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 
-@WebServlet("Logout")
+@WebServlet("/Logout")
 public class Logout extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

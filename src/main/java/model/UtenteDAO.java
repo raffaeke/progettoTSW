@@ -1,4 +1,6 @@
+package model;
 import java.sql.*;
+import util.ConnessioneMySQL;
 public class UtenteDAO {
 	public Utente doRetrieveByEmailPassword(String email, String password) {
         String query = "SELECT * FROM utente WHERE email = ? AND pass = ?";

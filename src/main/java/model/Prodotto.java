@@ -1,3 +1,4 @@
+package model;
 import java.io.Serializable;
 
 public class Prodotto implements Serializable{
