@@ -1,5 +1,7 @@
 import java.time.LocalDate;
-public class Recensione {
+import java.io.Serializable;
+
+public class Recensione implements Serializable{
 	private int id;
 	private Prodotto p;
 	private Utente u;

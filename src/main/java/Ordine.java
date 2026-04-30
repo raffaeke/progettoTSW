@@ -1,5 +1,7 @@
 import java.time.LocalDate;
-public class Ordine {
+import java.io.Serializable;
+
+public class Ordine implements Serializable{
 	private int id;
 	private LocalDate data_ordine;
 	private float totale;

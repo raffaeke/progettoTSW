@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Spec_prodotto {
+public class Spec_prodotto implements Serializable{
 		private int id;
 		private String taglia;
 		private int quantita;

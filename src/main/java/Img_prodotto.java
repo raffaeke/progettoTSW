@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Img_prodotto {
+public class Img_prodotto implements Serializable{
 	private int id;
 	private String url;
 	private Prodotto p;

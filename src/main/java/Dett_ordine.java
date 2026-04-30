@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Dett_ordine {
+public class Dett_ordine implements Serializable{
 	private Ordine o;
 	private Utente u;
 	private String taglia;

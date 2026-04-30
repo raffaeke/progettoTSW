@@ -1,6 +1,7 @@
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Messaggio {
+public class Messaggio implements Serializable{
 		private int id;
 		private Chat chat;
 		private Utente mittente;

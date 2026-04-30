@@ -1,5 +1,5 @@
-
-public class Utente {
+import java.io.Serializable;
+public class Utente implements Serializable{
 	private int id;
 	private String username;
 	private String email;
