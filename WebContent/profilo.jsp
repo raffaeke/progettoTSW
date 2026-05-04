@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-  // Protezione pagina: se non loggato rimanda al login
+  //se non loggato rimanda al login
   if (session.getAttribute("utente") == null) {
       response.sendRedirect("login.jsp");
       return;
   }
   // Recupera i dati dell'utente dalla sessione
-  // Adatta il cast alla tua classe Utente
-  Object utente = session.getAttribute("utente");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -34,8 +32,7 @@
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
-      </a>
-      <%-- Icona verde quando sei nella pagina profilo --%>
+        
       <a href="profilo.jsp" class="icon-link icon-link--active" aria-label="Profilo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -57,20 +54,18 @@
 
       <h1 class="auth-title">Il tuo profilo</h1>
 
-      <%--
-        Sostituisci utente.getNome() con i metodi della tua classe Utente.
-        Se hai salvato nella sessione direttamente nome e cognome come stringhe
-        separate, usa: session.getAttribute("nomeUtente")
-      --%>
+     
       <div class="profilo-info">
         <div class="profilo-row">
           <span class="profilo-label">Nome</span>
-          <span class="profilo-value"><%= utente %></span>
+          <%@ page import="model.Utente" %>
+          <% Utente user = (Utente) session.getAttribute("utente"); %>
+          <span class="profilo-value"><%= user.getUsername() %></span>
         </div>
       </div>
 
       <div class="profilo-actions">
-        <a href="Logout" class="btn-logout">Esci dall'account</a>
+        <a href="LogoutServlet" class="btn-logout">Esci dall'account</a>
       </div>
 
     </div>

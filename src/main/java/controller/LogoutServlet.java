@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 
 @WebServlet("/Logout")
-public class Logout extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 						throws ServletException,IOException{

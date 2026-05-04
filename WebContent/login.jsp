@@ -13,7 +13,7 @@
 
 <body>
 
-  <!-- HEADER -->
+  
   <header class="main-header">
     <nav class="nav-left">
       <a href="Catalogo/maglie">Maglie</a>
@@ -45,10 +45,9 @@
     </nav>
   </header>
 
-  <!-- PAGINA LOGIN -->
+  
   <main class="auth-page">
 
-    <!-- CAMPO SFONDO -->
     <div class="field field--background">
       <div class="center-line"></div>
       <div class="center-circle"></div>
@@ -79,7 +78,7 @@
           </div>
         <% } %>
 
-        <form class="auth-form" action="Login" method="post">
+        <form class="auth-form" action="${pageContext.request.contextPath}/LoginServlet" method="post">
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email"

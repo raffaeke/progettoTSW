@@ -13,7 +13,7 @@ import jakarta.servlet.http.*;
 
 
 @WebServlet("/Registrazione")
-public class Registrazione extends HttpServlet{
+public class RegistrazioneServlet extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException{

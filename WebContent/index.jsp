@@ -12,26 +12,25 @@
 
 <body>
 
-  <!-- ───────── HEADER ───────── -->
+
   <header class="main-header">
 
-    <!-- NAV SINISTRA -->
     <nav class="nav-left">
       <a href="Catalogo/maglie">Maglie</a>
       <a href="Catalogo/completi">Completi</a>
     </nav>
 
-    <!-- LOGO CENTRALE -->
+   
     <a href="index.jsp" class="logo-link">
       <img src="logo.png" alt="Kick Off Logo">
     </a>
 
-    <!-- NAV DESTRA -->
+   
     <nav class="nav-right">
       <a href="Catalogo/guantoni">Guantoni</a>
       <a href="Catalogo/scarpette">Scarpette</a>
 
-      <!-- CARRELLO -->
+      
       <a href="carrello.jsp" class="icon-link" aria-label="Carrello">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
@@ -41,7 +40,7 @@
         </svg>
       </a>
 
-      <!-- ACCOUNT -->
+      
       <% if (session.getAttribute("utente") != null) { %>
         <a href="profilo.jsp" class="icon-link icon-link--active" aria-label="Profilo">
       <% } else { %>
@@ -57,7 +56,7 @@
     </nav>
   </header>
 
-  <!-- ───────── CONTENUTO PRINCIPALE ───────── -->
+  S
   <main>
 
     <section class="field">

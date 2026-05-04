@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 
 @WebServlet("/Catalogo/*")
-public class Catalogo extends HttpServlet{
+public class CatalogoServlet extends HttpServlet{
 
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException,IOException{

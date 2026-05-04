@@ -40,12 +40,12 @@
       <h1 class="auth-title">Registrati</h1>
       <p class="auth-sub">Hai già un account? <a href="login.jsp" class="auth-link">Accedi</a></p>
 
-      <%-- Messaggio di errore dalla servlet --%>
+     
       <% if (request.getAttribute("errore") != null) { %>
         <div class="auth-error"><%= request.getAttribute("errore") %></div>
       <% } %>
 
-      <form class="auth-form" action="Registrazione" method="post">
+      <form class="auth-form" action="RegistrazioneServlet" method="post">
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" id="username" name="username" placeholder="NomeCognome00" required autocomplete="username">
@@ -64,7 +64,7 @@
         </div>
         <div class="form-group">
           <label for="indirizzo">Indirizzo</label>
-          <input type="text" id="indirizzo" name="indirizzo" placeholder="Via Roma 1" required autocomplete="country">
+          <input type="text" id="indirizzo" name="indirizzo" placeholder="Via Roma 1" required>
         </div>
         <button type="submit" class="btn-auth">Crea account</button>
       </form>
