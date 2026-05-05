@@ -1,7 +1,7 @@
-package model;
+package model.beans;
 public enum Categoria {
 	SCARPE,
 	GUANTONI,
 	MAGLIE,
-	COPLETI
+	COMPLETI
 }

@@ -1,4 +1,4 @@
-package model;
+package model.beans;
 import java.io.Serializable;
 public class Utente implements Serializable{
 	private int id;

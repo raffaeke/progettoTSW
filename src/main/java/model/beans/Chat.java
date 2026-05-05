@@ -1,4 +1,4 @@
-package model;
+package model.beans;
 import java.io.Serializable;
 import java.time.LocalDate;
 public class Chat implements Serializable{

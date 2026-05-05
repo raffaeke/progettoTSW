@@ -3,9 +3,9 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import model.UtenteDAO;
-import model.Utente;
-import model.Ruolo;
+import model.daoImpl.UtenteDAOImpl;
+import model.beans.Utente;
+import model.beans.Ruolo;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet{
 		
 		email = email.trim();
 		password = password.trim();
-		UtenteDAO dao=new UtenteDAO();
+		UtenteDAOImpl dao=new UtenteDAOImpl();
 		
 		Utente logged= dao.doRetrieveByEmailPassword(email, password);
 		if(logged != null) {

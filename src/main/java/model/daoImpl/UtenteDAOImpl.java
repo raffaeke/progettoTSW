@@ -1,7 +1,13 @@
-package model;
+package model.daoImpl;
+import model.beans.Utente;
+import model.dao.UtenteDAO;
+import model.beans.Ruolo;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import util.ConnessioneMySQL;
-public class UtenteDAO {
+public class UtenteDAOImpl	implements UtenteDAO {
 	public Utente doRetrieveByEmailPassword(String email, String password) {
         String query = "SELECT * FROM utente WHERE email = ? AND password_hash = ?";
         
@@ -51,4 +57,20 @@ public class UtenteDAO {
         u.setRuolo(Ruolo.valueOf(rs.getString("ruolo")));
         return u;
     }
+	
+	public List<Utente> doRetrieveAll(){
+		 String query = "SELECT * FROM utente";
+	        List<Utente> result= new ArrayList<>();
+	        try (Connection con = ConnessioneMySQL.getConnection();
+	             PreparedStatement ps = con.prepareStatement(query)) {
+	            ResultSet rs = ps.executeQuery();
+
+	            if (rs.next()) {
+	                result.add(mapper(rs)); 
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return result;
+	}
 }

@@ -2,9 +2,9 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import model.UtenteDAO;
-import model.Utente;
-import model.Ruolo;
+import model.daoImpl.UtenteDAOImpl;
+import model.beans.Utente;
+import model.beans.Ruolo;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
@@ -48,7 +48,7 @@ public class RegistrazioneServlet extends HttpServlet{
 		user.setIndirizzo(indirizzo);
 		user.setRuolo(Ruolo.customer);
 		
-		UtenteDAO dao= new UtenteDAO();
+		UtenteDAOImpl dao= new UtenteDAOImpl();
 		if(dao.doSave(user)) {
 			response.sendRedirect("login.jsp");
 		}	else {

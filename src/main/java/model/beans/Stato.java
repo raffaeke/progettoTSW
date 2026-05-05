@@ -1,4 +1,4 @@
-package model;
+package model.beans;
 public enum Stato {
  IN_ELABORAZIONE,
  SPEDITO,
