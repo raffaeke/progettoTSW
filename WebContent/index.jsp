@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Kick Off</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
@@ -16,22 +17,22 @@
   <header class="main-header">
 
     <nav class="nav-left">
-      <a href="Catalogo/maglie">Maglie</a>
-      <a href="Catalogo/completi">Completi</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo/maglie">Maglie</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo/completi">Completi</a>
     </nav>
 
    
     <a href="index.jsp" class="logo-link">
-      <img src="logo.png" alt="Kick Off Logo">
+      <img src="images/logo.png" alt="Kick Off Logo">
     </a>
 
    
     <nav class="nav-right">
-      <a href="Catalogo/guantoni">Guantoni</a>
-      <a href="Catalogo/scarpette">Scarpette</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo/guantoni">Guantoni</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo/scarpette">Scarpette</a>
 
       
-      <a href="carrello.jsp" class="icon-link" aria-label="Carrello">
+      <a href="${pageContext.request.contextPath}/view/carrello" class="icon-link" aria-label="Carrello">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
           <circle cx="9" cy="21" r="1"/>
@@ -42,9 +43,9 @@
 
       
       <% if (session.getAttribute("utente") != null) { %>
-        <a href="profilo.jsp" class="icon-link icon-link--active" aria-label="Profilo">
+        <a href="${pageContext.request.contextPath}/view/profilo" class="icon-link icon-link--active" aria-label="Profilo">
       <% } else { %>
-        <a href="login.jsp" class="icon-link" aria-label="Accedi">
+        <a href="${pageContext.request.contextPath}/view/login" class="icon-link" aria-label="Accedi">
       <% } %>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                stroke-linecap="round" stroke-linejoin="round">
@@ -56,7 +57,7 @@
     </nav>
   </header>
 
-  S
+  
   <main>
 
     <section class="field">

@@ -8,7 +8,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
 </head>
 
 <body>
@@ -16,19 +17,19 @@
   
   <header class="main-header">
     <nav class="nav-left">
-      <a href="Catalogo/maglie">Maglie</a>
-      <a href="Catalogo/completi">Completi</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo/maglie">Maglie</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo/completi">Completi</a>
     </nav>
 
     <a href="index.jsp" class="logo-link">
-      <img src="logo.png" alt="Kick Off Logo">
+      <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
     </a>
 
     <nav class="nav-right">
-      <a href="Catalogo/guantoni">Guantoni</a>
-      <a href="Catalogo/scarpette">Scarpette</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo/guantoni">Guantoni</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo/scarpette">Scarpette</a>
 
-      <a href="carrello.jsp" class="icon-link" aria-label="Carrello">
+      <a href="${pageContext.request.contextPath}/view/carrello" class="icon-link" aria-label="Carrello">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="9" cy="21" r="1"/>
           <circle cx="20" cy="21" r="1"/>
@@ -36,7 +37,7 @@
         </svg>
       </a>
 
-      <a href="login.jsp" class="icon-link icon-link--active" aria-label="Account">
+      <a href="${pageContext.request.contextPath}/view/login" class="icon-link icon-link--active" aria-label="Account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
           <circle cx="12" cy="7" r="4"/>
@@ -69,7 +70,7 @@
         <h1 class="auth-title">Accedi</h1>
         <p class="auth-sub">
           Non hai un account?
-          <a href="registrazione.jsp" class="auth-link">Registrati</a>
+          <a href="${pageContext.request.contextPath}/view/registrazione" class="auth-link">Registrati</a>
         </p>
 
         <% if (request.getAttribute("errore") != null) { %>

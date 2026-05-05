@@ -1,0 +1,77 @@
+@charset "UTF-8";
+/* CAMPO */
+.field {
+  position: relative;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 1400px;
+  aspect-ratio: 16 / 9;
+
+  background: repeating-linear-gradient(
+    0deg,
+    #2f8f3a,
+    #2f8f3a 60px,
+    #3fa34d 60px,
+    #3fa34d 120px
+  );
+
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+/* LINEE CAMPO */
+.center-line {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 3px;
+  background: white;
+}
+
+.center-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  border: 3px solid white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.penalty-box {
+  position: absolute;
+  width: 26%;
+  height: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 3px solid white;
+}
+
+.penalty-box.top { top: 0; }
+.penalty-box.bottom { bottom: 0; }
+
+.goal-box {
+  position: absolute;
+  width: 14%;
+  height: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 3px solid white;
+}
+
+.goal-box.top { top: 0; }
+.goal-box.bottom { bottom: 0; }
+
+.penalty-spot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.penalty-spot.top { top: 15%; }
+.penalty-spot.bottom { bottom: 15%; }
