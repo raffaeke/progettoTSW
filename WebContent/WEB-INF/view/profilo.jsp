@@ -14,7 +14,8 @@
   <title>Kick Off — Profilo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
 </head>
 <body>
 
@@ -23,7 +24,7 @@
       <a href="${pageContext.request.contextPath}/view/Catalogo/maglie">Maglie</a>
       <a href="${pageContext.request.contextPath}/view/Catalogo/completi">Completi</a>
     </nav>
-    <a href="index.jsp" class="logo-link"><img src="logo.png" alt="Kick Off Logo"></a>
+    <a href="${pageContext.request.contextPath}/index.jsp" class="logo-link"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo"></a>
     <nav class="nav-right">
       <a href="${pageContext.request.contextPath}/view/Catalogo/guantoni">Guantoni</a>
       <a href="${pageContext.request.contextPath}/view/Catalogo/scarpette">Scarpette</a>
@@ -65,7 +66,7 @@
       </div>
 
       <div class="profilo-actions">
-        <a href="LogoutServlet" class="btn-logout">Esci dall'account</a>
+        <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-logout">Esci dall'account</a>
       </div>
 
     </div>

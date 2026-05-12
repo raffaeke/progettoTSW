@@ -21,7 +21,7 @@
       <a href="${pageContext.request.contextPath}/view/Catalogo/completi">Completi</a>
     </nav>
 
-    <a href="index.jsp" class="logo-link">
+    <a href="${pageContext.request.contextPath}/index.jsp" class="logo-link">
       <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
     </a>
 

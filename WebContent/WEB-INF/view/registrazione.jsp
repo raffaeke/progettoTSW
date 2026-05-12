@@ -16,7 +16,7 @@
       <a href="${pageContext.request.contextPath}/view/Catalogo/maglie">Maglie</a>
       <a href="${pageContext.request.contextPath}/view/Catalogo/completi">Completi</a>
     </nav>
-    <a href="index.jsp" class="logo-link"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo"></a>
+    <a href="${pageContext.request.contextPath}/index.jsp" class="logo-link"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo"></a>
     <nav class="nav-right">
       <a href="${pageContext.request.contextPath}/view/Catalogo/guantoni">Guantoni</a>
       <a href="${pageContext.request.contextPath}/view/Catalogo/scarpette">Scarpette</a>
@@ -39,14 +39,14 @@
     <div class="auth-card">
 
       <h1 class="auth-title">Registrati</h1>
-      <p class="auth-sub">Hai già un account? <a href="login.jsp" class="auth-link">Accedi</a></p>
+      <p class="auth-sub">Hai già un account? <a href="${pageContext.request.contextPath}/view/login" class="auth-link">Accedi</a></p>
 
      
       <% if (request.getAttribute("errore") != null) { %>
         <div class="auth-error"><%= request.getAttribute("errore") %></div>
       <% } %>
 
-      <form class="auth-form" action="RegistrazioneServlet" method="post">
+      <form class="auth-form" action="${pageContext.request.contextPath}/RegistrazioneServlet" method="post">
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" id="username" name="username" placeholder="NomeCognome00" required autocomplete="username">

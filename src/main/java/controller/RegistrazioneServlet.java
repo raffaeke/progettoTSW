@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import model.daoImpl.UtenteDAOImpl;
+import util.PassCrypted;
 import model.beans.Utente;
 import model.beans.Ruolo;
 
@@ -21,7 +22,7 @@ public class RegistrazioneServlet extends HttpServlet{
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String indirizzo = request.getParameter("indirizzo");
-		RequestDispatcher dispatcherToRegPage=request.getRequestDispatcher("registrazione.jsp");
+		RequestDispatcher dispatcherToRegPage = request.getRequestDispatcher("/view/registrazione");
 		
 		List<String> errors=new ArrayList<>();
 		
@@ -41,16 +42,17 @@ public class RegistrazioneServlet extends HttpServlet{
 			return;
 		}
 		
+		String passwordHashata = PassCrypted.hashPassword(password);
 		Utente user = new Utente();
 		user.setUsername(username.trim()); 
 		user.setEmail(email.trim());
-		user.setPassword(password.trim());
+		user.setPassword(passwordHashata);
 		user.setIndirizzo(indirizzo);
 		user.setRuolo(Ruolo.customer);
 		
 		UtenteDAOImpl dao= new UtenteDAOImpl();
 		if(dao.doSave(user)) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect(request.getContextPath() + "/view/login");
 		}	else {
 			request.setAttribute("errore","Registrazione fallita. Riprova");
 			dispatcherToRegPage.forward(request, response);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import model.daoImpl.UtenteDAOImpl;
+import util.PassCrypted;
 import model.beans.Utente;
 import model.beans.Ruolo;
 
@@ -18,6 +19,7 @@ public class LoginServlet extends HttpServlet{
 				throws ServletException, IOException{
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String passwordHashata= PassCrypted.hashPassword(password);
 		RequestDispatcher dispatcherToLoginPage=request.getRequestDispatcher("login.jsp");
 		List<String> errors=new ArrayList<>();
 
@@ -35,10 +37,9 @@ public class LoginServlet extends HttpServlet{
 		}
 		
 		email = email.trim();
-		password = password.trim();
 		UtenteDAOImpl dao=new UtenteDAOImpl();
 		
-		Utente logged= dao.doRetrieveByEmailPassword(email, password);
+		Utente logged= dao.doRetrieveByEmailPassword(email, passwordHashata);
 		if(logged != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("utente", logged);
