@@ -5,8 +5,6 @@ import java.util.List;
 import model.daoImpl.UtenteDAOImpl;
 import util.PassCrypted;
 import model.beans.Utente;
-import model.beans.Ruolo;
-
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
@@ -18,15 +16,21 @@ public class RegistrazioneServlet extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException{
-		String username = request.getParameter("username");
+		String nome = request.getParameter("nome");
+		String cognome = request.getParameter("cognome");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String indirizzo = request.getParameter("indirizzo");
+		String provincia = request.getParameter("provincia");
+		String paese = request.getParameter("paese");
 		RequestDispatcher dispatcherToRegPage = request.getRequestDispatcher("/view/registrazione");
 		
 		List<String> errors=new ArrayList<>();
 		
-		if(username==null || username.trim().isEmpty()) {
+		if(nome==null || nome.trim().isEmpty()) {
+			errors.add("nome non puo essere vuoto");
+		}
+		if(cognome==null || cognome.trim().isEmpty()) {
 			errors.add("Username non puo essere vuoto");
 		}
 		if(email==null || email.trim().isEmpty()) {
@@ -34,6 +38,15 @@ public class RegistrazioneServlet extends HttpServlet{
 		}
 		if(password==null || password.trim().isEmpty()) {
 			errors.add("Password non puo essere vuoto");
+		}
+		if(indirizzo==null || indirizzo.trim().isEmpty()) {
+			errors.add("indirizzo non puo essere vuoto");
+		}
+		if(provincia==null || provincia.trim().isEmpty()) {
+			errors.add("provincia non puo essere vuoto");
+		}
+		if(paese==null || paese.trim().isEmpty()) {
+			errors.add("paese non puo essere vuoto");
 		}
 		
 		if(!errors.isEmpty()) {
@@ -44,11 +57,13 @@ public class RegistrazioneServlet extends HttpServlet{
 		
 		String passwordHashata = PassCrypted.hashPassword(password);
 		Utente user = new Utente();
-		user.setUsername(username.trim()); 
+		user.setNome(nome.trim()); 
+		user.setCognome(cognome.trim());
 		user.setEmail(email.trim());
 		user.setPassword(passwordHashata);
 		user.setIndirizzo(indirizzo);
-		user.setRuolo(Ruolo.customer);
+		user.setProvincia(provincia);
+		user.setPaese(paese);
 		
 		UtenteDAOImpl dao= new UtenteDAOImpl();
 		if(dao.doSave(user)) {

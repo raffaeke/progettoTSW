@@ -2,11 +2,13 @@ package model.beans;
 import java.io.Serializable;
 public class Utente implements Serializable{
 	private int id;
-	private String username;
+	private String nome;
+	private String cognome;
 	private String email;
 	private String password;
 	private String indirizzo;
-	private Ruolo r;
+	private String provincia;
+	private String paese;
 	
 	public Utente() {	}
 	
@@ -18,14 +20,20 @@ public class Utente implements Serializable{
     	}
 
     
-    
-    public String getUsername() { 
-    	return username; 
+    public String getNome() { 
+    	return nome; 
     	}
-    public void setUsername(String username) {
-    	this.username = username; 
+    public void setNome(String nome) {
+    	this.nome = nome; 
     	}
 
+    
+    public String getCognome() { 
+    	return nome; 
+    	}
+    public void setCognome(String cognome) {
+    	this.cognome = cognome; 
+    	}
     
     
     public String getEmail() {
@@ -34,7 +42,6 @@ public class Utente implements Serializable{
     public void setEmail(String email) {
     	this.email = email; 
     	}
-
     
     
     public String getPassword() { 
@@ -52,17 +59,23 @@ public class Utente implements Serializable{
     public void setIndirizzo(String indirizzo) {
     	this.indirizzo = indirizzo; 
     	}
+    
+    
+    public String getPaese() { 
+    	return paese; 
+    	}
+    public void setPaese(String paese) {
+    	this.paese = paese; 
+    	}
+    
+    
+    public String getProvincia() { 
+    	return provincia; 
+    	}
+    public void setProvincia(String provincia) {
+    	this.provincia = provincia; 
+    	}
 
     
-    public Ruolo getRuolo() {
-    	return r;
-    }
-    public void setRuolo(Ruolo r) {
-    	this.r = r;
-    }
-    
-    
-    public boolean isAdmin() {
-    	return Ruolo.admin.equals(r);
-    }
+ 
 }

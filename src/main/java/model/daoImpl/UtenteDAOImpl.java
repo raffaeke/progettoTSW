@@ -1,7 +1,6 @@
 package model.daoImpl;
 import model.beans.Utente;
 import model.dao.UtenteDAO;
-import model.beans.Ruolo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +27,18 @@ public class UtenteDAOImpl	implements UtenteDAO {
     }
 	
 	public boolean doSave(Utente utente) {
-        String query = "INSERT INTO utente (username, email, password_hash, indirizzo, ruolo) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO utente (nome, cognome, email, password_hash, indirizzo, provincia, paese) VALUES (?, ?, ?, ?, ?,?,?)";
         
         try (Connection con = ConnessioneMySQL.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
-            ps.setString(1, utente.getUsername());
-            ps.setString(2, utente.getEmail());
-            ps.setString(3, utente.getPassword());
-            ps.setString(4, utente.getIndirizzo());
-            ps.setString(5, utente.getRuolo().name());
+            ps.setString(1, utente.getNome());
+            ps.setString(2, utente.getCognome());
+            ps.setString(3, utente.getEmail());
+            ps.setString(4, utente.getPassword());
+            ps.setString(5, utente.getIndirizzo());
+            ps.setString(6, utente.getProvincia());
+            ps.setString(7, utente.getPaese());
 
             ps.executeUpdate();
             return true;
@@ -50,11 +51,13 @@ public class UtenteDAOImpl	implements UtenteDAO {
 	private Utente mapper(ResultSet rs) throws SQLException {
         Utente u = new Utente();
         u.setId(rs.getInt("id"));
-        u.setUsername(rs.getString("username"));
+        u.setNome(rs.getString("nome"));
+        u.setCognome(rs.getString("cognome"));
         u.setEmail(rs.getString("email"));
         u.setPassword(rs.getString("password_hash"));
         u.setIndirizzo(rs.getString("indirizzo"));
-        u.setRuolo(Ruolo.valueOf(rs.getString("ruolo")));
+        u.setProvincia(rs.getString("provincia"));
+        u.setPaese(rs.getString("paese"));
         return u;
     }
 	

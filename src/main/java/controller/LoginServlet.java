@@ -6,8 +6,6 @@ import java.util.List;
 import model.daoImpl.UtenteDAOImpl;
 import util.PassCrypted;
 import model.beans.Utente;
-import model.beans.Ruolo;
-
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
@@ -38,17 +36,15 @@ public class LoginServlet extends HttpServlet{
 		
 		email = email.trim();
 		UtenteDAOImpl dao=new UtenteDAOImpl();
-		
+		if(email.equals("admin@admin.it") && password.equals(PassCrypted.hashPassword("admin"))) {
+			HttpSession session = request.getSession();
+			//redirect a pagine admin
+		}
 		Utente logged= dao.doRetrieveByEmailPassword(email, passwordHashata);
 		if(logged != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("utente", logged);
-			if(logged.getRuolo().equals(Ruolo.admin)) {
-				/*TODO*/response.sendRedirect("");
-			}	else {
-				response.sendRedirect("index.jsp");
-			}
-			
+				response.sendRedirect("index.jsp");			
 		}	else {
 			request.setAttribute("errors","Accesso fallita. Riprova");
 			dispatcherToLoginPage.forward(request, response);
