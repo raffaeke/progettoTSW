@@ -49,7 +49,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 	}
 
 	public boolean doSave(Prodotto prodotto) throws SQLException {
-		String query = "INSERT INTO prodotto (nome, descr, prezzo, categoria) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO prodotto (nome, descr, prezzo, categoria, sconto, in_evidenza) VALUES (?, ?, ?, ?, ?, ?)";
         
         try (Connection con = ConnessioneMySQL.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -57,7 +57,13 @@ public class ProdottoDAOImpl implements ProdottoDAO{
             ps.setString(1, prodotto.getNome());
             ps.setString(2, prodotto.getDesc());
             ps.setFloat(3, prodotto.getPrezzo());
-            ps.setString(5, prodotto.getCat().name());
+            ps.setString(4, prodotto.getCat().name());
+            ps.setInt(5, prodotto.getSconto());
+            if(prodotto.isInEvidenza()) {
+            	ps.setInt(6, 1);
+            }else {
+            	ps.setInt(6, 0);
+            }
 
             ps.executeUpdate();
             return true;
@@ -74,6 +80,12 @@ public class ProdottoDAOImpl implements ProdottoDAO{
         p.setDesc(rs.getString("descr"));
         p.setPrezzo(rs.getFloat("prezzo"));
         p.setCat(Categoria.valueOf(rs.getString("categoria")));
+        p.setSconto(rs.getInt("sconto"));
+        if(rs.getInt("in_evidenza") == 1) {
+        	p.setInEvidenza(true);
+        }else {
+        	p.setInEvidenza(false);
+        }
         return p;
     }
 }

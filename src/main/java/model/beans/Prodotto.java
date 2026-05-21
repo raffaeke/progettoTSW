@@ -7,6 +7,8 @@ public class Prodotto implements Serializable{
 	private String desc;
 	private float prezzo;
 	private Categoria cat;
+	private int sconto;
+	private boolean inEvidenza;
 	
 	public Prodotto() {}
 	
@@ -37,7 +39,12 @@ public class Prodotto implements Serializable{
 	
 	
 	public float getPrezzo() {
-		return prezzo;
+		if(sconto == 0) {
+			return prezzo;
+		}else {
+			return prezzo-((prezzo*sconto)/100);
+		}
+		
 	}
 	public void setPrezzo(float prezzo) {
 		this.prezzo = prezzo;
@@ -49,5 +56,20 @@ public class Prodotto implements Serializable{
 	}
 	public void setCat(Categoria cat) {
 		this.cat = cat;
+	}
+	
+	
+	public int getSconto() {
+		return sconto;
+	}
+	public void setSconto(int sconto) {
+		this.sconto = sconto;
+	}
+	
+	public boolean isInEvidenza() {
+		return inEvidenza;
+	}
+	public void setInEvidenza(boolean k) {
+		this.inEvidenza = k;
 	}
 }

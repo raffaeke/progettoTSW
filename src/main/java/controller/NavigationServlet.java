@@ -10,18 +10,23 @@ import jakarta.servlet.http.*;
 public class NavigationServlet extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-						throws ServletException,IOException{
-		String path = request.getPathInfo();
-		
-		String pathDir = "/WEB-INF/view/";
-		String target = "";
-		if (path == null || path.equals("/")) {
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
-            return;        
-            } else {
-            target = path.substring(1) + ".jsp"; 
-        }
-		request.getRequestDispatcher(pathDir+target).forward(request, response);
+	        throws ServletException, IOException {
+	    
+	    String path = request.getPathInfo();
+	    
+	    if (path == null || path.equals("/")) {
+	        request.getRequestDispatcher("/index.jsp").forward(request, response);
+	        return; 
+	    }
+
+	    if (path.startsWith("/")) {
+	        path = path.substring(1);
+	    }
+
+	    String pathDir = "/WEB-INF/view/";
+	    String target = pathDir + path + ".jsp"; 
+
+	    request.getRequestDispatcher(target).forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 

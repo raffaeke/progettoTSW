@@ -36,15 +36,22 @@ public class LoginServlet extends HttpServlet{
 		
 		email = email.trim();
 		UtenteDAOImpl dao=new UtenteDAOImpl();
-		if(email.equals("admin@admin.it") && password.equals(PassCrypted.hashPassword("admin"))) {
+		if(email.equals("admin@admin.it") && passwordHashata.equals(PassCrypted.hashPassword("admin"))) {
 			HttpSession session = request.getSession();
-			//redirect a pagine admin
+			Utente admin= new Utente();
+			admin.setNome("Amministratore");
+			admin.setCognome("");
+			admin.setEmail(email);
+			session.setAttribute("utente", admin);
+			session.setAttribute("isAdmin", true);
+			response.sendRedirect(request.getContextPath() + "/view/admin/dashboard");
+			return;
 		}
 		Utente logged= dao.doRetrieveByEmailPassword(email, passwordHashata);
 		if(logged != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("utente", logged);
-				response.sendRedirect("index.jsp");			
+			response.sendRedirect(request.getContextPath() + "/view/profilo");		
 		}	else {
 			request.setAttribute("errors","Accesso fallita. Riprova");
 			dispatcherToLoginPage.forward(request, response);

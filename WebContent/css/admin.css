@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+/* Pannello effetto vetro che racchiude la dashboard admin sopra il prato */
+.admin-glass-panel {
+  background: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(47,143,58,0.15);
+}
+
+.admin-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.admin-container h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #2f8f3a;
+  padding-bottom: 10px;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.admin-badge {
+  background: #c0392b;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.admin-card {
+  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+
+.admin-card:hover {
+  border-color: #2f8f3a;
+}
+
+.admin-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.admin-card p {
+  font-size: 14px;
+  color: #aaa;
+  flex-grow: 1;
+  line-height: 1.5;
+}
+
+.btn-admin {
+  display: inline-block;
+  text-align: center;
+  background: #2f8f3a;
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-admin:hover {
+  background: #3aa348;
+  transform: translateY(-1px);
+}
+.btn-admin-logout, 
+.btn-admin-logout:visited {
+  display: inline-block;
+  background: #c0392b;
+  color: white !important; /* Forza il bianco contro i link visitati */
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'Barlow Condensed', sans-serif;
+  transition: background 0.2s, transform 0.1s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-admin-logout:hover {
+  background: #e74c3c; /* Rosso più acceso al passaggio del mouse */
+  color: white !important;
+  transform: translateY(-1px);
+}
