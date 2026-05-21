@@ -44,9 +44,6 @@
         <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
       </a>
       <div class="nav-right">
-        <span style="color: #eee; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
-          Benvenuto, <%= user.getNome() %>
-        </span>
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-admin-logout">Esci</a>
          </div>
     </header>
