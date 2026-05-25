@@ -117,3 +117,200 @@
   color: white !important;
   transform: translateY(-1px);
 }
+
+/* LAYOUT SPLIT (FORM + TABELLA) */
+.admin-split-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.user-form-panel {
+  flex: 1;
+  max-width: 450px;
+  position: sticky;
+  top: 130px; /* Rimane bloccato mentre scorri la lunga tabella a destra */
+}
+
+.table-panel {
+  flex: 2;
+}
+
+.admin-glass-panel h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #fff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+/* INPUT SELECT (MENU A TENDINA) */
+.admin-select {
+  padding: 12px;
+  background: rgba(10, 10, 10, 0.65);
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #eee;
+  font-family: inherit;
+  width: 100%;
+  cursor: pointer;
+}
+.admin-select:focus {
+  border-color: #2f8f3a;
+  outline: none;
+}
+
+/* CHECKBOX PERSONALIZZATA STYLE */
+.checkbox-group {
+  margin: 5px 0;
+}
+.container-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #aaa;
+  user-select: none;
+}
+.container-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #111;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+.container-checkbox:hover input ~ .checkmark {
+  border-color: #2f8f3a;
+}
+.container-checkbox input:checked ~ .checkmark {
+  background-color: #2f8f3a;
+  border-color: #2f8f3a;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.container-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+.container-checkbox .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* TABELLA PRODOTTI ADMIN */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 14px;
+  border-bottom: 2px solid #333;
+  color: #888;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.admin-table td {
+  padding: 14px;
+  border-bottom: 1px solid #222;
+  vertical-align: middle;
+}
+
+.admin-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* DETTAGLI TABELLA */
+.td-id { color: #2f8f3a; font-weight: 700; font-family: monospace; }
+.td-product-title { color: #fff; font-weight: 600; font-size: 15px; }
+.td-product-desc { color: #666; font-size: 12px; margin-top: 2px; }
+.td-price { font-weight: 600; color: #fff; }
+
+.cat-tag {
+  background: #222;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #ccc;
+  font-weight: 600;
+}
+
+.discount-badge {
+  background: rgba(192, 57, 43, 0.2);
+  color: #e74c3c;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.status-badge.live { background: rgba(47, 143, 58, 0.2); color: #2f8f3a; }
+.status-badge.standard { background: #222; color: #666; }
+
+/* PULSANTI DI AZIONE ACCATTIVANTI */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action-edit, .btn-action-delete {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.btn-action-edit {
+  background: #1e3d59;
+  color: #17b978 !important;
+  border: 1px solid rgba(23, 185, 120, 0.3);
+}
+.btn-action-edit:hover { background: #17b978; color: white !important; }
+
+.btn-action-delete {
+  background: rgba(192, 57, 43, 0.1);
+  color: #c0392b !important;
+  border: 1px solid rgba(192, 57, 43, 0.3);
+}
+.btn-action-delete:hover { background: #c0392b; color: white !important; }

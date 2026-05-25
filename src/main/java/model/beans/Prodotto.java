@@ -37,8 +37,10 @@ public class Prodotto implements Serializable{
 		this.desc = desc;
 	}
 	
-	
 	public float getPrezzo() {
+		return prezzo;
+	}
+	public float getPrezzoScontato() {
 		if(sconto == 0) {
 			return prezzo;
 		}else {

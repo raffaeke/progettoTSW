@@ -4,7 +4,6 @@
   Utente user = (Utente) session.getAttribute("utente");
   Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
 
-  // BLOCCO DI SICUREZZA: Se non è loggato O non è admin, rimbalza al login
   if (user == null || isAdmin == null || !isAdmin) {
       response.sendRedirect(request.getContextPath() + "/view/login");
       return;
