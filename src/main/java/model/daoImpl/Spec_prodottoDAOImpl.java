@@ -26,6 +26,7 @@ public class Spec_prodottoDAOImpl implements Spec_prodottoDAO{
 			else return -1;
 		}catch(SQLException e ) {
 			e.printStackTrace();
+			return -1;
 		}
 	}
 

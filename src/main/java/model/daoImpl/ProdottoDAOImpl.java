@@ -39,7 +39,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
             
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 result.add(mapper(rs)); 
             }
         } catch (SQLException e) {
