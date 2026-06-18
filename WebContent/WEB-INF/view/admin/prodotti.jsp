@@ -155,7 +155,7 @@
                     </td>
                     <td><span class="cat-tag"><%= prod.getCat().name() %></span></td>
                     <td>
-                      <span class="td-price"><%= String.format("%.2f", prod.getPrezzo()) %>€</span>
+                      <span class="td-price"><%= String.format("%.2f", prod.getPrezzoScontato()) %>€</span>
                       <% if(prod.getSconto() > 0) { %>
                         <span class="discount-badge">-<%= prod.getSconto() %>%</span>
                       <% } %>

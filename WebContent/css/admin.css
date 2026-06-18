@@ -314,3 +314,53 @@
   border: 1px solid rgba(192, 57, 43, 0.3);
 }
 .btn-action-delete:hover { background: #c0392b; color: white !important; }
+
+/* BADGES SPECIFICI PER GLI STATI ORDINE */
+.order-status-badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  display: inline-block;
+  text-transform: uppercase;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+/* Grigio/Giallo scuro: In Elaborazione */
+.badge-elaborazione {
+  background: rgba(243, 156, 18, 0.15);
+  color: #f39c12;
+  border: 1px solid rgba(243, 156, 18, 0.3);
+}
+
+/* Blu Sportivo: Spedito */
+.badge-spedito {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+/* Viola/Fucsia: In Consegna */
+.badge-consegna {
+  background: rgba(155, 89, 182, 0.15);
+  color: #9b59b6;
+  border: 1px solid rgba(155, 89, 182, 0.3);
+}
+
+/* Verde Erba: Consegnato */
+.badge-consegnato {
+  background: rgba(47, 143, 58, 0.2);
+  color: #2f8f3a;
+  border: 1px solid rgba(47, 143, 58, 0.4);
+}
+
+/* Tag identificativo Utente */
+.user-id-tag {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #bbb;
+  font-size: 12px;
+  font-family: monospace;
+}

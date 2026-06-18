@@ -7,7 +7,7 @@ public class Ordine implements Serializable{
 	private LocalDate data_ordine;
 	private float totale;
 	private Stato stato;
-	private Utente utente;
+	private int utente_id;
 	
 	public Ordine() {}
 	
@@ -45,10 +45,10 @@ public class Ordine implements Serializable{
 	
 	
 	
-	public Utente getUtente() {
-		return utente;
+	public int getUtenteId() {
+		return utente_id;
 	}
-	public void setUtente(Utente u) {
-		this.utente = u;
+	public void setUtenteId(int id) {
+		this.utente_id = id;
 	}
 }
