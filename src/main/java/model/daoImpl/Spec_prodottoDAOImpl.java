@@ -1,0 +1,81 @@
+package model.daoImpl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import model.dao.Spec_prodottoDAO;
+import util.DriverManagerConnectionPool;
+
+public class Spec_prodottoDAOImpl implements Spec_prodottoDAO{
+
+	@Override
+	public int doRetrieveQuantitaBySize(int id, String size) throws SQLException {
+		String query="SELECT quantita FROM spec_prodotto WHERE prodotto_id=? AND taglia=?";
+		
+		try(Connection con= DriverManagerConnectionPool.getConnection();
+				PreparedStatement ps= con.prepareStatement(query)){
+			
+			ps.setInt(1, id);
+			ps.setString(2, size);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("quantita");
+			}
+			else return -1;
+		}catch(SQLException e ) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean doSave(int id, String size, int q) throws SQLException {
+		Spec_prodottoDAOImpl dao= new Spec_prodottoDAOImpl();
+		if(dao.doRetrieveQuantitaBySize(id, size)!=-1) {
+			return dao.doUpdate(id, size, q);
+		}else {
+			String query="INSERT INTO spec_prodotto(taglia,quantita,prodotto_id) VALUES(?,?,?)";
+			try(Connection con= DriverManagerConnectionPool.getConnection();
+					PreparedStatement ps= con.prepareStatement(query)){
+				
+				ps.setInt(3, id);
+				ps.setString(1, size);
+				ps.setInt(2, q);
+				
+				ps.executeUpdate();
+				return true;
+				
+			}catch(SQLException e ) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public boolean doUpdate(int id, String size, int q) throws SQLException {
+		Spec_prodottoDAOImpl dao= new Spec_prodottoDAOImpl();
+		int q_attuale=dao.doRetrieveQuantitaBySize(id, size);
+		if(q_attuale+q < 0) {
+			return false;
+		}else {
+			String query="UPDATE spec_prodotto SET quantita=? WHERE prodotto_id=? AND taglia=?";
+			try(Connection con= DriverManagerConnectionPool.getConnection();
+					PreparedStatement ps= con.prepareStatement(query)){
+				
+				ps.setInt(2, id);
+				ps.setString(3, size);
+				ps.setInt(1, q_attuale+q);
+				
+				ps.executeUpdate();
+				return true;
+				
+			}catch(SQLException e ) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+	}
+
+}
