@@ -5,12 +5,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.ConnessioneMySQL;
+import util.DriverManagerConnectionPool;
 public class UtenteDAOImpl	implements UtenteDAO {
 	public Utente doRetrieveByEmailPassword(String email, String password) {
         String query = "SELECT * FROM utente WHERE email = ? AND password_hash = ?";
         
-        try (Connection con = ConnessioneMySQL.getConnection();
+        try (Connection con = DriverManagerConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
             ps.setString(1, email);
@@ -29,7 +29,7 @@ public class UtenteDAOImpl	implements UtenteDAO {
 	public boolean doSave(Utente utente) {
         String query = "INSERT INTO utente (nome, cognome, email, password_hash, indirizzo, provincia, paese) VALUES (?, ?, ?, ?, ?,?,?)";
         
-        try (Connection con = ConnessioneMySQL.getConnection();
+        try (Connection con = DriverManagerConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
             ps.setString(1, utente.getNome());
@@ -64,7 +64,7 @@ public class UtenteDAOImpl	implements UtenteDAO {
 	public List<Utente> doRetrieveAll(){
 		 String query = "SELECT * FROM utente";
 	        List<Utente> result= new ArrayList<>();
-	        try (Connection con = ConnessioneMySQL.getConnection();
+	        try (Connection con = DriverManagerConnectionPool.getConnection();
 	             PreparedStatement ps = con.prepareStatement(query)) {
 	            ResultSet rs = ps.executeQuery();
 

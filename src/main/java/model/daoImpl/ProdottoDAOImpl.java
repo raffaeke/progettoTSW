@@ -9,14 +9,14 @@ import java.util.List;
 import model.beans.Categoria;
 import model.beans.Prodotto;
 import model.dao.ProdottoDAO;
-import util.ConnessioneMySQL;
+import util.DriverManagerConnectionPool;
 
 public class ProdottoDAOImpl implements ProdottoDAO{
 
 	public Prodotto doRetrieveByKey(int id) throws SQLException {
 		String query = "SELECT * FROM prodotto WHERE id = ?";
         
-        try (Connection con = ConnessioneMySQL.getConnection();
+        try (Connection con = DriverManagerConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
             ps.setInt(1, id);
@@ -34,7 +34,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 	public List<Prodotto> doRetrieveAll() throws SQLException {
 		String query = "SELECT * FROM prodotto";
         List<Prodotto> result= new ArrayList<>();
-        try (Connection con = ConnessioneMySQL.getConnection();
+        try (Connection con = DriverManagerConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
             ResultSet rs = ps.executeQuery();
@@ -51,7 +51,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 	public boolean doSave(Prodotto prodotto) throws SQLException {
 		String query = "INSERT INTO prodotto (nome, descr, prezzo, categoria, sconto, in_evidenza) VALUES (?, ?, ?, ?, ?, ?)";
         
-        try (Connection con = ConnessioneMySQL.getConnection();
+        try (Connection con = DriverManagerConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
             ps.setString(1, prodotto.getNome());
@@ -92,7 +92,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 	
 	public boolean doDelete(int id) throws SQLException{
 		String query="DELETE FROM prodotto WHERE id=?";
-		try(Connection con = ConnessioneMySQL.getConnection();
+		try(Connection con = DriverManagerConnectionPool.getConnection();
 				PreparedStatement ps = con.prepareStatement(query)){
 			ps.setInt(1, id);
 			ps.executeUpdate();
@@ -107,7 +107,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 		String query = "UPDATE prodotto SET nome = ?, descr = ?, prezzo = ?, "
                 + "categoria = ?, sconto = ?, in_evidenza = ? WHERE id = ?";
    
-		try (Connection con = ConnessioneMySQL.getConnection();
+		try (Connection con = DriverManagerConnectionPool.getConnection();
 				PreparedStatement ps = con.prepareStatement(query)) {
        
 					ps.setString(1, prodotto.getNome());
