@@ -33,16 +33,49 @@ public class OrdineDAOImpl implements OrdineDAO{
 	        }
 	        return result;
 	}
+	
+	public boolean doUpdateStatoByID(int id, Stato s) throws SQLException {
+		
+		String query="UPDATE ordine SET stato=? WHERE id=?";
+		try(Connection con=DriverManagerConnectionPool.getConnection();
+				PreparedStatement ps = con.prepareStatement(query)){
+			ps.setInt(2, id);
+			ps.setString(1, s.toString());
+			ps.executeUpdate();
+			return true;
+			
+		}catch(SQLException e) {
+			return false;
+		}
+		
+	}
 
 
-private Ordine mapper(ResultSet rs) throws SQLException {
-    Ordine o = new Ordine();
-    o.setId(rs.getInt("id"));
-    java.sql.Date data=rs.getDate("data_ordine");
-    o.setData(data.toLocalDate());
-    o.setTotale(rs.getFloat("tot"));
-    o.setStato(Stato.valueOf(rs.getString("stato")));
-    o.setUtenteId(rs.getInt("utente_id"));
-    return o;
+	private Ordine mapper(ResultSet rs) throws SQLException {
+	    Ordine o = new Ordine();
+	    o.setId(rs.getInt("id"));
+	    
+	    try {
+	        java.sql.Date data = rs.getDate("data_ordine");
+	        if (data == null) data = rs.getDate("data"); 
+	        if (data != null) o.setData(data.toLocalDate());
+	    } catch (Exception e) {
+	        // Se fallisce la data, non bloccare il programma
+	    }
+	    
+	    o.setTotale(rs.getFloat("tot"));
+	    
+	    try {
+	        String statoString = rs.getString("stato");
+	        if (statoString != null) {
+	            o.setStato(Stato.valueOf(statoString.trim().toUpperCase()));
+	        }
+	    } catch (Exception e) {
+	        // Se l'enum fallisce perché la stringa nel DB non corrisponde, assegniamo il primo valore di default
+	        o.setStato(Stato.IN_ELABORAZIONE); 
+	    }
+	        o.setUtenteId(rs.getInt("utente_id"));
+
+	    return o;
 	}
 }

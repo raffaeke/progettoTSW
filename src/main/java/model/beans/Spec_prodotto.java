@@ -5,7 +5,7 @@ public class Spec_prodotto implements Serializable{
 		private int id;
 		private String taglia;
 		private int quantita;
-		private Prodotto p;
+		private int prodotto_id;
 		
 		public Spec_prodotto() {}
 		
@@ -33,10 +33,10 @@ public class Spec_prodotto implements Serializable{
 		}
 		
 		
-		public Prodotto getProdotto() {
-			return p;
+		public int getProdottoId() {
+			return prodotto_id;
 		}
-		public void setProdotto(Prodotto p) {
-			this.p = p;
+		public void setProdottoId(int id) {
+			this.prodotto_id = id;
 		}
 }
