@@ -67,7 +67,7 @@
           <div class="admin-card">
             <h3>Assistenza Clienti</h3>
             <p>Rispondi alle richieste effettuate dai clienti sul portale.</p>
-            <!-- TODO --><a href="${pageContext.request.contextPath}/view/admin/ordini" class="btn-admin">Vedi Richieste</a>
+            ><a href="${pageContext.request.contextPath}/view/admin/assistenza" class="btn-admin">Vedi Richieste</a>
           </div>
         </div>
       </div>
