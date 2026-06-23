@@ -1,0 +1,10 @@
+package model.dao;
+import model.beans.Messaggio;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+public interface MessaggioDAO {
+
+	public ArrayList<Messaggio> doRetrieveByChat(int chat_id)throws SQLException;
+	public void doDeleteByChat(int id) throws SQLException;
+}

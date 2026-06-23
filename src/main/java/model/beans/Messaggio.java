@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Messaggio implements Serializable{
 		private int id;
-		private Chat chat;
-		private Utente mittente;
+		private int chat_id;
+		private int utente_id;
 		private String testo;
 		private LocalDate inviatoIl;
 		
@@ -19,19 +19,19 @@ public class Messaggio implements Serializable{
 		}
 		
 		
-		public Chat getChat() {
-			return chat;
+		public int getChat() {
+			return chat_id;
 		}
-		public void setChat(Chat c) {
-			this.chat = c;
+		public void setChat(int c) {
+			this.chat_id = c;
 		}
 		
 		
-		public Utente getMittente() {
-			return mittente;
+		public int getMittente() {
+			return utente_id;
 		}
-		public void setMittente(Utente m) {
-			this.mittente = m;
+		public void setMittente(int m) {
+			this.utente_id = m;
 		}
 		
 		

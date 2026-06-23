@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 public class Chat implements Serializable{
 	private int id;
-	private Utente cliente;
+	private int cliente_id;
 	private LocalDate creataIl;
 	
 	public Chat() {}
@@ -16,11 +16,11 @@ public class Chat implements Serializable{
 	}
 	
 	
-	public Utente getCliente() {
-		return cliente;
+	public int getCliente() {
+		return cliente_id;
 	}
-	public void setCliente(Utente c) {
-		this.cliente = c;
+	public void setCliente(int c) {
+		this.cliente_id = c;
 	}
 	
 	
