@@ -13,6 +13,9 @@
       response.sendRedirect(request.getContextPath() + "/view/login");
       return;
   }
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+  response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+  response.setDateHeader("Expires", 0); // Proxy
 
   // 2. Inizializzazione DAO e Variabili
   ChatDAO chatDao = new ChatDAOImpl();
@@ -199,7 +202,7 @@
               for (Chat c : listaChat) {
                   boolean isSelezionata = (chatSelezionata != null && chatSelezionata.getId() == c.getId());
           %>
-            <a href="?idChat=<%= c.getId() %>" style="text-decoration: none; color: inherit;">
+            <a href="?idChat=<%= c.getId() %>&t=<%= System.currentTimeMillis() %>" style="text-decoration: none; color: inherit;">
               <div class="inbox-card" style="background: <%= isSelezionata ? "rgba(23, 185, 120, 0.15)" : "rgba(0, 0, 0, 0.3)" %>; 
                               border: 1px solid <%= isSelezionata ? "#17b978" : "rgba(255,255,255,0.05)" %>;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -227,7 +230,7 @@
               <span style="font-size: 11px; color: #aaa;">Stai visualizzando il ticket #<%= chatSelezionata.getId() %></span>
             </div>
             
-            <form action="${pageContext.request.contextPath}/ConcludiChatServlet" method="post" style="margin: 0;">
+            <form action="${pageContext.request.contextPath}/ConcludiChat" method="post" style="margin: 0;">
               <input type="hidden" name="chatId" value="<%= chatSelezionata.getId() %>">
               <button type="submit" class="btn-concludi">Concludi Chat</button>
             </form>
@@ -252,7 +255,7 @@
             <% } %>
           </div>
           
-          <form action="${pageContext.request.contextPath}/InviaMessaggioServlet" method="post" style="background: rgba(0,0,0,0.3); padding: 15px; display: flex; gap: 10px; border-top: 1px solid rgba(255,255,255,0.08);">
+          <form action="${pageContext.request.contextPath}/InviaMessaggioAssistenza" method="post" style="background: rgba(0,0,0,0.3); padding: 15px; display: flex; gap: 10px; border-top: 1px solid rgba(255,255,255,0.08);">
             <input type="hidden" name="chatId" value="<%= chatSelezionata.getId() %>">
             <input type="hidden" name="redirectUrl" value="view/admin/assistenza?idChat=<%= chatSelezionata.getId() %>">
             

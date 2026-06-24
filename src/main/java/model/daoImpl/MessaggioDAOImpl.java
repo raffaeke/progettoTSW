@@ -1,9 +1,12 @@
 package model.daoImpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import model.beans.Categoria;
@@ -27,18 +30,7 @@ public class MessaggioDAOImpl implements MessaggioDAO{
 		}
 		return result;
 	}
-	public void doDeleteByChat(int id) {
-		MessaggioDAOImpl dao= new MessaggioDAOImpl();
-		dao.doDeleteByChat(id);
-		String query="DELETE FROM messaggio WHERE chat_id=?";
-		try(Connection con= DriverManagerConnectionPool.getConnection();
-				PreparedStatement ps= con.prepareStatement(query)){
-			ps.setInt(1, id);
-			ps.executeUpdate();
-		}catch(SQLException e) {
-			
-		}
-	}
+	
 	private Messaggio mapper(ResultSet rs) throws SQLException {
         Messaggio m= new Messaggio();
         m.setId(rs.getInt("id"));
@@ -54,4 +46,32 @@ public class MessaggioDAOImpl implements MessaggioDAO{
 	    }
         return m;
     }
+	public void doDeleteByChat(int id) throws SQLException{
+		MessaggioDAOImpl dao= new MessaggioDAOImpl();
+		dao.doDeleteByChat(id);
+		String query="DELETE FROM messaggio WHERE chat_id=?";
+		try(Connection con= DriverManagerConnectionPool.getConnection();
+				PreparedStatement ps= con.prepareStatement(query)){
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			
+		}
+	}
+	public void doSave(Messaggio m) throws SQLException{
+		
+		String query = "INSERT INTO messaggio (chat_id, mittente_id, testo, inviato_il) VALUES (?, ?, ?, ?)";
+		try (Connection con = DriverManagerConnectionPool.getConnection();
+                PreparedStatement ps = con.prepareStatement(query)) {
+               
+               ps.setInt(1, m.getChat());
+               ps.setInt(2, m.getMittente()); 
+               ps.setString(3, m.getTesto());
+               ps.setDate(4,Date.valueOf(m.getDataInvio())); 
+               ps.executeUpdate();
+           }catch(SQLException e) {
+        	   e.printStackTrace();
+           }
+		
+	}
 }

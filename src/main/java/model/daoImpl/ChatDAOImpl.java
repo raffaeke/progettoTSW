@@ -35,6 +35,7 @@ public class ChatDAOImpl implements ChatDAO{
 		String query="SELECT * FROM chat WHERE id=?";
 		try(Connection con= DriverManagerConnectionPool.getConnection();
 				PreparedStatement ps= con.prepareStatement(query)){
+			ps.setInt(1, id);
 			ResultSet rs= ps.executeQuery();
 			if(rs.next()) {
 				result=mapper(rs);
@@ -47,15 +48,31 @@ public class ChatDAOImpl implements ChatDAO{
 
 	@Override
 	public void doDelete(int id) throws SQLException {
-		String query="DELETE FROM chat WHERE id=?";
-		try(Connection con= DriverManagerConnectionPool.getConnection();
-				PreparedStatement ps= con.prepareStatement(query)){
-			ps.setInt(1, id);
-			ps.executeUpdate();
-			
-		}catch(SQLException e) {
-			
-		}
+	    String queryMessaggi = "DELETE FROM messaggio WHERE chat_id = ?";
+	    String queryChat = "DELETE FROM chat WHERE id = ?";
+	    
+	    try (Connection con = DriverManagerConnectionPool.getConnection()) {
+	        // Disattiviamo l'autocommit per fare un'operazione atomica (Transazione)
+	        con.setAutoCommit(false);
+	        
+	        try (PreparedStatement psMsg = con.prepareStatement(queryMessaggi);
+	             PreparedStatement psChat = con.prepareStatement(queryChat)) {
+	            
+	            psMsg.setInt(1, id);
+	            psMsg.executeUpdate();
+	            
+	            psChat.setInt(1, id);
+	            psChat.executeUpdate();
+	            
+	            con.commit();
+	            
+	        } catch (SQLException e) {
+	            con.rollback(); // Se uno dei due fallisce, annulla tutto
+	            throw e; // Rilancia l'eccezione
+	        } finally {
+	            con.setAutoCommit(true);
+	        }
+	    }
 	}
 	
 	private Chat mapper(ResultSet rs) throws SQLException {

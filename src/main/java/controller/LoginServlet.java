@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet{
 		if(email.equals("admin@admin.it") && passwordHashata.equals(PassCrypted.hashPassword("admin"))) {
 			HttpSession session = request.getSession();
 			Utente admin= new Utente();
+			admin.setId(11);
 			admin.setNome("Amministratore");
 			admin.setCognome("");
 			admin.setEmail(email);
