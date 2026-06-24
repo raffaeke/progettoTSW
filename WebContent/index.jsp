@@ -75,6 +75,6 @@
     </section>
 
   </main>
-
+<%@ include file="/WEB-INF/view/parziali/footer.jsp" %>
 </body>
 </html>

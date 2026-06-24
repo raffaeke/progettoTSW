@@ -99,3 +99,95 @@ nav a:hover::after {
 .icon-link--active svg {
   stroke: #2f8f3a;
 }
+
+/* STILI GENERALI FOOTER */
+.site-footer {
+    background: rgba(18, 23, 26, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    padding: 40px 0 0 0;
+    font-family: 'Barlow', sans-serif;
+    margin-top: auto; /* Spinge il footer in basso nelle pagine con poco contenuto */
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 30px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-logo {
+    max-height: 45px;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #94a3b8;
+}
+
+.footer-section h4 {
+    color: #17b978; /* Il verde Kick Off */
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+}
+
+.footer-section ul li a:hover {
+    color: #17b978;
+}
+
+/* BARRA INFERIORE */
+.footer-bottom {
+    background: rgba(10, 13, 15, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px 0;
+}
+
+.footer-bottom-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.payment-methods span {
+    margin-left: 15px;
+    font-size: 14px;
+    opacity: 0.7;
+}
