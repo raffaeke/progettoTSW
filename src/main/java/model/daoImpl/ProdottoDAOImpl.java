@@ -48,8 +48,8 @@ public class ProdottoDAOImpl implements ProdottoDAO{
         return result;
 	}
 
-	public boolean doSave(Prodotto prodotto) throws SQLException {
-		String query = "INSERT INTO prodotto (nome, descr, prezzo, categoria, sconto, in_evidenza) VALUES (?, ?, ?, ?, ?, ?)";
+	public int doSave(Prodotto prodotto) throws SQLException {
+		String query = "INSERT INTO prodotto (nome, descr, prezzo, categoria, sconto, in_evidenza, marca) VALUES (?, ?, ?, ?, ?, ?,?)";
         
         try (Connection con = DriverManagerConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -64,19 +64,26 @@ public class ProdottoDAOImpl implements ProdottoDAO{
             }else {
             	ps.setInt(6, 0);
             }
+            ps.setString(7, prodotto.getMarca());
 
             ps.executeUpdate();
-            return true;
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Ritorna l'ID generato
+                }
+            }
         } catch (SQLException e) {
         	e.printStackTrace();
-           return false;
+        	
         }
+        return 0;
 	}
 
 	private Prodotto mapper(ResultSet rs) throws SQLException {
         Prodotto p = new Prodotto();
         p.setId(rs.getInt("id"));
         p.setNome(rs.getString("nome"));
+        p.setMarca(rs.getString("marca"));
         p.setDesc(rs.getString("descr"));
         p.setPrezzo(rs.getFloat("prezzo"));
         String catString = rs.getString("categoria");

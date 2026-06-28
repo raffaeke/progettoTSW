@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="model.beans.Prodotto" %>
 <%@ page import="model.beans.Categoria" %>
-<%@ page import="model.dao.ProdottoDAO" %>          <%@ page import="model.daoImpl.ProdottoDAOImpl" %>  <%@ page import="java.util.List" %>
+<%@ page import="model.dao.ProdottoDAO" %>          
+<%@ page import="model.daoImpl.ProdottoDAOImpl" %>  
+<%@ page import="java.util.List" %>
 <%
   Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
   if (session.getAttribute("utente") == null || isAdmin == null || !isAdmin) {
@@ -10,12 +12,44 @@
   }
 
   ProdottoDAO jspDao = new ProdottoDAOImpl();
-  List<Prodotto> lista = null;
+  List<Prodotto> listaCompleta = null;
   try {
-      lista = jspDao.doRetrieveAll(); // Prende i prodotti direttamente in tempo reale
+      listaCompleta = jspDao.doRetrieveAll(); 
   } catch(Exception e) {
-      request.setAttribute("errore", "Impossibile caricare i prodotti dal database.");
+      request.setAttribute("errore", "Impossibile caricare i prodotti dal database: " + e.getMessage());
   }
+
+  // ════════════ LOGICA DI IMPAGINAZIONE ════════════
+  int prodottiPerPagina = 10; // Quanti prodotti vuoi vedere per pagina
+  int paginaCorrente = 1;
+  
+  String paramPagina = request.getParameter("page");
+  if (paramPagina != null && !paramPagina.isEmpty()) {
+      try {
+          paginaCorrente = Integer.parseInt(paramPagina);
+      } catch(NumberFormatException e) {
+          paginaCorrente = 1;
+      }
+  }
+
+  int totaleProdotti = (listaCompleta != null) ? listaCompleta.size() : 0;
+  // Calcolo matematico del numero totale di pagine
+  int totalePagine = (int) Math.ceil((double) totaleProdotti / prodottiPerPagina);
+  if (totalePagine == 0) totalePagine = 1;
+
+  // Protezione contro numeri di pagina fuori target
+  if (paginaCorrente < 1) paginaCorrente = 1;
+  if (paginaCorrente > totalePagine) paginaCorrente = totalePagine;
+
+  // Estraiamo la sottolista da mostrare nella tabella
+  int indiceInizio = (paginaCorrente - 1) * prodottiPerPagina;
+  int indiceFine = Math.min(indiceInizio + prodottiPerPagina, totaleProdotti);
+  
+  List<Prodotto> listaPaginata = null;
+  if (listaCompleta != null && totaleProdotti > 0) {
+      listaPaginata = listaCompleta.subList(indiceInizio, indiceFine);
+  }
+  // ═════════════════════════════════════════════════
 
   Prodotto prodDaModificare = (Prodotto) request.getAttribute("prodottoDaModificare");
   boolean isModifica = (prodDaModificare != null);
@@ -27,9 +61,50 @@
   <title>Kick Off — Gestione Prodotti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"> 
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/base.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/auth.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin.css"> 
+  
+  <%-- Mini stile al volo per i bottoni dell'impaginazione --%>
+  <style>
+    .pagination-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .pagination-info {
+        color: #aaa;
+        font-size: 14px;
+    }
+    .pagination-buttons {
+        display: flex;
+        gap: 8px;
+    }
+    .btn-page {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-family: 'Barlow', sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        transition: background 0.2s;
+    }
+    .btn-page:hover:not(.disabled) {
+        background: #17b978;
+    }
+    .btn-page.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+    .btn-page.active {
+        background: #17b978;
+    }
+  </style>
 </head>
 <body>
 
@@ -48,13 +123,13 @@
 
     <header style="position: absolute; top: 0; left: 0; z-index: 10; width: 100%;">
       <div class="nav-left">
-        <a href="${pageContext.request.contextPath}/view/admin/dashboard" class="admin-badge" style="text-decoration: none;">← TORNA ALLA DASHBOARD</a>
+        <a href="<%= request.getContextPath() %>/view/admin/dashboard" class="admin-badge" style="text-decoration: none;">← TORNA ALLA DASHBOARD</a>
       </div>
-      <a href="${pageContext.request.contextPath}/index.jsp" class="logo-link">
-        <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
+      <a href="<%= request.getContextPath() %>/index.jsp" class="logo-link">
+        <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off Logo">
       </a>
       <div class="nav-right">
-        <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-admin-logout">Esci</a>
+        <a href="<%= request.getContextPath() %>/LogoutServlet" class="btn-admin-logout">Esci</a>
       </div>
     </header>
 
@@ -69,18 +144,26 @@
         <div class="admin-glass-panel user-form-panel">
           <h2><%= isModifica ? "Modifica Prodotto" : "Nuovo Prodotto" %></h2>
           
-          <form class="auth-form" action="${pageContext.request.contextPath}/GestioneProdotti" method="post">
+          <form class="auth-form" action="<%= request.getContextPath() %>/GestioneProdotti" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<%= isModifica ? prodDaModificare.getId() : "0" %>">
 
-            <div class="form-group">
-              <label for="nome">Nome Articolo</label>
-              <input type="text" id="nome" name="nome" required placeholder="Es. Maglia Juventus 2026" 
-                     value="<%= isModifica ? prodDaModificare.getNome() : "" %>">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nome">Nome Articolo</label>
+                <input type="text" id="nome" name="nome" required placeholder="Es. Predator Accuracy" 
+                       value="<%= isModifica ? prodDaModificare.getNome() : "" %>">
+              </div>
+
+              <div class="form-group">
+                <label for="marca">Marca</label>
+                <input type="text" id="marca" name="marca" required placeholder="Es. Adidas" 
+                       value="<%= isModifica ? prodDaModificare.getMarca() : "" %>">
+              </div>
             </div>
 
             <div class="form-group">
               <label for="desc">Descrizione</label>
-              <input type="text" id="desc" name="desc" required placeholder="Es. Maglia ufficiale da gara..." 
+              <input type="text" id="desc" name="desc" required placeholder="Es. Scarpe con tomaia HybridTouch..." 
                      value="<%= isModifica ? prodDaModificare.getDesc() : "" %>">
             </div>
 
@@ -98,18 +181,43 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="categoria">Categoria</label>
-              <select id="categoria" name="categoria" required class="admin-select">
-                <% for(Categoria c : Categoria.values()) { %>
-                  <option value="<%= c.name() %>" <%= (isModifica && prodDaModificare.getCat() == c) ? "selected" : "" %>>
-                    <%= c.name().toUpperCase() %>
-                  </option>
-                <% } %>
-              </select>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="categoria">Categoria</label>
+                <select id="categoria" name="categoria" required class="admin-select">
+                  <% for(Categoria c : Categoria.values()) { %>
+                    <option value="<%= c.name() %>" <%= (isModifica && prodDaModificare.getCat() == c) ? "selected" : "" %>>
+                      <%= c.name().toUpperCase() %>
+                    </option>
+                  <% } %>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="foto">Foto Prodotto</label>
+                <input type="file" id="foto" name="foto" accept="image/*" <%= isModifica ? "" : "required" %> style="padding: 7px; color: #fff;">
+              </div>
             </div>
 
-            <div class="form-group checkbox-group">
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 15px; padding-top: 15px;">
+              <h3 style="font-family: 'Barlow Condensed', sans-serif; color: #17b978; text-transform: uppercase; margin-bottom: 10px; font-size: 18px;">Specifiche Magazzino</h3>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="taglia">Taglia</label>
+                  <input type="text" id="taglia" name="taglia" required placeholder="Es. M, 42, 9" 
+                         value="<%= (isModifica && request.getAttribute("tagliaDaModificare") != null) ? request.getAttribute("tagliaDaModificare") : "" %>">
+                </div>
+
+                <div class="form-group">
+                  <label for="quantita">Quantità Stock</label>
+                  <input type="number" id="quantita" name="quantita" min="0" required placeholder="10" 
+                         value="<%= (isModifica && request.getAttribute("quantitaDaModificare") != null) ? request.getAttribute("quantitaDaModificare") : "1" %>">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group checkbox-group" style="margin-top: 10px;">
               <label class="container-checkbox">
                 <input type="checkbox" name="inEvidenza" id="inEvidenza" <%= (isModifica && prodDaModificare.isInEvidenza()) ? "checked" : "" %>>
                 <span class="checkmark"></span>
@@ -122,13 +230,13 @@
             </button>
             
             <% if(isModifica) { %>
-              <a href="${pageContext.request.contextPath}/GestioneProdotti" class="btn-admin-logout" style="text-align:center; background:#444; margin-top:5px;">Annulla Modifica</a>
+              <a href="<%= request.getContextPath() %>/GestioneProdotti" class="btn-admin-logout" style="text-align:center; background:#444; margin-top:5px; display: block; text-decoration: none; line-height: 35px;">Annulla Modifica</a>
             <% } %>
           </form>
         </div>
 
         <div class="admin-glass-panel table-panel">
-          <h2>Inventario Negozio</h2>
+          <h2>Inventario Negozio (<%= totaleProdotti %> totali)</h2>
           
           <div class="table-wrapper">
             <table class="admin-table">
@@ -144,13 +252,16 @@
               </thead>
               <tbody>
                 <% 
-                  if (lista != null && !lista.isEmpty()) {
-                    for(Prodotto prod : lista) {
+                  // Usiamo la listaPaginata (massimo 10 elementi) anziché la lista completa
+                  if (listaPaginata != null && !listaPaginata.isEmpty()) {
+                    for(Prodotto prod : listaPaginata) {
                 %>
                   <tr>
                     <td><span class="td-id">#<%= prod.getId() %></span></td>
                     <td>
-                      <div class="td-product-title"><%= prod.getNome() %></div>
+                      <div class="td-product-title">
+                        <strong style="color: #17b978;"><%= prod.getMarca() %></strong> — <%= prod.getNome() %>
+                      </div>
                       <div class="td-product-desc"><%= prod.getDesc() %></div>
                     </td>
                     <td><span class="cat-tag"><%= prod.getCat().name() %></span></td>
@@ -169,8 +280,8 @@
                     </td>
                     <td>
                       <div class="action-buttons">
-                        <a href="${pageContext.request.contextPath}/GestioneProdotti?action=modifica&id=<%= prod.getId() %>" class="btn-action-edit">Matita</a>
-                        <a href="${pageContext.request.contextPath}/GestioneProdotti?action=elimina&id=<%= prod.getId() %>" class="btn-action-delete" onclick="return confirm('Sicuro di voler eliminare questo prodotto?');">Cestino</a>
+                        <a href="<%= request.getContextPath() %>/GestioneProdotti?action=modifica&id=<%= prod.getId() %>" class="btn-action-edit" style="text-decoration: none; text-align: center;">Matita</a>
+                        <a href="<%= request.getContextPath() %>/GestioneProdotti?action=elimina&id=<%= prod.getId() %>" class="btn-action-delete" style="text-decoration: none; text-align: center;" onclick="return confirm('Sicuro di voler eliminare questo prodotto?');">Cestino</a>
                       </div>
                     </td>
                   </tr>
@@ -179,12 +290,41 @@
                   } else { 
                 %>
                   <tr>
-                    <td colspan="6" style="text-align: center; color: #888; padding: 40px;">Nessun prodotto presente nel catalogo.</td>
+                    <td colspan="6" style="text-align: center; color: #888; padding: 40px;">Nessun prodotto presente in questa pagina.</td>
                   </tr>
                 <% } %>
               </tbody>
             </table>
           </div>
+
+          <%-- ════════════ CONTROLLI DI IMPAGINAZIONE INTERFACCIA ════════════ --%>
+          <div class="pagination-container">
+            <div class="pagination-info">
+              Mostrati <%= indiceInizio + 1 %>-<%= indiceFine %> di <%= totaleProdotti %> articoli (Pagina <%= paginaCorrente %> di <%= totalePagine %>)
+            </div>
+            <div class="pagination-buttons">
+              <%-- Tasto Precedente --%>
+              <% if (paginaCorrente > 1) { %>
+                <a href="?page=<%= paginaCorrente - 1 %>" class="btn-page">« Prec</a>
+              <% } else { %>
+                <a class="btn-page disabled">« Prec</a>
+              <% } %>
+
+              <%-- Elenco numerico delle pagine --%>
+              <% for (int i = 1; i <= totalePagine; i++) { %>
+                <a href="?page=<%= i %>" class="btn-page <%= (i == paginaCorrente) ? "active" : "" %>"><%= i %></a>
+              <% } %>
+
+              <%-- Tasto Successivo --%>
+              <% if (paginaCorrente < totalePagine) { %>
+                <a href="?page=<%= paginaCorrente + 1 %>" class="btn-page">Succ »</a>
+              <% } else { %>
+                <a class="btn-page disabled">Succ »</a>
+              <% } %>
+            </div>
+          </div>
+          <%-- ═══════════════════════════════════════════════════════════════ --%>
+
         </div>
 
       </div>

@@ -5,6 +5,7 @@ public class Prodotto implements Serializable{
 	private int id;
 	private String nome;
 	private String desc;
+	private String marca;
 	private float prezzo;
 	private Categoria cat;
 	private int sconto;
@@ -21,6 +22,12 @@ public class Prodotto implements Serializable{
 		this.id = id;
 	}
 	
+	public String getMarca() {
+		return marca;
+	}
+	public void setMarca(String m) {
+		marca=m;
+	}
 	
 	public String getNome() {
 		return nome;

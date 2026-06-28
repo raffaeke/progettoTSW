@@ -1,5 +1,7 @@
 package controller;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,10 +11,15 @@ import jakarta.servlet.http.*;
 import model.beans.Categoria;
 import model.beans.Prodotto;
 import model.dao.ProdottoDAO;
+import model.daoImpl.ImgDAOImpl;
 import model.daoImpl.ProdottoDAOImpl;
 
 @WebServlet("/GestioneProdotti")
-
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+    maxFileSize = 1024 * 1024 * 10,      // 10MB
+    maxRequestSize = 1024 * 1024 * 50    // 50MB
+)
 public class GestioneProdottiServlet extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -67,44 +74,65 @@ public class GestioneProdottiServlet extends HttpServlet{
 			return;
 		}
 		
-		String idParam = request.getParameter("id");
+		// 1. Recupero dei parametri testuali del prodotto
 	    String nome = request.getParameter("nome");
-	    String desc = request.getParameter("desc");
-	    String prezzoParam = request.getParameter("prezzo");
-	    String catParam = request.getParameter("categoria");
-	    String scontoParam = request.getParameter("sconto");
-	    String inEvidenzaParam = request.getParameter("inEvidenza");
-	    boolean inEvidenza = (inEvidenzaParam != null); 
+	    String marca = request.getParameter("marca");
+	    String descr = request.getParameter("desc");
+	    float prezzo = Float.parseFloat(request.getParameter("prezzo"));
+	    String categoria = request.getParameter("categoria");
+	    int sconto = Integer.parseInt(request.getParameter("sconto"));
+	    boolean inEvidenza = request.getParameter("inEvidenza") != null;
 
-	    ProdottoDAO dao = new ProdottoDAOImpl();
+	    // Crea l'oggetto Prodotto (senza ID se è un nuovo inserimento)
+	    Prodotto prod = new Prodotto();
+	    prod.setNome(nome);prod.setMarca(marca);prod.setDesc(descr);prod.setPrezzo(prezzo);prod.setCat(Categoria.valueOf(categoria));prod.setSconto(sconto);
+	    prod.setInEvidenza(inEvidenza);
+	    ProdottoDAOImpl prodottoDao = new ProdottoDAOImpl();
+
 	    try {
-	    	float prezzo=Float.parseFloat(prezzoParam);
-	    	Categoria cat = Categoria.valueOf(catParam.trim().toUpperCase());
-	    	int sconto = (scontoParam != null && !scontoParam.isEmpty()) ? Integer.parseInt(scontoParam) : 0;
-	    	Prodotto p = new Prodotto();
-	        p.setNome(nome);
-	        p.setDesc(desc);
-	        p.setPrezzo(prezzo);
-	        p.setSconto(sconto);
-	        p.setInEvidenza(inEvidenza);
-	        p.setCat(cat);
-	        if (idParam == null || idParam.isEmpty() || "0".equals(idParam)) {
-	            // ID assente o zero -> NUOVO PRODOTTO
-	            dao.doSave(p);
-	        } else {
-	            //ID presente -> MODIFICA PRODOTTO ESISTENTE
-	            int id = Integer.parseInt(idParam);
-	            p.setId(id); 
-	            dao.doUpdate(p);
+	        // 2. Salva il prodotto principale nel DB e ottieni l'ID autogenerato
+	        int nuovoProdottoId = prodottoDao.doSave(prod); 
+
+	        // 3. Gestione del File Upload (Foto)
+	        Part filePart = request.getPart("foto"); // Corrisponde a name="foto" nella JSP
+	        
+	        if (filePart != null && filePart.getSize() > 0) {
+	            // Estrae il nome originale del file (es: "mercurial.png")
+	            String fileOriginalName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+	            
+	            // Per evitare conflitti di nomi (es. due utenti caricano "foto.png"), 
+	            // conviene rinominare il file usando l'ID del prodotto (es: "prod_37.png")
+	            String estensione = fileOriginalName.substring(fileOriginalName.lastIndexOf("."));
+	            String nomeFileFinale = "prod_" + nuovoProdottoId + estensione;
+
+	            // Definisci dove salvare il file fisicamente sul server.
+	            // getServletContext().getRealPath("") punta alla cartella 'webapp' o 'WebContent' distribuita sul server Tomcat
+	            String uploadPath = getServletContext().getRealPath("") + File.separator + "images" + File.separator + "prodotti";
+	            
+	            File uploadDir = new File(uploadPath);
+	            if (!uploadDir.exists()) {
+	                uploadDir.mkdirs(); // Crea la cartella images/prodotti se non esiste
+	            }
+
+	            // Scrive fisicamente il file sul server
+	            String percorsoCompletoFile = uploadPath + File.separator + nomeFileFinale;
+	            filePart.write(percorsoCompletoFile);
+
+	            // 4. Salva il riferimento nel Database nella tabella `img_prodotto`
+	            // Passiamo il nome del file (es: "prod_37.png") e l'ID del prodotto a cui appartiene
+	            ImgDAOImpl imgDao = new ImgDAOImpl();
+	            imgDao.doSave(nomeFileFinale, nuovoProdottoId);
 	        }
-	    }catch(NumberFormatException e) {
-	    	e.printStackTrace();
+	        
+	        // Gestisci qui l'inserimento in spec_prodotto (taglia e quantità)...
+
+	        response.sendRedirect(request.getContextPath() + "/view/admin/prodotti?success=true");
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        request.setAttribute("errore", "Errore nel salvataggio del prodotto.");
+	        // forward alla pagina di errore o alla stessa JSP...
 	    }
-	    catch(SQLException e) {
-	    	e.printStackTrace();
-	    }
-	    
-	    response.sendRedirect(request.getContextPath()+"/GestioneProdotti");
 	}
 
 }

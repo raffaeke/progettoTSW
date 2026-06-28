@@ -3,5 +3,5 @@ public enum Categoria {
 	SCARPE,
 	GUANTONI,
 	MAGLIE,
-	COMPLETI
+	COMPLETO
 }

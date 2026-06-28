@@ -7,6 +7,7 @@ public class Ordine implements Serializable{
 	private int id;
 	private LocalDate data_ordine;
 	private Stato stato;
+	private float totale;
 	private ArrayList<ProdottoCompleto> prodotti= new ArrayList<>();
 	private int utente_id;
 	
@@ -27,7 +28,9 @@ public class Ordine implements Serializable{
 		this.data_ordine= d;
 	}
 	
-	
+	public void setTotale(float t) {
+		totale=t;
+	}
 	public float getTotale() {
 		float tot=0;
 		for ( ProdottoCompleto e : prodotti) {
