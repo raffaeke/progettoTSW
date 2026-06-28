@@ -11,7 +11,6 @@
       <h4>Esplora</h4>
       <ul>
         <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
-        <li><a href="${pageContext.request.contextPath}/view/catalogo">Catalogo</a></li>
         <li><a href="${pageContext.request.contextPath}/view/client/assistenzaClienti">Contatta Assistenza</a></li>
       </ul>
     </div>

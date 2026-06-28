@@ -17,8 +17,8 @@
 
   <header class="main-header">
     <nav class="nav-left">
-      <a href="${pageContext.request.contextPath}/view/Catalogo/maglie">Maglie</a>
-      <a href="${pageContext.request.contextPath}/view/Catalogo/completi">Completi</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo?tipo=maglie">Maglie</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo?tipo=completi">Completi</a>
     </nav>
 
     <a href="index.jsp" class="logo-link">
@@ -26,8 +26,8 @@
     </a>
 
     <nav class="nav-right">
-      <a href="${pageContext.request.contextPath}/view/Catalogo/guantoni">Guantoni</a>
-      <a href="${pageContext.request.contextPath}/view/Catalogo/scarpette">Scarpette</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo?tipo=Guantoni">Guantoni</a>
+      <a href="${pageContext.request.contextPath}/view/Catalogo?tipo=scarpette">Scarpette</a>
 
       <a href="${pageContext.request.contextPath}/view/carrello" class="icon-link" aria-label="Carrello">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
