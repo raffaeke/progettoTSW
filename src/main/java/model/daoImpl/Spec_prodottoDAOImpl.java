@@ -4,11 +4,31 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.beans.Categoria;
 import model.dao.Spec_prodottoDAO;
 import util.DriverManagerConnectionPool;
 
 public class Spec_prodottoDAOImpl implements Spec_prodottoDAO{
+	
+	public List<String> doRetrieveDistinctTaglieByCategoria(Categoria c) throws SQLException{
+		String query="SELECT DISTINCT s.taglia FROM spec_prodotto s JOIN prodotto p ON s.prodotto_id = p.id WHERE p.categoria = ? ORDER BY s.taglia";
+		 List<String> result= new ArrayList<>();
+	        try (Connection con = DriverManagerConnectionPool.getConnection();
+	             PreparedStatement ps = con.prepareStatement(query)) {
+	            ps.setString(1,c.toString());
+	            ResultSet rs = ps.executeQuery();
+
+	            while (rs.next()) {
+	                result.add(rs.getString("taglia")); 
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return result;
+	}
 
 	@Override
 	public int doRetrieveQuantitaBySize(int id, String size) throws SQLException {

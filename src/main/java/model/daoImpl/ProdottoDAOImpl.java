@@ -30,7 +30,74 @@ public class ProdottoDAOImpl implements ProdottoDAO{
         }
         return null;
 	}
+	public List<Prodotto> doRetrieveByCategoria(Categoria c) throws SQLException{
+		String query = "SELECT * FROM prodotto WHERE categoria=?";
+        List<Prodotto> result= new ArrayList<>();
+        try (Connection con = DriverManagerConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1,c.toString());
+            ResultSet rs = ps.executeQuery();
 
+            while (rs.next()) {
+                result.add(mapper(rs)); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+	}
+	
+	public List<String> doRetrieveDistinctMarcheByCategoria(Categoria c) throws SQLException{
+		String query="SELECT DISTINCT marca FROM prodotto WHERE categoria = ? ORDER BY marca";
+		 List<String> result= new ArrayList<>();
+	        try (Connection con = DriverManagerConnectionPool.getConnection();
+	             PreparedStatement ps = con.prepareStatement(query)) {
+	            ps.setString(1,c.toString());
+	            ResultSet rs = ps.executeQuery();
+
+	            while (rs.next()) {
+	                result.add(rs.getString("marca")); 
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return result;
+	}
+
+    public List<Prodotto> doRetrieveInEvidenzaByCategoria(Categoria c) throws SQLException{
+    	List<Prodotto> prodotti = new ArrayList<>();
+        String query = "SELECT * FROM prodotto WHERE categoria = ? AND in_evidenza = 1";
+        
+        try (Connection con = DriverManagerConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setString(1, c.toString());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    prodotti.add(mapper(rs));
+                }
+            }
+        }
+        return prodotti;
+    }
+    
+
+    public List<Prodotto> doRetrievePiuScontatiByCategoria(Categoria c)throws SQLException{
+    	List<Prodotto> result = new ArrayList<>();
+        String query = "SELECT * FROM prodotto WHERE categoria = ? AND sconto > 0 ORDER BY sconto DESC";
+        
+        try (Connection con = DriverManagerConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setString(1, c.toString());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    result.add(mapper(rs));
+                }
+            }
+        }
+        return result;
+    }
 	public List<Prodotto> doRetrieveAll() throws SQLException {
 		String query = "SELECT * FROM prodotto";
         List<Prodotto> result= new ArrayList<>();

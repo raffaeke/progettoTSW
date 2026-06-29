@@ -10,9 +10,11 @@ import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import model.beans.Categoria;
 import model.beans.Prodotto;
+import model.beans.Spec_prodotto;
 import model.dao.ProdottoDAO;
 import model.daoImpl.ImgDAOImpl;
 import model.daoImpl.ProdottoDAOImpl;
+import model.daoImpl.Spec_prodottoDAOImpl;
 
 @WebServlet("/GestioneProdotti")
 @MultipartConfig(
@@ -82,17 +84,19 @@ public class GestioneProdottiServlet extends HttpServlet{
 	    String categoria = request.getParameter("categoria");
 	    int sconto = Integer.parseInt(request.getParameter("sconto"));
 	    boolean inEvidenza = request.getParameter("inEvidenza") != null;
+	    String taglia =  request.getParameter("taglia");
+	    int q= Integer.parseInt(request.getParameter("quantita"));
 
 	    // Crea l'oggetto Prodotto (senza ID se è un nuovo inserimento)
 	    Prodotto prod = new Prodotto();
 	    prod.setNome(nome);prod.setMarca(marca);prod.setDesc(descr);prod.setPrezzo(prezzo);prod.setCat(Categoria.valueOf(categoria));prod.setSconto(sconto);
 	    prod.setInEvidenza(inEvidenza);
+	    Spec_prodottoDAOImpl specDAO = new Spec_prodottoDAOImpl();
 	    ProdottoDAOImpl prodottoDao = new ProdottoDAOImpl();
 
 	    try {
 	        // 2. Salva il prodotto principale nel DB e ottieni l'ID autogenerato
 	        int nuovoProdottoId = prodottoDao.doSave(prod); 
-
 	        // 3. Gestione del File Upload (Foto)
 	        Part filePart = request.getPart("foto"); // Corrisponde a name="foto" nella JSP
 	        
@@ -107,7 +111,8 @@ public class GestioneProdottiServlet extends HttpServlet{
 
 	            // Definisci dove salvare il file fisicamente sul server.
 	            // getServletContext().getRealPath("") punta alla cartella 'webapp' o 'WebContent' distribuita sul server Tomcat
-	            String uploadPath = getServletContext().getRealPath("") + File.separator + "images" + File.separator + "prodotti";
+	            String uploadPath = getServletContext().getRealPath("") + "images" + File.separator + "prodotti";
+	            System.out.println("LA FOTO VIENE SALVATA QUI: " + uploadPath);
 	            
 	            File uploadDir = new File(uploadPath);
 	            if (!uploadDir.exists()) {
@@ -123,8 +128,8 @@ public class GestioneProdottiServlet extends HttpServlet{
 	            ImgDAOImpl imgDao = new ImgDAOImpl();
 	            imgDao.doSave(nomeFileFinale, nuovoProdottoId);
 	        }
-	        
-	        // Gestisci qui l'inserimento in spec_prodotto (taglia e quantità)...
+
+	        specDAO.doSave(nuovoProdottoId, taglia, q);
 
 	        response.sendRedirect(request.getContextPath() + "/view/admin/prodotti?success=true");
 

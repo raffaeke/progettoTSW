@@ -1,21 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%@ page import="model.beans.Categoria" %>
+<%@ page import="model.beans.Prodotto" %>
+<%@ page import="model.daoImpl.Spec_prodottoDAOImpl" %>
+<%@ page import="model.daoImpl.ImgDAOImpl" %>
+<%@ page import="java.util.ArrayList" %>
 <%-- Importa i path corretti dei tuoi modelli/bean --%>
 <%@ page import="model.beans.ProdottoCompleto" %> 
 <%
-  // Recuperiamo i dati passati dalla Servlet tramite gli attributi della Request
-  String s = (String) request.getAttribute("tipo");
-Categoria categoria= Categoria.valueOf(s)
-  ArrayList<ProdottoCompleto> listaProdotti = (ArrayList<ProdottoCompleto>) request.getAttribute("prodotti");
-  ArrayList<ProdottoCompleto> listaInEvidenza = (ArrayList<ProdottoCompleto>) request.getAttribute("inEvidenza");
-  ArrayList<ProdottoCompleto> listaPiuScontati = (ArrayList<ProdottoCompleto>) request.getAttribute("piuScontati");
-  
-  ArrayList<String> marche = (ArrayList<String>) request.getAttribute("marche");
-  ArrayList<String> taglie = (ArrayList<String>) request.getAttribute("taglie");
+  // Recuperiamo in sicurezza il tipo stringa e lo convertiamo nell'Enum Categoria
+  String tipoStr = (String) request.getAttribute("tipo");
+  Categoria categoria = Categoria.MAGLIE; // default di sicurezza
+  if (tipoStr != null) {
+      try {
+          categoria = Categoria.valueOf(tipoStr.toLowerCase());
+      } catch(IllegalArgumentException e) {
+          // Gestione nel caso l'enum non corrisponda
+      }
+  }
 
-  if (categoria == null) categoria = "Prodotti";
-  if (listaProdotti == null) listaProdotti = new ArrayList<ProdottoCompleto>();
+  // Recuperiamo le liste reali modellate sul tuo Bean 'Prodotto'
+  List<Prodotto> listaProdotti = (List<Prodotto>) request.getAttribute("prodotti");
+  
+  if (listaProdotti == null) {
+      listaProdotti = new ArrayList<Prodotto>();
+  }
+  List<Prodotto> listaInEvidenza = (List<Prodotto>) request.getAttribute("inEvidenza");
+  if (listaInEvidenza == null) {
+      listaInEvidenza = new ArrayList<Prodotto>();
+  }
+  List<Prodotto> listaPiuScontati = (List<Prodotto>) request.getAttribute("piuScontati");
+  if (listaPiuScontati == null) {
+	  listaPiuScontati = new ArrayList<Prodotto>();
+  }
+
+  // Liste stringhe per i filtri laterali (Popolate dinamicamente dalle query DISTINCT della Servlet)
+  List<String> marche = (List<String>) request.getAttribute("marche");
+  if (marche == null) marche = new ArrayList<String>();
+
+  List<String> taglie = (List<String>) request.getAttribute("taglie");
+  if (taglie == null) taglie = new ArrayList<String>();
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -169,41 +193,40 @@ Categoria categoria= Categoria.valueOf(s)
               In evidenza
             </h2>
             <div class="products-grid" id="gridEvidenza">
-              <% for (ProdottoCompleto p : listaInEvidenza) { 
-                  float prezzoVisualizzato = p.getProdotto().getPrezzoScontato() > 0 ? p.getProdotto().getPrezzoScontato() : p.getProdotto().getPrezzo();
+              <% for (Prodotto p : listaInEvidenza) { 
+                  float prezzoVisualizzato = p.getPrezzoScontato() > 0 ? p.getPrezzoScontato() : p.getPrezzo();
               %>
                 <article class="product-card"
-                         data-marca="<%= p.getProdotto().getMarca() %>"
-                         data-taglia="<%= p.getSpec().getTaglia() %>"
+                         data-marca="<%= p.getMarca() %>"
                          data-prezzo="<%= prezzoVisualizzato %>"
-                         data-sconto="<%= p.getProdotto().getPrezzoScontato() > 0 ? "true" : "false" %>"
-                         data-nome="<%= p.getProdotto().getNome() %>">
-                  <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getProdotto().getId() %>" class="card-img-link">
+                         data-sconto="<%= p.getPrezzoScontato() > 0 ? "true" : "false" %>"
+                         data-nome="<%= p.getNome() %>">
+                  <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>" class="card-img-link">
                     <div class="card-img-wrap">
-                      <% if (p.getProdotto().getPrezzoScontato() > 0) { 
-                          int percentuale = Math.round((1 - (p.getProdotto().getPrezzoScontato() / p.getProdotto().getPrezzo())) * 100);
+                      <% if (p.getPrezzoScontato() > 0) { 
+                          int percentuale = Math.round((1 - (p.getPrezzoScontato() / p.getPrezzo())) * 100);
                       %>
                         <span class="card-badge badge-sale">-<%= percentuale %>%</span>
                       <% } %>
-                      <img src="<%= request.getContextPath() %>/images/prodotti/<%= p.getImg().getUrl() %>"
-                           alt="<%= p.getProdotto().getNome() %>" class="card-img" loading="lazy"
-                           onerror="this.style.opacity=0">
+                     <!--   <img src="<%= request.getContextPath() %>/images/prodotti/<%= p.getImg().getUrl() %>"
+                           alt="<%= p.getNome() %>" class="card-img" loading="lazy"
+                           onerror="this.style.opacity=0">-->
                       <div class="card-img-placeholder" aria-hidden="true"></div>
                     </div>
                   </a>
                   <div class="card-body">
-                    <span class="card-brand"><%= p.getProdotto().getMarca() %></span>
+                    <span class="card-brand"><%= p.getMarca() %></span>
                     <h3 class="card-name">
-                      <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getProdotto().getId() %>"><%= p.getProdotto().getNome() %></a>
+                      <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>"><%= p.getNome() %></a>
                     </h3>
                     <div class="card-footer">
-                      <% if (p.getProdotto().getPrezzoScontato() > 0) { %>
-                        <span class="card-price">€<%= String.format("%.2f", p.getProdotto().getPrezzoScontato()) %></span>
-                        <span class="card-price-orig">€<%= String.format("%.2f", p.getProdotto().getPrezzo()) %></span>
+                      <% if (p.getPrezzoScontato() > 0) { %>
+                        <span class="card-price">€<%= String.format("%.2f", p.getPrezzoScontato()) %></span>
+                        <span class="card-price-orig">€<%= String.format("%.2f", p.getPrezzo()) %></span>
                       <% } else { %>
-                        <span class="card-price">€<%= String.format("%.2f", p.getProdotto().getPrezzo()) %></span>
+                        <span class="card-price">€<%= String.format("%.2f", p.getPrezzo()) %></span>
                       <% } %>
-                      <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getProdotto().getId() %>"
+                      <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getId() %>"
                          class="card-cart-btn" aria-label="Aggiungi al carrello">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
@@ -219,40 +242,39 @@ Categoria categoria= Categoria.valueOf(s)
         <% } %>
 
         <%-- ─── PIÙ SCONTATI ─── --%>
-        <% if (listaPiuScontati != null && !listaPiuScontati.isEmpty()) { %>
+        <% if (listaPiuScontati != null) { %>
           <div class="section-block">
             <h2 class="section-label">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c14a4a" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
               Più scontati
             </h2>
             <div class="products-grid" id="gridScontati">
-              <% for (ProdottoCompleto p : listaPiuScontati) { 
-                  int percentuale = Math.round((1 - (p.getProdotto().getPrezzoScontato() / p.getProdotto().getPrezzo())) * 100);
+              <% for (Prodotto p : listaPiuScontati) { 
+                  int percentuale = Math.round((1 - (p.getPrezzoScontato() / p.getPrezzo())) * 100);
               %>
                 <article class="product-card"
-                         data-marca="<%= p.getProdotto().getMarca() %>"
-                         data-taglia="<%= p.getSpec().getTaglia() %>"
-                         data-prezzo="<%= p.getProdotto().getPrezzoScontato() %>"
+                         data-marca="<%= p.getMarca() %>"
+                         data-prezzo="<%= p.getPrezzoScontato() %>"
                          data-sconto="true"
-                         data-nome="<%= p.getProdotto().getNome() %>">
-                  <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getProdotto().getId() %>" class="card-img-link">
+                         data-nome="<%= p.getNome() %>">
+                  <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>" class="card-img-link">
                     <div class="card-img-wrap">
                       <span class="card-badge badge-sale">-<%= percentuale %>%</span>
-                      <img src="<%= request.getContextPath() %>/images/prodotti/<%= p.getImg().getUrl() %>"
-                           alt="<%= p.getProdotto().getNome() %>" class="card-img" loading="lazy"
+                      <img src="<%= p.getImg().getUrl()%>"
+                           alt="<%= p.getNome() %>" class="card-img" loading="lazy"
                            onerror="this.style.opacity=0">
                       <div class="card-img-placeholder" aria-hidden="true"></div>
                     </div>
                   </a>
                   <div class="card-body">
-                    <span class="card-brand"><%= p.getProdotto().getMarca() %></span>
+                    <span class="card-brand"><%= p.getMarca() %></span>
                     <h3 class="card-name">
-                      <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getProdotto().getId() %>"><%= p.getProdotto().getNome() %></a>
+                      <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>"><%= p.getNome() %></a>
                     </h3>
                     <div class="card-footer">
-                      <span class="card-price">€<%= String.format("%.2f", p.getProdotto().getPrezzoScontato()) %></span>
-                      <span class="card-price-orig">€<%= String.format("%.2f", p.getProdotto().getPrezzo()) %></span>
-                      <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getProdotto().getId() %>"
+                      <span class="card-price">€<%= String.format("%.2f", p.getPrezzoScontato()) %></span>
+                      <span class="card-price-orig">€<%= String.format("%.2f", p.getPrezzo()) %></span>
+                      <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getId() %>"
                          class="card-cart-btn" aria-label="Aggiungi al carrello">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
@@ -275,41 +297,40 @@ Categoria categoria= Categoria.valueOf(s)
           </h2>
           <div class="products-grid" id="gridTutti">
             <% if (!listaProdotti.isEmpty()) { 
-                for (ProdottoCompleto p : listaProdotti) { 
-                  float prezzoVisualizzato = p.getProdotto().getPrezzoScontato() > 0 ? p.getProdotto().getPrezzoScontato() : p.getProdotto().getPrezzo();
+                for (Prodotto p : listaProdotti) { 
+                  float prezzoVisualizzato = p.getPrezzoScontato() > 0 ? p.getPrezzoScontato() : p.getPrezzo();
             %>
               <article class="product-card"
-                       data-marca="<%= p.getProdotto().getMarca() %>"
-                       data-taglia="<%= p.getSpec().getTaglia() %>"
+                       data-marca="<%= p.getMarca() %>"
                        data-prezzo="<%= prezzoVisualizzato %>"
-                       data-sconto="<%= p.getProdotto().getPrezzoScontato() > 0 ? "true" : "false" %>"
-                       data-nome="<%= p.getProdotto().getNome() %>">
-                <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getProdotto().getId() %>" class="card-img-link">
+                       data-sconto="<%= p.getPrezzoScontato() > 0 ? "true" : "false" %>"
+                       data-nome="<%= p.getNome() %>">
+                <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>" class="card-img-link">
                   <div class="card-img-wrap">
-                    <% if (p.getProdotto().getPrezzoScontato() > 0) { 
-                        int percentuale = Math.round((1 - (p.getProdotto().getPrezzoScontato() / p.getProdotto().getPrezzo())) * 100);
+                    <% if (p.getPrezzoScontato() > 0) { 
+                        int percentuale = Math.round((1 - (p.getPrezzoScontato() / p.getPrezzo())) * 100);
                     %>
                       <span class="card-badge badge-sale">-<%= percentuale %>%</span>
                     <% } %>
-                    <img src="<%= request.getContextPath() %>/images/prodotti/<%= p.getImg().getUrl() %>"
-                         alt="<%= p.getProdotto().getNome() %>" class="card-img" loading="lazy"
-                         onerror="this.style.opacity=0">
+                   <!--   <img src="<%=//  request.getContextPath() %>/images/prodotti/<%=// p.getImg().getUrl() %>"
+                         alt="<%=//  p.getNome() %>" class="card-img" loading="lazy"
+                         onerror="this.style.opacity=0">-->
                     <div class="card-img-placeholder" aria-hidden="true"></div>
                   </div>
                 </a>
                 <div class="card-body">
-                  <span class="card-brand"><%= p.getProdotto().getMarca() %></span>
+                  <span class="card-brand"><%= p.getMarca() %></span>
                   <h3 class="card-name">
-                    <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getProdotto().getId() %>"><%= p.getProdotto().getNome() %></a>
+                    <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>"><%= p.getNome() %></a>
                   </h3>
                   <div class="card-footer">
-                    <% if (p.getProdotto().getPrezzoScontato() > 0) { %>
-                      <span class="card-price">€<%= String.format("%.2f", p.getProdotto().getPrezzoScontato()) %></span>
-                      <span class="card-price-orig">€<%= String.format("%.2f", p.getProdotto().getPrezzo()) %></span>
+                    <% if (p.getPrezzoScontato() > 0) { %>
+                      <span class="card-price">€<%= String.format("%.2f", p.getPrezzoScontato()) %></span>
+                      <span class="card-price-orig">€<%= String.format("%.2f", p.getPrezzo()) %></span>
                     <% } else { %>
-                      <span class="card-price">€<%= String.format("%.2f", p.getProdotto().getPrezzo()) %></span>
+                      <span class="card-price">€<%= String.format("%.2f", p.getPrezzo()) %></span>
                     <% } %>
-                    <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getProdotto().getId() %>"
+                    <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getId() %>"
                        class="card-cart-btn" aria-label="Aggiungi al carrello">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
