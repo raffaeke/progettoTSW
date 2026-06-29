@@ -49,29 +49,38 @@ public class Spec_prodottoDAOImpl implements Spec_prodottoDAO{
 			return -1;
 		}
 	}
-
+	public void doDeleteByProductKey(int id)throws SQLException{
+		String query="Delete from spec_prodotto where prodotto_id=?";
+		try(Connection con= DriverManagerConnectionPool.getConnection();
+				PreparedStatement ps= con.prepareStatement(query)){
+			
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			
+		}catch(SQLException e ) {
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public boolean doSave(int id, String size, int q) throws SQLException {
-		Spec_prodottoDAOImpl dao= new Spec_prodottoDAOImpl();
-		if(dao.doRetrieveQuantitaBySize(id, size)!=-1) {
-			return dao.doUpdate(id, size, q);
-		}else {
-			String query="INSERT INTO spec_prodotto(taglia,quantita,prodotto_id) VALUES(?,?,?)";
-			try(Connection con= DriverManagerConnectionPool.getConnection();
-					PreparedStatement ps= con.prepareStatement(query)){
-				
-				ps.setInt(3, id);
-				ps.setString(1, size);
-				ps.setInt(2, q);
-				
-				ps.executeUpdate();
-				return true;
-				
-			}catch(SQLException e ) {
-				e.printStackTrace();
-				return false;
-			}
-		}
+	    if (this.doRetrieveQuantitaBySize(id, size) != -1) {
+	        return this.doUpdate(id, size, q);
+	    } else {
+	        String query = "INSERT INTO spec_prodotto(taglia, quantita, prodotto_id) VALUES(?, ?, ?)";
+	        
+	        // Lasciamo che le risorse si chiudano da sole e NON catturiamo l'eccezione qui,
+	        // la rilanciamo alla Servlet così sa se l'operazione è fallita davvero.
+	        try (Connection con = DriverManagerConnectionPool.getConnection();
+	             PreparedStatement ps = con.prepareStatement(query)) {
+	            
+	            ps.setString(1, size);
+	            ps.setInt(2, q);
+	            ps.setInt(3, id);
+	            
+	            int rows = ps.executeUpdate();
+	            return rows > 0;
+	        }
+	    }
 	}
 
 	@Override

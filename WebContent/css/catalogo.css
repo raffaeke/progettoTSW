@@ -388,7 +388,43 @@
   text-align: center;
 }
 .empty-msg p { font-size: 14px; }
+.products-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 15px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
 
+/* Nasconde la barra di scorrimento brutta su browser moderni mantenendo la funzione */
+.products-grid::-webkit-scrollbar {
+    height: 8px;
+}
+.products-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+.products-grid::-webkit-scrollbar-thumb {
+    background: #17b978; /* Il verde fluo di Kick Off */
+    border-radius: 10px;
+}
+
+/* Forza ogni singola card a occupare esattamente un quinto dello spazio disponibile */
+.products-grid .product-card {
+    flex: 0 0 calc((100% - (20px * 4)) / 5);
+    min-width: calc((100% - (20px * 4)) / 5);
+    box-sizing: border-box;
+}
+
+/* Lasciamo invece la griglia normale verticale solo per la sezione "Tutti i prodotti" */
+#gridTutti {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    flex-wrap: wrap !important;
+    overflow-x: visible;
+}
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .catalogo-layout { grid-template-columns: 210px 1fr; gap: 24px; }

@@ -43,6 +43,6 @@ public class CatalogoServlet extends HttpServlet{
 	        request.setAttribute("errore", "Errore nel caricamento del catalogo dal database.");
 	    }
 
-	    request.getRequestDispatcher("/view/catalogo.jsp").forward(request, response);
+	    request.getRequestDispatcher("/view/Catalogo").forward(request, response);
 }
 }

@@ -39,11 +39,14 @@ public ArrayList<String> doRetrieveByProductKey(int id) throws SQLException {
 	            while(rs.next()) {
 	            	result.add(rs.getString("url"));
 	            }
-	            return result;
+	            
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-	        return null;
+		 if (result.isEmpty()) {
+	            result.add("default.png");
+	        }
+		 return result;
 	}
 public boolean doDeleteByProductKey(int id) throws SQLException {
 	String query=" DELETE FROM immagini_prodotto WHERE prodotto_id=?";

@@ -8,4 +8,5 @@ public interface Spec_prodottoDAO {
 	public boolean doSave(int id, String size,int q) throws SQLException; 
 	public boolean doUpdate(int id, String size,int q) throws SQLException; //modifichiamo la quantita
 	public List<String> doRetrieveDistinctTaglieByCategoria(Categoria c) throws SQLException;
+	public void doDeleteByProductKey(int id)throws SQLException;
 }

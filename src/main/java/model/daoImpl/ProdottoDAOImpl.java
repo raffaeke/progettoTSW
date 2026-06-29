@@ -119,7 +119,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 		String query = "INSERT INTO prodotto (nome, descr, prezzo, categoria, sconto, in_evidenza, marca) VALUES (?, ?, ?, ?, ?, ?,?)";
         
         try (Connection con = DriverManagerConnectionPool.getConnection();
-             PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement(query, java.sql.Statement.RETURN_GENERATED_KEYS)) {
             
             ps.setString(1, prodotto.getNome());
             ps.setString(2, prodotto.getDesc());
@@ -165,6 +165,10 @@ public class ProdottoDAOImpl implements ProdottoDAO{
     }
 	
 	public boolean doDelete(int id) throws SQLException{
+		Spec_prodottoDAOImpl specDAO = new Spec_prodottoDAOImpl();
+		ImgDAOImpl imgDAO=new ImgDAOImpl();
+		imgDAO.doDeleteByProductKey(id);
+		specDAO.doDeleteByProductKey(id);
 		String query="DELETE FROM prodotto WHERE id=?";
 		try(Connection con = DriverManagerConnectionPool.getConnection();
 				PreparedStatement ps = con.prepareStatement(query)){
