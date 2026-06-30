@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Recensione implements Serializable{
 	private int id;
-	private Prodotto p;
-	private Utente u;
+	private int p;
+	private int u;
 	private int voto;
 	private String commento;
 	private LocalDate rec_data;
@@ -20,19 +20,19 @@ public class Recensione implements Serializable{
 	}
 	
 	
-	public Prodotto getProdotto() {
+	public int getProdottoId() {
 		return p;
 	}
-	public void setProdotto(Prodotto p) {
-		this.p = p;
+	public void setProdottoId(int id) {
+		this.p = id;
 	}
 	
 	
-	public Utente getUtente() {
+	public int getUtenteId() {
 		return u;
 	}
-	public void setUtente(Utente u) {
-		this.u = u;
+	public void setUtenteId(int id) {
+		this.u = id;
 	}
 	
 	

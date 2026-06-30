@@ -76,4 +76,21 @@ public class UtenteDAOImpl	implements UtenteDAO {
 	        }
 	        return result;
 	}
+	public Utente doRetrieveById(int id)throws SQLException{
+		String query = "SELECT * FROM utente WHERE id= ?";
+        
+        try (Connection con = DriverManagerConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return mapper(rs); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+	}
 }

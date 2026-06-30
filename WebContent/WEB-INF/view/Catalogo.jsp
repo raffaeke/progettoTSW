@@ -93,7 +93,7 @@
   <header class="main-header">
     <nav class="nav-left">
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=MAGLIE">Maglie</a>
-      <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETI">Completi</a>
+      <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETO">Completi</a>
     </nav>
     <a href="<%= request.getContextPath() %>/index.jsp" class="logo-link">
       <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off">
@@ -176,22 +176,6 @@
           </div>
         </div>
 
-        <%-- Taglia --%>
-        <div class="filter-group">
-          <button type="button" class="filter-toggle" aria-expanded="true" data-target="taglia-body">
-            Taglia <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="filter-body" id="taglia-body">
-            <% if (taglie != null) {
-                for (String t : taglie) { %>
-              <label class="check-label">
-                <input type="checkbox" class="filter-check" data-filter="taglia" value="<%= t %>">
-                <span class="checkmark"></span>
-                <%= t %>
-              </label>
-            <% } } %>
-          </div>
-        </div>
 
         <%-- Solo scontati --%>
         <div class="filter-group">

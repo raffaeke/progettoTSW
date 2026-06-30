@@ -5,6 +5,7 @@
 <%@ page import="model.beans.Spec_prodotto" %>
 <%@ page import="model.beans.Recensione" %>
 <%@ page import="model.beans.Utente" %>
+<%@ page import="model.daoImpl.UtenteDAOImpl" %>
 <%
   // Recuperiamo i dati reali impostati dalla servlet tramite request.getAttribute
   Prodotto p = (Prodotto) request.getAttribute("prodotto");
@@ -232,7 +233,7 @@
       <% if (session.getAttribute("utente") != null) { %>
         <div class="rec-form-wrap">
           <h3 class="rec-form-title">Lascia una recensione</h3>
-          <form action="<%= request.getContextPath() %>/RecensioneServlet" method="post" class="rec-form">
+          <form action="<%= request.getContextPath() %>/Recensione" method="post" class="rec-form">
             <input type="hidden" name="prodottoId" value="<%= p.getId() %>">
 
             <div class="stars-input" id="starsInput" role="radiogroup" aria-label="Valutazione">
@@ -263,9 +264,12 @@
       <div class="rec-list">
         <% if (!recensioni.isEmpty()) { 
             for (Recensione r : recensioni) { 
+            	UtenteDAOImpl utenteDAO= new UtenteDAOImpl();
+          	  Utente u=utenteDAO.doRetrieveById(r.getUtenteId());
               String iniziali = "";
-              if (r.getUtente() != null) {
-                  iniziali += r.getUtente().getNome().substring(0, 1) + r.getUtente().getCognome().substring(0, 1);
+              if (r.getUtenteId() != 0) {
+            
+                  iniziali += u.getNome().substring(0, 1) + u.getCognome().substring(0, 1);
               }
         %>
           <article class="rec-card">
@@ -273,7 +277,7 @@
               <div class="rec-avatar"><%= iniziali.toUpperCase() %></div>
               <div class="rec-meta">
                 <span class="rec-autore">
-                  <%= (r.getUtente() != null) ? (r.getUtente().getNome() + " " + r.getUtente().getCognome()) : "Utente Kick Off" %>
+                  <%= (r.getUtenteId() != 0) ? (u.getNome() + " " + u.getCognome()) : "Utente Kick Off" %>
                 </span>
                 <div class="rec-stars" aria-label="<%= r.getVoto() %> su 5 stelle">
                   <% for (int s = 1; s <= 5; s++) { 

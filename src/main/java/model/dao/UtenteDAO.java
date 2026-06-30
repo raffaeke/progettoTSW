@@ -10,4 +10,5 @@ public interface UtenteDAO {
 	public Utente doRetrieveByEmailPassword(String email, String password)throws SQLException;
 	public List<Utente> doRetrieveAll() throws SQLException;
 	public boolean doSave(Utente utente)throws SQLException;
+	public Utente doRetrieveById(int id)throws SQLException;
 }

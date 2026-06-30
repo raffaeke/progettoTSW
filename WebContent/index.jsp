@@ -54,10 +54,10 @@
 
   <main>
 
-    <!-- ===== HERO: CAROSELLO + RICERCA ===== -->
+    <!-- ===== HERO: SLIDES + RICERCA ===== -->
     <section class="hero-section">
 
-      <!-- CAROSELLO -->
+      <!-- SLIDES -->
       <div class="carousel" id="carousel">
         <div class="slides-track" id="slidesTrack">
 
@@ -80,7 +80,7 @@
               <span class="slide-kicker">Nuova collezione 2025</span>
               <h2 class="slide-title">Vesti il tuo<br>gioco.</h2>
               <p class="slide-sub">Maglie ufficiali e da allenamento per chi vive il calcio ogni giorno.</p>
-              <a href="${pageContext.request.contextPath}/view/Catalogo/maglie" class="slide-btn slide-btn--green">Scopri le maglie</a>
+              <a href="<%= request.getContextPath() %>/Catalogo?tipo=MAGLIE"" class="slide-btn slide-btn--green">Scopri le maglie</a>
             </div>
           </div>
 
@@ -99,7 +99,7 @@
               <span class="slide-kicker">Attrezzatura pro</span>
               <h2 class="slide-title">Protezione<br>totale.</h2>
               <p class="slide-sub">Guantoni da portiere di livello professionale. Grip, comfort e sicurezza.</p>
-              <a href="${pageContext.request.contextPath}/view/Catalogo/guantoni" class="slide-btn slide-btn--blue">Vedi guantoni</a>
+              <a href="<%= request.getContextPath() %>/Catalogo?tipo=GUANTONI" class="slide-btn slide-btn--blue">Vedi guantoni</a>
             </div>
           </div>
 
@@ -118,7 +118,7 @@
               <span class="slide-kicker">Offerta limitata</span>
               <h2 class="slide-title">Scarpette<br>a &minus;15%.</h2>
               <p class="slide-sub">Le migliori scarpette firm ground e soft ground in promozione questa settimana.</p>
-              <a href="${pageContext.request.contextPath}/view/Catalogo/scarpette" class="slide-btn slide-btn--red">Approfitta ora</a>
+              <a href="<%= request.getContextPath() %>/Catalogo?tipo=SCARPE" class="slide-btn slide-btn--red">Approfitta ora</a>
             </div>
           </div>
 

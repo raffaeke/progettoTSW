@@ -36,25 +36,39 @@
 
     <header style="position: absolute; top: 0; left: 0; z-index: 10;">
       <nav class="nav-left">
-        <a href="${pageContext.request.contextPath}/view/Catalogo/maglie">Maglie</a>
-        <a href="${pageContext.request.contextPath}/view/Catalogo/completi">Completi</a>
-      </nav>
-      <a href="${pageContext.request.contextPath}/index.jsp" class="logo-link"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo"></a>
-      <nav class="nav-right">
-        <a href="${pageContext.request.contextPath}/view/Catalogo/guantoni">Guantoni</a>
-        <a href="${pageContext.request.contextPath}/view/Catalogo/scarpette">Scarpette</a>
-        <a href="${pageContext.request.contextPath}/view/carrello" class="icon-link" aria-label="Carrello">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-          </svg>
-        </a> <a href="${pageContext.request.contextPath}/view/profilo" class="icon-link icon-link--active" aria-label="Profilo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <a href="<%= request.getContextPath() %>/Catalogo?tipo=MAGLIE">Maglie</a>
+      <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETO">Completi</a>
+    </nav>
+
+    <a href="index.jsp" class="logo-link">
+      <img src="../images/logo.png" alt="Kick Off Logo">
+    </a>
+
+    <nav class="nav-right">
+      <a href="<%= request.getContextPath() %>/Catalogo?tipo=GUANTONI">Guantoni</a>
+      <a href="<%= request.getContextPath() %>/Catalogo?tipo=SCARPE">Scarpe</a>
+
+      <a href="${pageContext.request.contextPath}/view/carrello" class="icon-link" aria-label="Carrello">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+      </a>
+
+      <% if (session.getAttribute("utente") != null) { %>
+        <a href="${pageContext.request.contextPath}/view/profilo" class="icon-link icon-link--active" aria-label="Profilo">
+      <% } else { %>
+        <a href="${pageContext.request.contextPath}/view/login" class="icon-link" aria-label="Accedi">
+      <% } %>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
             <circle cx="12" cy="7" r="4"/>
           </svg>
         </a>
-      </nav>
+    </nav>
     </header>
 
     <div class="auth-wrapper" style="margin-top: 90px;">
