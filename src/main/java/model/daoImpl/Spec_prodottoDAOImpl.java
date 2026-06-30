@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.beans.Categoria;
+import model.beans.Spec_prodotto;
 import model.dao.Spec_prodottoDAO;
 import util.DriverManagerConnectionPool;
 
@@ -106,6 +107,31 @@ public class Spec_prodottoDAOImpl implements Spec_prodottoDAO{
 				return false;
 			}
 		}
+	}
+	private Spec_prodotto mapper(ResultSet rs) throws SQLException {
+		Spec_prodotto sp=new Spec_prodotto();
+		sp.setId(rs.getInt("id"));
+		sp.setQuantita(rs.getInt("quantita"));
+		sp.setTaglia(rs.getString("taglia"));
+		sp.setProdottoId(rs.getInt("prodotto_id"));
+		return sp;
+		
+	}
+	public List<Spec_prodotto> doRetrieveByProductKey(int id)throws SQLException{
+		List<Spec_prodotto> result=new ArrayList<>();
+		String query="SELECT * FROM spec_prodotto WHERE prodotto_id=?";
+		try(Connection con= DriverManagerConnectionPool.getConnection();
+				PreparedStatement ps= con.prepareStatement(query)){
+			ps.setInt(1, id);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				result.add(mapper(rs));
+			}
+			
+		}catch(SQLException e ) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

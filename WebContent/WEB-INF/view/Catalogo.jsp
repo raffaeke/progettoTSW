@@ -235,7 +235,7 @@
                          data-prezzo="<%= prezzoFinale %>"
                          data-sconto="<%= haSconto ? "true" : "false" %>"
                          data-nome="<%= p.getNome() %>">
-                  <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>" class="card-img-link">
+                  <a href="<%= request.getContextPath() %>/prodotto?id=<%= p.getId() %>" class="card-img-link">
                     <div class="card-img-wrap">
                       <% if (haSconto) { %>
                         <span class="card-badge badge-sale">-<%= p.getSconto() %>%</span>
@@ -249,7 +249,7 @@
                   <div class="card-body">
                     <span class="card-brand"><%= p.getMarca() %></span>
                     <h3 class="card-name">
-                      <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>"><%= p.getNome() %></a>
+                      <a href="<%= request.getContextPath() %>/prodotto?id=<%= p.getId() %>"><%= p.getNome() %></a>
                     </h3>
                     <div class="card-footer">
                       <% if (haSconto) { %>
@@ -290,7 +290,7 @@
                          data-prezzo="<%= prezzoFinale %>"
                          data-sconto="<%= haSconto ? "true" : "false" %>"
                          data-nome="<%= p.getNome() %>">
-                  <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>" class="card-img-link">
+                  <a href="<%= request.getContextPath() %>/prodotto?id=<%= p.getId() %>" class="card-img-link">
                     <div class="card-img-wrap">
                       <% if (haSconto) { %>
                         <span class="card-badge badge-sale">-<%= p.getSconto() %>%</span>
@@ -304,7 +304,7 @@
                   <div class="card-body">
                     <span class="card-brand"><%= p.getMarca() %></span>
                     <h3 class="card-name">
-                      <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>"><%= p.getNome() %></a>
+                      <a href="<%= request.getContextPath() %>/prodotto?id=<%= p.getId() %>"><%= p.getNome() %></a>
                     </h3>
                     <div class="card-footer">
                       <% if (haSconto) { %>
@@ -345,7 +345,7 @@
                        data-prezzo="<%= prezzoFinale %>"
                        data-sconto="<%= haSconto ? "true" : "false" %>"
                        data-nome="<%= p.getNome() %>">
-                <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>" class="card-img-link">
+                <a href="<%= request.getContextPath() %>/prodotto?id=<%= p.getId() %>" class="card-img-link">
                   <div class="card-img-wrap">
                     <% if (haSconto) { %>
                       <span class="card-badge badge-sale">-<%= p.getSconto() %>%</span>
@@ -359,7 +359,7 @@
                 <div class="card-body">
                   <span class="card-brand"><%= p.getMarca() %></span>
                   <h3 class="card-name">
-                    <a href="<%= request.getContextPath() %>/view/prodotto/<%= p.getId() %>"><%= p.getNome() %></a>
+                    <a href="<%= request.getContextPath() %>/prodotto?id=<%= p.getId() %>"><%= p.getNome() %></a>
                   </h3>
                   <div class="card-footer">
                     <% if (haSconto) { %>
