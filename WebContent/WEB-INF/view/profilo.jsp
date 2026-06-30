@@ -89,11 +89,11 @@
             <span class="profilo-value"><%= user.getNome() + " " + user.getCognome() %></span>
           </div>
           <div class="profilo-row">
-            <span class="profilo-label">Email</span>
+            <span class="profilo-label">Email: </span>
             <span class="profilo-value"><%= user.getEmail() %></span>
           </div>
           <div class="profilo-row">
-            <span class="profilo-label">Indirizzo</span>
+            <span class="profilo-label">Indirizzo: </span>
             <span class="profilo-value"><%= user.getIndirizzo() + ", " + user.getProvincia() + " (" + user.getPaese() + ")" %></span>
           </div>
         </div>

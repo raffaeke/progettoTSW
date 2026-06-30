@@ -11,6 +11,7 @@ import model.beans.Utente;
 import model.daoImpl.RecensioneDAOImpl;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 @WebServlet("/Recensione")
 public class RecensioneServlet extends HttpServlet {
@@ -31,15 +32,16 @@ public class RecensioneServlet extends HttpServlet {
         String prodottoIdStr = request.getParameter("prodottoId");
         String votoStr = request.getParameter("voto");
         String testo = request.getParameter("testo");
+        LocalDate data= LocalDate.now();
 
         Utente utente = (Utente) session.getAttribute("utente"); 
         int utenteId = utente.getId(); // o come recuperi l'ID utente
 
         // 3. Validazione dei dati
-        if (prodottoIdStr == null || votoStr == null || testo == null || testo.trim().isEmpty()) {
+        /*if (prodottoIdStr == null || votoStr == null || testo == null || testo.trim().isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/errore.jsp?msg=Dati+mancanti");
             return;
-        }
+        }*/
 
         try {
             int prodottoId = Integer.parseInt(prodottoIdStr);
@@ -57,6 +59,7 @@ public class RecensioneServlet extends HttpServlet {
              recensione.setCommento(testo);
              recensione.setProdottoId(prodottoId);
              recensione.setUtenteId(utenteId);
+             recensione.setData(data);
              recensioneDAO.doSave(recensione); 
 
             // 5. Redirezione (Pattern Redirect-After-Post per evitare doppi invii col refresh)
@@ -69,7 +72,7 @@ public class RecensioneServlet extends HttpServlet {
         } catch (Exception e) {
             
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/errore.jsp");
+           //response.sendRedirect(request.getContextPath() + "/errore.jsp");
         }
     }
 

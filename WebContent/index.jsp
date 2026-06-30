@@ -201,14 +201,14 @@
               </svg>
             </div>
             <div class="product-hover-overlay">
-              <a href="${pageContext.request.contextPath}/view/prodotto/1"
+              <a href="${pageContext.request.contextPath}/prodotto?id=1"
                  class="product-quick-btn">Aggiungi al carrello</a>
             </div>
           </div>
           <div class="product-info">
             <span class="product-brand">Serie A</span>
             <h3 class="product-name">
-              <a href="${pageContext.request.contextPath}/view/prodotto/1">Maglia Home 2024/25</a>
+              <a href="${pageContext.request.contextPath}/prodotto?id=1">Maglia Home 2024/25</a>
             </h3>
             <div class="product-footer">
               <span class="product-price">&euro;79,99</span>
@@ -232,14 +232,14 @@
               </svg>
             </div>
             <div class="product-hover-overlay">
-              <a href="${pageContext.request.contextPath}/view/prodotto/2"
+              <a href="${pageContext.request.contextPath}prodotto?id=2"
                  class="product-quick-btn">Aggiungi al carrello</a>
             </div>
           </div>
           <div class="product-info">
             <span class="product-brand">Speed Pro</span>
             <h3 class="product-name">
-              <a href="${pageContext.request.contextPath}/view/prodotto/2">Scarpetta Firm Ground</a>
+              <a href="${pageContext.request.contextPath}prodotto?id=2">Scarpetta Firm Ground</a>
             </h3>
             <div class="product-footer">
               <span class="product-price">&euro;126,65</span>
@@ -264,14 +264,14 @@
               </svg>
             </div>
             <div class="product-hover-overlay">
-              <a href="${pageContext.request.contextPath}/view/prodotto/3"
+              <a href="${pageContext.request.contextPath}/prodotto?id=3"
                  class="product-quick-btn">Aggiungi al carrello</a>
             </div>
           </div>
           <div class="product-info">
             <span class="product-brand">GK Pro</span>
             <h3 class="product-name">
-              <a href="${pageContext.request.contextPath}/view/prodotto/3">Guantone Portiere Elite</a>
+              <a href="${pageContext.request.contextPath}/prodotto?id=3">Guantone Portiere Elite</a>
             </h3>
             <div class="product-footer">
               <span class="product-price">&euro;129,00</span>
@@ -296,14 +296,14 @@
               </svg>
             </div>
             <div class="product-hover-overlay">
-              <a href="${pageContext.request.contextPath}/view/prodotto/4"
+              <a href="${pageContext.request.contextPath}/prodotto?id=4"
                  class="product-quick-btn">Aggiungi al carrello</a>
             </div>
           </div>
           <div class="product-info">
             <span class="product-brand">Training</span>
             <h3 class="product-name">
-              <a href="${pageContext.request.contextPath}/view/prodotto/4">Completo Allenamento Pro</a>
+              <a href="${pageContext.request.contextPath}/prodotto?id=4">Completo Allenamento Pro</a>
             </h3>
             <div class="product-footer">
               <span class="product-price">&euro;89,99</span>

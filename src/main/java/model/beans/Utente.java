@@ -29,7 +29,7 @@ public class Utente implements Serializable{
 
     
     public String getCognome() { 
-    	return nome; 
+    	return cognome; 
     	}
     public void setCognome(String cognome) {
     	this.cognome = cognome; 

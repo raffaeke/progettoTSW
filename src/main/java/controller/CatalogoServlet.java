@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import model.beans.Categoria;
 import model.beans.Prodotto;
+import model.daoImpl.ImgDAOImpl;
 import model.daoImpl.ProdottoDAOImpl;
 import model.daoImpl.Spec_prodottoDAOImpl;
 
@@ -17,6 +18,7 @@ public class CatalogoServlet extends HttpServlet{
 					throws ServletException,IOException{
 			ProdottoDAOImpl prodottoDao = new ProdottoDAOImpl();
 		    Spec_prodottoDAOImpl specDao = new Spec_prodottoDAOImpl();
+		   
 		    try {
 		        String tipoParam = request.getParameter("tipo");
 		        if (tipoParam == null || tipoParam.isEmpty()) {
