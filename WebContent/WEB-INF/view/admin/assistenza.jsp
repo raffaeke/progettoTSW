@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.beans.Chat" %>
-<%@ page import="model.beans.Messaggio" %>
-<%@ page import="model.dao.ChatDAO" %>
-<%@ page import="model.daoImpl.ChatDAOImpl" %>
-<%@ page import="model.dao.MessaggioDAO" %>
-<%@ page import="model.daoImpl.MessaggioDAOImpl" %>
+<%@ page import="model.Chat" %>
+<%@ page import="model.Messaggio" %>
+<%@ page import="dao.ChatDAO" %>
+<%@ page import="daoImpl.ChatDAOImpl" %>
+<%@ page import="dao.MessaggioDAO" %>
+<%@ page import="daoImpl.MessaggioDAOImpl" %>
 <%
   // 1. Controllo di Sicurezza per l'Amministratore
   Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
@@ -48,119 +48,10 @@
   <title>Kick Off — Centro Assistenza Clienti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
-  
-  <style>
-    .split-container {
-      position: relative; 
-      z-index: 2; 
-      padding-top: 130px; 
-      max-width: 1200px; 
-      margin: 0 auto;
-      display: flex; 
-      gap: 20px; 
-      height: 75vh; 
-      align-items: stretch;
-    }
-
-    /* Colonna sinistra: la Inbox dei ticket */
-    .inbox-panel {
-      flex: 0 0 35%; 
-      display: flex; 
-      flex-direction: column; 
-      padding: 20px; 
-      overflow: hidden;
-    }
-
-    .inbox-list {
-      flex: 1; 
-      overflow-y: auto; 
-      display: flex; 
-      flex-direction: column; 
-      gap: 10px; 
-      padding-right: 5px;
-    }
-
-    .inbox-card {
-      padding: 15px; 
-      border-radius: 10px; 
-      transition: all 0.2s; 
-      cursor: pointer;
-    }
-
-    /* Colonna destra: il corpo della chat stile WhatsApp */
-    .chat-panel {
-      flex: 1; 
-      display: flex; 
-      flex-direction: column; 
-      padding: 0; 
-      overflow: hidden; 
-      background: rgba(18, 23, 26, 0.75);
-    }
-
-    .wa-body {
-      flex: 1; 
-      overflow-y: auto; 
-      padding: 20px; 
-      display: flex; 
-      flex-direction: column; 
-      gap: 12px; 
-      background-color: #0f1315;
-      background-image: radial-gradient(rgba(255,255,255,0.015) 1px, transparent 0);
-      background-size: 16px 16px;
-    }
-
-    /* Nuvolette dei messaggi */
-    .msg-bubble {
-      max-width: 70%; 
-      padding: 10px 14px; 
-      border-radius: 8px; 
-      font-size: 13.5px; 
-      line-height: 1.4;
-    }
-
-    .msg-client {
-      align-self: flex-start; 
-      background: #2c3e50; 
-      color: #fff;
-      border-bottom-left-radius: 0;
-    }
-
-    .msg-admin {
-      align-self: flex-end; 
-      background: #056162; 
-      color: #e1ffec;
-      border-bottom-right-radius: 0;
-    }
-
-    .msg-time {
-      font-size: 9px; 
-      color: rgba(255,255,255,0.4); 
-      display: block; 
-      text-align: right; 
-      margin-top: 4px;
-    }
-
-    /* Pulsante rosso Concludi Ticket */
-    .btn-concludi {
-      background: #c0392b; 
-      color: #fff; 
-      border: none; 
-      padding: 8px 16px; 
-      border-radius: 6px; 
-      font-size: 11px; 
-      font-weight: bold; 
-      cursor: pointer; 
-      text-transform: uppercase;
-      font-family: 'Barlow Condensed', sans-serif;
-      transition: background 0.2s;
-    }
-    .btn-concludi:hover {
-      background: #e74c3c;
-    }
-  </style>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/base.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/auth.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/assistenza.css">
 </head>
 <body>
 
@@ -177,7 +68,7 @@
       <div class="nav-left">
         <a href="${pageContext.request.contextPath}/view/admin/dashboard" class="admin-badge" style="text-decoration: none;">← TORNA ALLA DASHBOARD</a>
       </div>
-      <a href="${pageContext.request.contextPath}/index.jsp" class="logo-link">
+      <a href="${pageContext.request.contextPath}/" class="logo-link">
         <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
       </a>
       <div class="nav-right">
@@ -239,7 +130,7 @@
           <div class="wa-body" id="waBody">
             <% 
               if (cronologiaMessaggi != null && !cronologiaMessaggi.isEmpty()) {
-                int idAdminLoggato = ((model.beans.Utente)session.getAttribute("utente")).getId(); 
+                int idAdminLoggato = ((model.Utente)session.getAttribute("utente")).getId(); 
                 for (Messaggio m : cronologiaMessaggi) {
                     boolean isAdminMsg = (m.getMittente() == idAdminLoggato);
             %>

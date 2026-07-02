@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="model.beans.Utente" %>
+<%@ page import="model.Utente" %>
 <%
   Utente user = (Utente) session.getAttribute("utente");
   Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
@@ -16,9 +16,9 @@
   <title>Kick Off — Pannello Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght=700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"> 
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/base.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/auth.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css"> 
 </head>
 <body>
 
@@ -39,7 +39,7 @@
       <div class="nav-left">
         <span class="admin-badge">PANNELLO AMMINISTRATORE</span>
       </div>
-      <a href="${pageContext.request.contextPath}/index.jsp" class="logo-link">
+      <a href="${pageContext.request.contextPath}/" class="logo-link">
         <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
       </a>
       <div class="nav-right">

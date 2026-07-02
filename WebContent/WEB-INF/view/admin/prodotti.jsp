@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="model.beans.Prodotto" %>
-<%@ page import="model.beans.Categoria" %>
-<%@ page import="model.dao.ProdottoDAO" %>          
-<%@ page import="model.daoImpl.ProdottoDAOImpl" %>  
+<%@ page import="model.Prodotto" %>
+<%@ page import="model.Categoria" %>
+<%@ page import="dao.ProdottoDAO" %>          
+<%@ page import="daoImpl.ProdottoDAOImpl" %>  
 <%@ page import="java.util.List" %>
 <%
   Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
@@ -61,50 +61,9 @@
   <title>Kick Off — Gestione Prodotti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/base.css">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/auth.css">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin.css"> 
-  
-  <%-- Mini stile al volo per i bottoni dell'impaginazione --%>
-  <style>
-    .pagination-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 20px;
-        padding-top: 15px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .pagination-info {
-        color: #aaa;
-        font-size: 14px;
-    }
-    .pagination-buttons {
-        display: flex;
-        gap: 8px;
-    }
-    .btn-page {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        padding: 6px 14px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-family: 'Barlow', sans-serif;
-        font-weight: 600;
-        font-size: 13px;
-        transition: background 0.2s;
-    }
-    .btn-page:hover:not(.disabled) {
-        background: #17b978;
-    }
-    .btn-page.disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-    }
-    .btn-page.active {
-        background: #17b978;
-    }
-  </style>
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/base.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/auth.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/admin.css">
 </head>
 <body>
 
@@ -125,7 +84,7 @@
       <div class="nav-left">
         <a href="<%= request.getContextPath() %>/view/admin/dashboard" class="admin-badge" style="text-decoration: none;">← TORNA ALLA DASHBOARD</a>
       </div>
-      <a href="<%= request.getContextPath() %>/index.jsp" class="logo-link">
+      <a href="<%= request.getContextPath() %>/" class="logo-link">
         <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off Logo">
       </a>
       <div class="nav-right">
