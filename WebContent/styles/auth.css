@@ -395,3 +395,129 @@
   color: #ff8f8f;
   margin-top: -2px;
 }
+
+/* STORICO ORDINI (profilo) */
+.ordini-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+}
+
+.ordini-title {
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.ordini-vuoto {
+  color: #888;
+  font-size: 13px;
+  background: rgba(15, 15, 15, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.ordine-card {
+  background: rgba(15, 15, 15, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.ordine-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ordine-id {
+  font-weight: 700;
+  color: #eee;
+  font-size: 13px;
+}
+
+.ordine-data {
+  font-size: 12px;
+  color: #888;
+}
+
+.ordine-totale {
+  margin-left: auto;
+  font-weight: 800;
+  color: #2f8f3a;
+  font-size: 15px;
+}
+
+.ordine-righe {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ordine-righe li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12.5px;
+  color: #aaa;
+}
+
+.riga-prezzo {
+  color: #ccc;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Badge di stato ordine (stessa palette di admin.css) */
+.order-status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+.badge-elaborazione {
+  background: rgba(243, 156, 18, 0.15);
+  color: #f39c12;
+  border: 1px solid rgba(243, 156, 18, 0.3);
+}
+.badge-spedito {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.3);
+}
+.badge-consegna {
+  background: rgba(155, 89, 182, 0.15);
+  color: #9b59b6;
+  border: 1px solid rgba(155, 89, 182, 0.3);
+}
+.badge-consegnato {
+  background: rgba(47, 143, 58, 0.2);
+  color: #2f8f3a;
+  border: 1px solid rgba(47, 143, 58, 0.4);
+}
+
+@media (max-width: 560px) {
+  .ordine-header {
+    gap: 8px;
+  }
+  .ordine-totale {
+    margin-left: 0;
+    width: 100%;
+  }
+}
