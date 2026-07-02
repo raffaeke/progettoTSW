@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.daoImpl.ImgDAOImpl" %>
-<%@ page import="model.beans.Prodotto" %>
-<%@ page import="model.beans.ItemCarrello" %>
+<%@ page import="daoImpl.ImgDAOImpl" %>
+<%@ page import="model.Prodotto" %>
+<%@ page import="model.ItemCarrello" %>
 <%
   // Recuperiamo il carrello dalla sessione
   List<ItemCarrello> carrello = (List<ItemCarrello>) session.getAttribute("carrello");
@@ -51,8 +51,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/base.css">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/carrello.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/base.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/carrello.css">
 </head>
 
 <body data-ctx="<%= request.getContextPath() %>">
@@ -63,7 +63,7 @@
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=MAGLIE">Maglie</a>
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETI">Completi</a>
     </nav>
-    <a href="<%= request.getContextPath() %>/index.jsp" class="logo-link">
+    <a href="<%= request.getContextPath() %>/" class="logo-link">
       <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off">
     </a>
     <nav class="nav-right">
@@ -202,13 +202,21 @@
               <span>€<%= String.format("%.2f", totaleCompleto) %></span>
             </div>
             
-            <%-- Modificato in btn-checkout per agganciarsi alle regole del CSS --%>
-            <a href="<%= request.getContextPath() %>/view/checkout" class="btn-checkout">
-              Procedi al Checkout
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
+            <%-- Il checkout richiede un account: agli ospiti mostriamo un CTA verso il login invece del bottone --%>
+            <% if (session.getAttribute("utente") != null) { %>
+              <a href="<%= request.getContextPath() %>/view/client/checkout" class="btn-checkout">
+                Procedi al Checkout
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            <% } else { %>
+              <p class="checkout-login-notice">Accedi al tuo account per completare l'acquisto.</p>
+              <a href="<%= request.getContextPath() %>/view/login?redirect=checkout" class="btn-checkout">
+                Accedi per continuare
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            <% } %>
             
-            <a href="<%= request.getContextPath() %>/index.jsp" class="btn-continue">Continua lo shopping</a>
+            <a href="<%= request.getContextPath() %>/" class="btn-continue">Continua lo shopping</a>
           </div>
         </aside>
 
@@ -219,7 +227,7 @@
         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         <p>Il tuo carrello è attualmente vuoto.</p>
         <%-- btn-primary per richiamare i bottoni verdi generali delle altre pagine --%>
-        <a href="<%= request.getContextPath() %>/index.jsp" class="btn-primary">Scopri il Catalogo</a>
+        <a href="<%= request.getContextPath() %>/" class="btn-primary">Scopri il Catalogo</a>
       </div>
     <% } %>
   </main>

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.beans.Prodotto" %>
-<%@ page import="model.beans.Spec_prodotto" %>
-<%@ page import="model.beans.Recensione" %>
-<%@ page import="model.beans.Utente" %>
-<%@ page import="model.daoImpl.UtenteDAOImpl" %>
+<%@ page import="model.Prodotto" %>
+<%@ page import="model.Spec_prodotto" %>
+<%@ page import="model.Recensione" %>
+<%@ page import="model.Utente" %>
+<%@ page import="daoImpl.UtenteDAOImpl" %>
 <%
   // Recuperiamo i dati reali impostati dalla servlet tramite request.getAttribute
   Prodotto p = (Prodotto) request.getAttribute("prodotto");
@@ -44,8 +44,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/base.css">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/prodotto.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/base.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/prodotto.css">
 </head>
 
 <body data-ctx="<%= request.getContextPath() %>">
@@ -56,7 +56,7 @@
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=MAGLIE">Maglie</a>
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETI">Completi</a>
     </nav>
-    <a href="<%= request.getContextPath() %>/index.jsp" class="logo-link">
+    <a href="<%= request.getContextPath() %>/" class="logo-link">
       <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off">
     </a>
     <nav class="nav-right">
@@ -86,7 +86,7 @@
 
     <%-- ===== BREADCRUMB ===== --%>
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="<%= request.getContextPath() %>/index.jsp">Home</a>
+      <a href="<%= request.getContextPath() %>/">Home</a>
       <span class="bc-sep">/</span>
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=<%= p.getCat().toString() %>"><%= p.getCat() %></a>
       <span class="bc-sep">/</span>
@@ -197,6 +197,7 @@
           <a href="#"
              id="btnCarrello"
              class="btn-primary"
+             data-prod-id="<%= p.getId() %>"
              onclick="return aggiungiCarrello(event)">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
@@ -311,6 +312,6 @@
 
   <%@ include file="/WEB-INF/view/parziali/footer.jsp" %>
 
-  <script src="<%= request.getContextPath() %>/js/prodotto.js"></script>
+  <script src="<%= request.getContextPath() %>/scripts/prodotto.js"></script>
 </body>
 </html>
