@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+  // Propaga l'eventuale intento (es. "checkout") cosi' dopo il login si torna dove serve
+  String redirectParam = request.getParameter("redirect");
+  if (redirectParam == null) redirectParam = "";
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -8,8 +13,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/base.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/auth.css">
 </head>
 
 <body>
@@ -21,7 +26,7 @@
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETO">Completi</a>
     </nav>
 
-    <a href="index.jsp" class="logo-link">
+    <a href="<%= request.getContextPath() %>/" class="logo-link">
       <img src="../images/logo.png" alt="Kick Off Logo">
     </a>
 
@@ -85,7 +90,8 @@
           </div>
         <% } %>
 
-        <form class="auth-form" action="${pageContext.request.contextPath}/LoginServlet" method="post">
+        <form id="loginForm" class="auth-form" action="${pageContext.request.contextPath}/LoginServlet" method="post" novalidate>
+          <input type="hidden" name="redirect" value="<%= redirectParam %>">
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email"
@@ -108,5 +114,6 @@
 
   </main>
 
+  <script src="<%= request.getContextPath() %>/scripts/auth.js"></script>
 </body>
 </html>

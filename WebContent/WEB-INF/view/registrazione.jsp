@@ -6,22 +6,8 @@
   <title>Kick Off — Registrati</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
-  
-  <style>
-    .form-row {
-      display: flex;
-      gap: 15px;
-      width: 100%;
-    }
-    .form-row .form-group {
-      flex: 1; /* Distribuisce lo spazio equamente */
-    }
-    .form-row .form-group.short {
-      flex: 0 0 80px; /* La provincia rimane stretta */
-    }
-  </style>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/base.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/auth.css">
 </head>
 <body>
 
@@ -31,7 +17,7 @@
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETO">Completi</a>
     </nav>
 
-    <a href="index.jsp" class="logo-link">
+    <a href="<%= request.getContextPath() %>/" class="logo-link">
       <img src="../images/logo.png" alt="Kick Off Logo">
     </a>
 
@@ -83,7 +69,7 @@
       <div class="auth-error"><%= request.getAttribute("errore") %></div>
     <% } %>
 
-    <form class="auth-form" action="${pageContext.request.contextPath}/RegistrazioneServlet" method="post">
+    <form id="registrazioneForm" class="auth-form" action="${pageContext.request.contextPath}/RegistrazioneServlet" method="post" novalidate>
       
       <div class="form-row">
         <div class="form-group">
@@ -136,5 +122,6 @@
 </div>
 </div>
 
+  <script src="<%= request.getContextPath() %>/scripts/auth.js"></script>
 </body>
 </html>
