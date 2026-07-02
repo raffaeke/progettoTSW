@@ -9,11 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/base.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/index.css">
 </head>
 
-<body>
+<body data-ctx="<%= request.getContextPath() %>">
 
   <header class="main-header">
     <nav class="nav-left">
@@ -21,8 +21,8 @@
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETO">Completi</a>
     </nav>
 
-    <a href="index.jsp" class="logo-link">
-      <img src="images/logo.png" alt="Kick Off Logo">
+    <a href="<%= request.getContextPath() %>/" class="logo-link">
+      <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off Logo">
     </a>
 
     <nav class="nav-right">
@@ -161,16 +161,17 @@
               autocomplete="off"
               aria-label="Cerca prodotti"
             >
+            <div class="search-results-dropdown" id="searchResults" hidden></div>
           </div>
           <button class="search-submit" id="searchSubmit" type="button">Cerca</button>
         </div>
 
         <div class="search-tags">
           <span class="search-tags-label">Ricerche popolari:</span>
-          <button class="search-tag" data-value="Maglia Serie A">Maglia Serie A</button>
-          <button class="search-tag" data-value="Scarpette Nike">Scarpette Nike</button>
-          <button class="search-tag" data-value="Completo allenamento">Completo allenamento</button>
-          <button class="search-tag" data-value="Guantoni portiere">Guantoni portiere</button>
+          <button class="search-tag" data-value="Nike Zoom Superfly 9 Academy">Nike Zoom Superfly 9 Academy</button>
+          <button class="search-tag" data-value="Nike">Nike</button>
+          <button class="search-tag" data-value="Real Madrid">Real Madrid</button>
+          <button class="search-tag" data-value="Juventus">Juventus</button>
         </div>
       </div>
 
@@ -188,7 +189,7 @@
         <article class="product-card">
           <div class="product-img-wrap">
             <span class="product-badge product-badge--new">Nuovo</span>
-            <img src="images/prodotti/maglia-home.jpg"
+            <img src="<%= request.getContextPath() %>/images/prodotti/maglia-home.jpg"
                  alt="Maglia Home 2024/25"
                  class="product-img"
                  loading="lazy"
@@ -220,7 +221,7 @@
         <article class="product-card">
           <div class="product-img-wrap">
             <span class="product-badge product-badge--sale">&minus;15%</span>
-            <img src="images/prodotti/scarpette-fg.jpg"
+            <img src="<%= request.getContextPath() %>/images/prodotti/scarpette-fg.jpg"
                  alt="Scarpetta Firm Ground"
                  class="product-img"
                  loading="lazy"
@@ -251,7 +252,7 @@
         <!-- Card 3 -->
         <article class="product-card">
           <div class="product-img-wrap">
-            <img src="images/prodotti/guantone-elite.jpg"
+            <img src="<%= request.getContextPath() %>/images/prodotti/guantone-elite.jpg"
                  alt="Guantone Portiere Elite"
                  class="product-img"
                  loading="lazy"
@@ -283,7 +284,7 @@
         <article class="product-card">
           <div class="product-img-wrap">
             <span class="product-badge product-badge--new">Nuovo</span>
-            <img src="images/prodotti/completo-allenamento.jpg"
+            <img src="<%= request.getContextPath() %>/images/prodotti/completo-allenamento.jpg"
                  alt="Completo Allenamento Pro"
                  class="product-img"
                  loading="lazy"
@@ -318,6 +319,6 @@
 
   <%@ include file="/WEB-INF/view/parziali/footer.jsp" %>
 
-  <script src="js/index.js"></script>
+  <script src="<%= request.getContextPath() %>/scripts/index.js"></script>
 </body>
 </html>

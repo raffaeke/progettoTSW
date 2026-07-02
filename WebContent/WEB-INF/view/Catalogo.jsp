@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="model.beans.Categoria" %>
-<%@ page import="model.beans.Prodotto" %>
-<%@ page import="model.daoImpl.Spec_prodottoDAOImpl" %>
-<%@ page import="model.daoImpl.ImgDAOImpl" %>
+<%@ page import="model.Categoria" %>
+<%@ page import="model.Prodotto" %>
+<%@ page import="daoImpl.Spec_prodottoDAOImpl" %>
+<%@ page import="daoImpl.ImgDAOImpl" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.beans.ProdottoCompleto" %> 
 <%
+  String query = (String) request.getAttribute("query");
+
   String tipoStr = (String) request.getAttribute("tipo");
-  Categoria categoria = Categoria.MAGLIE; 
+  Categoria categoria = Categoria.MAGLIE;
   if (tipoStr != null) {
       try {
           categoria = Categoria.valueOf(tipoStr.toUpperCase());
@@ -43,48 +44,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/base.css">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/catalogo.css">
-  
-  <style>
-    /* Slider Orizzontale per le sezioni In Evidenza e Più Scontati */
-    .products-slider {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto;
-        gap: 20px;
-        padding-bottom: 15px;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    /* Personalizzazione barra di scorrimento dello slider */
-    .products-slider::-webkit-scrollbar {
-        height: 6px;
-    }
-    .products-slider::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: 10px;
-    }
-    .products-slider::-webkit-scrollbar-thumb {
-        background: #2f8f3a; 
-        border-radius: 10px;
-    }
-
-    /* Forza esattamente 5 elementi visibili nell'area dello slider */
-    .products-slider .product-card {
-        flex: 0 0 calc((100% - (20px * 4)) / 5);
-        min-width: calc((100% - (20px * 4)) / 5);
-        box-sizing: border-box;
-    }
-
-    /* Griglia classica verticale mantenuta solo per Tutti i Prodotti */
-    #gridTutti {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
-        gap: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/base.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/catalogo.css">
 </head>
 
 <body data-ctx="<%= request.getContextPath() %>">
@@ -95,7 +56,7 @@
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=MAGLIE">Maglie</a>
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETO">Completi</a>
     </nav>
-    <a href="<%= request.getContextPath() %>/index.jsp" class="logo-link">
+    <a href="<%= request.getContextPath() %>/" class="logo-link">
       <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off">
     </a>
     <nav class="nav-right">
@@ -124,14 +85,22 @@
 
     <%-- ===== BREADCRUMB ===== --%>
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="<%= request.getContextPath() %>/index.jsp">Home</a>
+      <a href="<%= request.getContextPath() %>/">Home</a>
       <span class="bc-sep">/</span>
-      <span class="bc-current"><%= categoria %></span>
+      <% if (query != null) { %>
+        <span class="bc-current">Ricerca: "<%= query %>"</span>
+      <% } else { %>
+        <span class="bc-current"><%= categoria %></span>
+      <% } %>
     </nav>
 
-    <%-- ===== TITOLO CATEGORIA ===== --%>
+    <%-- ===== TITOLO CATEGORIA / RICERCA ===== --%>
     <div class="cat-hero">
-      <h1 class="cat-title"><%= categoria %></h1>
+      <% if (query != null) { %>
+        <h1 class="cat-title">Risultati per "<%= query %>"</h1>
+      <% } else { %>
+        <h1 class="cat-title"><%= categoria %></h1>
+      <% } %>
       <span class="cat-count" id="prodCount"><%= listaProdotti.size() %> prodotti</span>
     </div>
 
@@ -242,13 +211,6 @@
                       <% } else { %>
                         <span class="card-price">€<%= String.format("%.2f", p.getPrezzo()) %></span>
                       <% } %>
-                      <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getId() %>"
-                         class="card-cart-btn" aria-label="Aggiungi al carrello">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                        </svg>
-                      </a>
                     </div>
                   </div>
                 </article>
@@ -297,13 +259,6 @@
                       <% } else { %>
                         <span class="card-price">€<%= String.format("%.2f", p.getPrezzo()) %></span>
                       <% } %>
-                      <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getId() %>"
-                         class="card-cart-btn" aria-label="Aggiungi al carrello">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                        </svg>
-                      </a>
                     </div>
                   </div>
                 </article>
@@ -352,13 +307,6 @@
                     <% } else { %>
                       <span class="card-price">€<%= String.format("%.2f", p.getPrezzo()) %></span>
                     <% } %>
-                    <a href="<%= request.getContextPath() %>/CarrelloServlet?action=aggiungi&id=<%= p.getId() %>"
-                       class="card-cart-btn" aria-label="Aggiungi al carrello">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                      </svg>
-                    </a>
                   </div>
                 </div>
               </article>
@@ -379,6 +327,6 @@
 
   <%@ include file="/WEB-INF/view/parziali/footer.jsp" %>
 
-  <script src="<%= request.getContextPath() %>/js/catalogo.js"></script>
+  <script src="<%= request.getContextPath() %>/scripts/catalogo.js"></script>
 </body>
 </html>
