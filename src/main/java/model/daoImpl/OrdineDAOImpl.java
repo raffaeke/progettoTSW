@@ -62,9 +62,7 @@ public class OrdineDAOImpl implements OrdineDAO{
 	    } catch (Exception e) {
 	        // Se fallisce la data, non bloccare il programma
 	    }
-	    
-	    o.setTotale(rs.getFloat("tot"));
-	    
+	    	    
 	    try {
 	        String statoString = rs.getString("stato");
 	        if (statoString != null) {

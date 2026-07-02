@@ -1,0 +1,415 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   KICK OFF — carrello.css
+   Layout reattivo a due colonne, card e sidebar di riepilogo coordinate
+   ========================================================================== */
+
+.carrello-main {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px 72px;
+  min-height: 60vh;
+}
+
+.carrello-title {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #eee;
+  padding: 10px 0 28px;
+  border-bottom: 1px solid #1e1e1e;
+  margin-bottom: 36px;
+}
+
+/* ── LAYOUT PRINCIPALE ── */
+.carrello-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (min-width: 992px) {
+  .carrello-layout {
+    grid-template-columns: 7fr 4fr;
+  }
+}
+
+/* ── LISTA ELEMENTI CARRELLO ── */
+.carrello-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.carrello-card {
+  display: flex;
+  background: #151515;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  padding: 20px;
+  gap: 24px;
+  transition: border-color .25s, transform .25s;
+}
+
+.carrello-card:hover {
+  border-color: #2f8f3a;
+}
+
+/* Contenitore Immagine */
+.cart-img-wrap {
+  width: 90px;
+  height: 90px;
+  aspect-ratio: 1 / 1;
+  background: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cart-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .35s;
+}
+
+.carrello-card:hover .cart-img-wrap img {
+  transform: scale(1.04);
+}
+
+/* Wrapper Info Interne */
+.cart-info-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .cart-info-wrap {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* Dettagli testuali */
+.cart-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-marca {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #555;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.cart-nome {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.cart-nome a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.cart-nome a:hover {
+  color: #2f8f3a;
+}
+
+.cart-meta {
+  font-size: 12px;
+  color: #666;
+}
+
+.cart-meta strong {
+  color: #aaa;
+}
+
+/* Controlli Quantità Form */
+.cart-qty-control {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.qty-input {
+  width: 64px;
+  background: #181818;
+  border: 1.5px solid #2a2a2a;
+  color: #ccc;
+  padding: 8px;
+  border-radius: 8px;
+  text-align: center;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.qty-input:focus {
+  border-color: #2f8f3a;
+  color: #fff;
+}
+
+/* Bottone rimuovi coordinato alle icone */
+.btn-remove {
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: color .2s, background-color .2s;
+}
+
+.btn-remove:hover {
+  color: #c14a4a;
+  background-color: rgba(193, 74, 74, 0.08);
+}
+
+.btn-remove svg {
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+/* Prezzi all'interno della card */
+.cart-price-wrap {
+  text-align: left;
+  min-width: 100px;
+}
+
+@media (min-width: 640px) {
+  .cart-price-wrap {
+    text-align: right;
+  }
+}
+
+.cart-prezzo-attuale {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: #2f8f3a;
+}
+
+.cart-prezzo-originale {
+  display: block;
+  font-size: 12px;
+  color: #555;
+  text-decoration: line-through;
+  margin-top: 2px;
+}
+
+/* ── SIDEBAR RIEPILOGO ORDINE ── */
+.carrello-summary {
+  position: sticky;
+  top: 110px;
+}
+
+.summary-card {
+  background: #151515;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.summary-title {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ccc;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #888;
+}
+
+.summary-row span:last-child {
+  font-weight: 600;
+  color: #eee;
+}
+
+.sconto-row {
+  color: #c14a4a;
+}
+
+.sconto-row span:last-child {
+  color: #c14a4a !important;
+}
+
+.sped-gratis {
+  color: #2f8f3a !important;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Avviso "honest pricing" per sbloccare la spedizione */
+.sped-avviso-mancante {
+  font-size: 12px;
+  background: rgba(47, 143, 58, 0.08);
+  border: 1px solid rgba(47, 143, 58, 0.2);
+  padding: 10px 14px;
+  color: #888;
+  margin: 18px 0;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.sped-avviso-mancante strong {
+  color: #2f8f3a;
+}
+
+.summary-divider {
+  height: 1px;
+  background: #1e1e1e;
+  margin: 18px 0;
+}
+
+.totale-row {
+  font-size: 16px;
+  font-weight: 800;
+  color: #eee;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.totale-row span:last-child {
+  font-size: 22px;
+  color: #2f8f3a !important;
+  font-weight: 800;
+}
+
+/* Bottoni di Azione coordinati ai tuoi .btn-primary */
+.btn-checkout {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #2f8f3a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 28px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.btn-checkout:hover {
+  background: #3aa847;
+  transform: translateY(-1px);
+}
+
+.btn-checkout svg {
+  stroke: currentColor;
+  transition: transform 0.2s;
+}
+
+.btn-checkout:hover svg {
+  transform: translateX(3px);
+}
+
+.btn-continue {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  color: #555;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.btn-continue:hover {
+  color: #2f8f3a;
+}
+
+/* ── STATO VUOTO ── */
+.carrello-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 72px 20px;
+  color: #555;
+  text-align: center;
+  background: #151515;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+}
+
+.carrello-empty svg {
+  stroke: #333;
+  margin-bottom: 8px;
+}
+
+.carrello-empty p {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.carrello-empty .btn-primary {
+  max-width: 240px;
+}
+
+/* Accessibilità */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Disabilita transizioni se richiesto dal sistema */
+@media (prefers-reduced-motion: reduce) {
+  .carrello-card, .cart-img-wrap img, .btn-checkout, .btn-checkout svg {
+    transition: none;
+  }
+}
