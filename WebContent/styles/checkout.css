@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   KICK OFF — checkout.css
+   Colonna sinistra del checkout: indirizzo di spedizione + carta finta
+   ========================================================================== */
+
+.checkout-form-wrap .auth-form {
+  gap: 24px;
+}
+
+.checkout-card {
+  background: #151515;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.checkout-section-title {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ccc;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.checkout-fake-notice {
+  font-size: 12px;
+  color: #888;
+  background: rgba(47, 143, 58, 0.08);
+  border: 1px solid rgba(47, 143, 58, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: -8px;
+}
+
+@media (max-width: 560px) {
+  .checkout-card {
+    padding: 18px;
+  }
+}
