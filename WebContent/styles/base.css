@@ -191,3 +191,28 @@ nav a:hover::after {
     font-size: 14px;
     opacity: 0.7;
 }
+
+/* RESPONSIVE HEADER (comune a tutte le pagine, .main-header incluso) */
+@media (max-width: 768px) {
+  header {
+    height: auto;
+    padding: 14px 16px;
+    row-gap: 10px;
+  }
+  nav { gap: 14px; }
+  nav a { font-size: 11px; letter-spacing: 0.06em; }
+  .logo-link img { height: 60px; }
+}
+
+@media (max-width: 560px) {
+  header {
+    grid-template-columns: 1fr;
+    grid-template-areas: "logo" "left" "right";
+    justify-items: center;
+    text-align: center;
+  }
+  .logo-link { grid-area: logo; justify-self: center; }
+  .nav-left { grid-area: left; justify-self: center; }
+  .nav-right { grid-area: right; justify-self: center; }
+  nav { flex-wrap: wrap; justify-content: center; gap: 8px 16px; }
+}

@@ -231,6 +231,78 @@
   background: #1e1e1e;
 }
 
+/* Dropdown risultati ricerca (AJAX) */
+.search-results-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 20;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  text-decoration: none;
+  border-bottom: 1px solid #222;
+  transition: background 0.15s;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: #1f1f1f; }
+
+.search-result-item img {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #1e1e1e;
+  flex-shrink: 0;
+}
+
+.sr-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.sr-marca {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555;
+}
+.sr-nome {
+  font-size: 13px;
+  color: #ddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sr-prezzo {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2f8f3a;
+  flex-shrink: 0;
+}
+
+.search-results-empty {
+  padding: 16px;
+  margin: 0;
+  font-size: 12.5px;
+  color: #666;
+  text-align: center;
+}
+
 .search-submit {
   background: #2f8f3a;
   color: #fff;

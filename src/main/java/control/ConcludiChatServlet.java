@@ -1,4 +1,4 @@
-package controller;
+package control;
 import java.io.IOException;
 import java.sql.SQLException;
 import jakarta.servlet.ServletException;
@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.beans.Utente;
-import model.daoImpl.ChatDAOImpl;
+import model.Utente;
+import daoImpl.ChatDAOImpl;
 @WebServlet("/ConcludiChat")
 public class ConcludiChatServlet extends HttpServlet{
 	
@@ -18,7 +18,7 @@ public class ConcludiChatServlet extends HttpServlet{
 			HttpSession session= request.getSession();
 			Utente adminLoggato= (Utente)session.getAttribute("utente");
 			if (adminLoggato == null || session.getAttribute("isAdmin") == null || !(Boolean)session.getAttribute("isAdmin")) {
-				response.sendRedirect(request.getContextPath() + "/index.jsp");
+				response.sendRedirect(request.getContextPath() + "/");
 				return;
 			}
 			String chatIdParam = request.getParameter("chatId");

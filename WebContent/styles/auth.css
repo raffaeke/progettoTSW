@@ -222,3 +222,176 @@
   background: #3aa348;
   transform: translateY(-1px);
 }
+
+/* PROFILO */
+.profilo-avatar {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: rgba(47, 143, 58, 0.15);
+  border: 1px solid rgba(47, 143, 58, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4ce25c;
+}
+
+.profilo-avatar svg {
+  width: 34px;
+  height: 34px;
+}
+
+.profilo-card {
+  text-align: center;
+}
+
+.profilo-success {
+  background: rgba(47, 143, 58, 0.15);
+  border: 1px solid rgba(47, 143, 58, 0.4);
+  color: #6eff7e;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.profilo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.profilo-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 13.5px;
+}
+
+.profilo-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.profilo-label {
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.profilo-value {
+  color: #eee;
+  text-align: right;
+}
+
+.profilo-edit-form {
+  text-align: left;
+  margin-top: 8px;
+}
+
+.profilo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profilo-actions-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.profilo-actions-row .btn-auth {
+  flex: 1;
+}
+
+/* BOTTONI PROFILO */
+.btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  color: #ccc;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: #2f8f3a;
+  color: #4ce25c;
+}
+
+.btn-logout {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: rgba(193, 74, 74, 0.1);
+  border: 1px solid rgba(193, 74, 74, 0.35);
+  border-radius: 6px;
+  color: #ff8f8f;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 12.5px;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: background 0.2s;
+}
+
+.btn-logout:hover {
+  background: rgba(193, 74, 74, 0.2);
+}
+
+/* VALIDAZIONE JS (login, registrazione, checkout, profilo) */
+.form-group input.input-error {
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+}
+
+/* RESPONSIVE */
+@media (max-width: 560px) {
+  .auth-card {
+    padding: 28px 20px;
+  }
+  .auth-title {
+    font-size: 26px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .form-row .form-group,
+  .form-row .form-group.row-indirizzo,
+  .form-row .form-group.row-paese,
+  .form-row .form-group.row-provincia,
+  .form-row .form-group.short {
+    flex: 1 1 auto;
+  }
+  .profilo-actions-row {
+    flex-direction: column;
+  }
+}
+
+.field-error {
+  font-size: 11.5px;
+  color: #ff8f8f;
+  margin-top: -2px;
+}

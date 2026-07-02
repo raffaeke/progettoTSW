@@ -299,6 +299,8 @@
   justify-content: center;
 }
 .card-img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -355,27 +357,6 @@
 }
 .card-price { font-size: 15px; font-weight: 700; color: #2f8f3a; }
 .card-price-orig { font-size: 11px; color: #555; text-decoration: line-through; }
-
-.card-cart-btn {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  background: #1e1e1e;
-  border: 1px solid #2a2a2a;
-  color: #888;
-  text-decoration: none;
-  transition: background .2s, color .2s, border-color .2s;
-  flex-shrink: 0;
-}
-.card-cart-btn:hover {
-  background: #2f8f3a;
-  border-color: #2f8f3a;
-  color: #fff;
-}
 
 /* Messaggio nessun risultato */
 .empty-msg {
@@ -437,4 +418,48 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .product-card, .card-img, .filter-toggle .chevron { transition: none; }
+}
+
+/* Slider orizzontale per le sezioni "In evidenza" e "Più scontati" */
+.products-slider {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 15px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.products-slider::-webkit-scrollbar {
+    height: 6px;
+}
+.products-slider::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+.products-slider::-webkit-scrollbar-thumb {
+    background: #2f8f3a;
+    border-radius: 10px;
+}
+
+/* Forza esattamente 5 elementi visibili nell'area dello slider */
+.products-slider .product-card {
+    flex: 0 0 calc((100% - (20px * 4)) / 5);
+    min-width: calc((100% - (20px * 4)) / 5);
+    box-sizing: border-box;
+}
+
+/* Griglia classica verticale mantenuta solo per Tutti i Prodotti */
+#gridTutti {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .products-slider .product-card {
+    flex: 0 0 calc((100% - 20px) / 2);
+    min-width: calc((100% - 20px) / 2);
+  }
 }
