@@ -156,41 +156,6 @@
     });
   });
 
-  /* ── GESTIONE AGGIUNTA AL CARRELLO (AJAX) ─────────────────────── */
-  document.addEventListener('click', function (e) {
-    // Intercettiamo il click sul bottone del carrello (anche se spostato o re-inserito nel DOM)
-    var cartBtn = e.target.closest('.card-cart-btn');
-    if (!cartBtn) return;
-
-    // Blocca il caricamento/reindirizzamento della pagina
-    e.preventDefault();
-
-    var url = cartBtn.getAttribute('href');
-
-    // Chiamata asincrona alla Servlet
-    fetch(url)
-      .then(function (response) {
-        if (response.ok) {
-          // Opzionale: un feedback visivo rapido all'utente
-          var svg = cartBtn.querySelector('svg');
-          if (svg) {
-            var originalColor = svg.style.stroke;
-            svg.style.stroke = '#2f8f3a'; // Diventa verde per un secondo
-            setTimeout(function () {
-              svg.style.stroke = originalColor;
-            }, 1000);
-          }
-          console.log('Prodotto aggiunto con successo!');
-        } else {
-          alert("Errore durante l'aggiunta al carrello.");
-        }
-      })
-      .catch(function (error) {
-        console.error('Errore di rete:', error);
-        alert('Impossibile connettersi al server.');
-      });
-  });
-
   /* ── Init ────────────────────────────────────────────────────── */
   updateRangeLabels();
   applyFilters();
