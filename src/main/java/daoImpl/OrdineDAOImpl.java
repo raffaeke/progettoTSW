@@ -36,6 +36,27 @@ public class OrdineDAOImpl implements OrdineDAO{
 	        return result;
 	}
 	
+	@Override
+	public ArrayList<Ordine> doRetrieveByUtente(int utenteId) throws SQLException {
+		ArrayList<Ordine> result = new ArrayList<>();
+		String query = "SELECT * FROM ordine WHERE utente_id=? ORDER BY data_ordine DESC, id DESC";
+
+		try (Connection con = DriverManagerConnectionPool.getConnection();
+				PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setInt(1, utenteId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Ordine o = mapper(rs);
+				o.setTotale(calcolaTotale(o.getId()));
+				result.add(o);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
+	}
+
 	public int doSave(Ordine o) throws SQLException {
 		String query = "INSERT INTO ordine (data_ordine, stato, utente_id) VALUES (?, ?, ?)";
 
