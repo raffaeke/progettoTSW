@@ -1,4 +1,4 @@
-package controller;
+package control;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,14 +11,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 // Importa i tuoi modelli e DAO corretti
-import model.beans.Prodotto;
-import model.beans.Spec_prodotto;
-import model.beans.Recensione;
-import model.daoImpl.ProdottoDAOImpl;       // Sostituisci con il tuo pacchetto/nome reale del DAO prodotti
-import model.daoImpl.RecensioneDAOImpl;
-import model.daoImpl.ImgDAOImpl;            // Il tuo DAO per le immagini
-import model.daoImpl.Spec_prodottoDAOImpl;  // Il tuo DAO per le specifiche/taglie
-//import model.daoImpl.RecensioneDAOImpl;     // Il tuo DAO per le recensioni (se presente)
+import model.Prodotto;
+import model.Spec_prodotto;
+import model.Recensione;
+import daoImpl.ProdottoDAOImpl;       // Sostituisci con il tuo pacchetto/nome reale del DAO prodotti
+import daoImpl.RecensioneDAOImpl;
+import daoImpl.ImgDAOImpl;            // Il tuo DAO per le immagini
+import daoImpl.Spec_prodottoDAOImpl;  // Il tuo DAO per le specifiche/taglie
+//import daoImpl.RecensioneDAOImpl;     // Il tuo DAO per le recensioni (se presente)
 
 @WebServlet("/prodotto")
 public class ProdottoServlet extends HttpServlet {
@@ -46,8 +46,8 @@ public class ProdottoServlet extends HttpServlet {
                 int id = Integer.parseInt(idStr);
                 
                 Prodotto prodotto = prodottoDAO.doRetrieveByKey(id);
-                
-                if (prodotto != null) {
+
+                if (prodotto != null && !prodotto.isEliminato()) {
                     List<String> listaImmagini = imgDAO.doRetrieveByProductKey(id);
                     List<Spec_prodotto> listaSpecifiche = specDAO.doRetrieveByProductKey(id); 
                     List<Recensione> listaRecensioni = recensioneDAO.doRetrieveByProductId(id);

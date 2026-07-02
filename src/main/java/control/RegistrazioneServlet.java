@@ -1,10 +1,10 @@
-package controller;
+package control;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import model.daoImpl.UtenteDAOImpl;
+import daoImpl.UtenteDAOImpl;
 import util.PassCrypted;
-import model.beans.Utente;
+import model.Utente;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;

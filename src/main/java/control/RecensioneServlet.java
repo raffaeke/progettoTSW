@@ -1,4 +1,4 @@
-package controller;
+package control;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -6,9 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.beans.Recensione;
-import model.beans.Utente;
-import model.daoImpl.RecensioneDAOImpl;
+import model.Recensione;
+import model.Utente;
+import daoImpl.RecensioneDAOImpl;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,7 +24,7 @@ public class RecensioneServlet extends HttpServlet {
         
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("utente") == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/view/login");
             return;
         }
 
@@ -68,7 +68,7 @@ public class RecensioneServlet extends HttpServlet {
 
         } catch (NumberFormatException e) {
             // Gestione errore nel caso i parametri ID o Voto non siano numeri validi
-            response.sendRedirect(request.getContextPath() + "/index.jsp?error=dati_corrotti");
+            response.sendRedirect(request.getContextPath() + "/?error=dati_corrotti");
         } catch (Exception e) {
             
             e.printStackTrace();
@@ -87,6 +87,6 @@ public class RecensioneServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        response.sendRedirect(request.getContextPath() + "/");
     }
 }

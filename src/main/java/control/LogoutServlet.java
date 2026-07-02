@@ -1,4 +1,4 @@
-package controller;
+package control;
 import java.io.IOException;
 
 import jakarta.servlet.*;
@@ -16,7 +16,7 @@ public class LogoutServlet extends HttpServlet {
 			session.invalidate();
 		}
 		
-		response.sendRedirect("index.jsp");
+		response.sendRedirect(request.getContextPath() + "/");
 	}
 
 }

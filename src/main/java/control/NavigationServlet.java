@@ -1,4 +1,4 @@
-package controller;
+package control;
 
 import java.io.IOException;
 
@@ -6,17 +6,18 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 
-@WebServlet("/view/*")
+@WebServlet({"/view/*", ""})
 public class NavigationServlet extends HttpServlet{
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
-	    
+
 	    String path = request.getPathInfo();
-	    
+
 	    if (path == null || path.equals("/")) {
-	        request.getRequestDispatcher("/index.jsp").forward(request, response);
-	        return; 
+	        // Copre sia "/" (home, mappata su url-pattern "") sia "/view" senza sotto-percorso
+	        request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
+	        return;
 	    }
 
 	    if (path.startsWith("/")) {

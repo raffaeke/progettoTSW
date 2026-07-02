@@ -1,4 +1,4 @@
-package controller;
+package control;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.beans.Stato;
-import model.daoImpl.OrdineDAOImpl;
+import model.Stato;
+import daoImpl.OrdineDAOImpl;
 
 @WebServlet("/GestioneOrdini")
 public class GestioneOrdiniServlet extends HttpServlet{
@@ -20,7 +20,7 @@ public class GestioneOrdiniServlet extends HttpServlet{
 		HttpSession session = request.getSession();
         Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
         if (session.getAttribute("utente") == null || isAdmin == null || !isAdmin) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/");
             return;
         }
         String idParam = request.getParameter("ordineId");

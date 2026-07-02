@@ -1,4 +1,4 @@
-package controller;
+package control;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -8,13 +8,13 @@ import java.util.List;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
-import model.beans.Categoria;
-import model.beans.Prodotto;
-import model.beans.Spec_prodotto;
-import model.dao.ProdottoDAO;
-import model.daoImpl.ImgDAOImpl;
-import model.daoImpl.ProdottoDAOImpl;
-import model.daoImpl.Spec_prodottoDAOImpl;
+import model.Categoria;
+import model.Prodotto;
+import model.Spec_prodotto;
+import dao.ProdottoDAO;
+import daoImpl.ImgDAOImpl;
+import daoImpl.ProdottoDAOImpl;
+import daoImpl.Spec_prodottoDAOImpl;
 
 @WebServlet("/GestioneProdotti")
 @MultipartConfig(
@@ -27,8 +27,8 @@ public class GestioneProdottiServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException{
 		HttpSession session= request.getSession();
-		if(! (boolean)session.getAttribute("isAdmin")) {
-			response.sendRedirect("index.jsp");
+		if(! Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
+			response.sendRedirect(request.getContextPath() + "/");
 			return;
 		}
 		ProdottoDAO dao= new ProdottoDAOImpl();
@@ -71,8 +71,8 @@ public class GestioneProdottiServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException{
 		HttpSession session= request.getSession();
-		if(! (boolean)session.getAttribute("isAdmin")) {
-			response.sendRedirect("index.jsp");
+		if(! Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
+			response.sendRedirect(request.getContextPath() + "/");
 			return;
 		}
 		
