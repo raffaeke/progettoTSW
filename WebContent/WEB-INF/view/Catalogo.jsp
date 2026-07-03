@@ -61,7 +61,7 @@
     </a>
     <nav class="nav-right">
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=GUANTONI">Guantoni</a>
-      <a href="<%= request.getContextPath() %>/Catalogo?tipo=SCARPE">Scarpette</a>
+      <a href="<%= request.getContextPath() %>/Catalogo?tipo=SCARPE">Scarpe</a>
       <a href="<%= request.getContextPath() %>/view/carrello" class="icon-link" aria-label="Carrello">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>

@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="model.Prodotto" %>
+<%@page import="daoImpl.ProdottoDAOImpl" %>
+<%@page import="daoImpl.ImgDAOImpl" %>
+<%@page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -116,8 +120,8 @@
             </div>
             <div class="slide-content">
               <span class="slide-kicker">Offerta limitata</span>
-              <h2 class="slide-title">Scarpette<br>a &minus;15%.</h2>
-              <p class="slide-sub">Le migliori scarpette firm ground e soft ground in promozione questa settimana.</p>
+              <h2 class="slide-title">Scarpe<br>a &minus;15%.</h2>
+              <p class="slide-sub">Le migliori scarpe FG e SG in promozione questa settimana.</p>
               <a href="<%= request.getContextPath() %>/Catalogo?tipo=SCARPE" class="slide-btn slide-btn--red">Approfitta ora</a>
             </div>
           </div>
@@ -186,128 +190,118 @@
       <div class="products-grid">
 
         <!-- Card 1 -->
+        <%	Prodotto p1= new Prodotto();
+        	ProdottoDAOImpl prodottodao= new ProdottoDAOImpl();
+        	p1= prodottodao.doRetrieveByKey(6);
+        	ImgDAOImpl imgdao= new ImgDAOImpl();
+        %>
         <article class="product-card">
           <div class="product-img-wrap">
             <span class="product-badge product-badge--new">Nuovo</span>
-            <img src="<%= request.getContextPath() %>/images/prodotti/maglia-home.jpg"
-                 alt="Maglia Home 2024/25"
-                 class="product-img"
-                 loading="lazy"
-                 onerror="this.style.display='none'">
-            <div class="product-img-placeholder" aria-hidden="true">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                <rect x="8" y="4" width="40" height="48" rx="5" fill="#2f8f3a" opacity=".9"/>
-                <line x1="28" y1="4" x2="28" y2="52" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-dasharray="4 3"/>
-                <path d="M8 18 Q14 8 28 12 Q42 8 48 18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <div class="product-hover-overlay">
-              <a href="${pageContext.request.contextPath}/prodotto?id=1"
+            <img src="<%= request.getContextPath() %>/images/prodotti/<%= imgdao.doRetrieveByProductKey(p1.getId()).get(0) %>"
+     			alt="<%=p1.getNome() %>"
+     			class="product-img"
+     			loading="lazy"
+     			onerror="this.style.display='none'">
+           <div class="product-hover-overlay">
+              <a href="${pageContext.request.contextPath}/prodotto?id=6"
                  class="product-quick-btn">Aggiungi al carrello</a>
             </div>
           </div>
           <div class="product-info">
-            <span class="product-brand">Serie A</span>
+            <span class="product-brand">PSG</span>
             <h3 class="product-name">
-              <a href="${pageContext.request.contextPath}/prodotto?id=1">Maglia Home 2024/25</a>
+              <a href="${pageContext.request.contextPath}/prodotto?id=6"><%=p1.getNome() %></a>
             </h3>
             <div class="product-footer">
-              <span class="product-price">&euro;79,99</span>
+              <span class="product-price">&euro;<%= p1.getPrezzo() %></span>
             </div>
           </div>
         </article>
 
         <!-- Card 2 -->
+        <% Prodotto p2= new Prodotto();
+    	p2= prodottodao.doRetrieveByKey(22);
+    	
+    	%>
         <article class="product-card">
           <div class="product-img-wrap">
             <span class="product-badge product-badge--sale">&minus;15%</span>
-            <img src="<%= request.getContextPath() %>/images/prodotti/scarpette-fg.jpg"
-                 alt="Scarpetta Firm Ground"
-                 class="product-img"
-                 loading="lazy"
-                 onerror="this.style.display='none'">
-            <div class="product-img-placeholder" aria-hidden="true">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                <path d="M8 42 Q20 20 28 24 Q36 20 48 42Z" fill="#c8970a" opacity=".9"/>
-                <line x1="8" y1="42" x2="48" y2="42" stroke="rgba(0,0,0,.3)" stroke-width="2"/>
-              </svg>
-            </div>
+            <img src="<%= request.getContextPath() %>/images/prodotti/<%= imgdao.doRetrieveByProductKey(p2.getId()).get(0) %>"
+     			alt="<%=p2.getNome() %>"
+     			class="product-img"
+     			loading="lazy"
+     			onerror="this.style.display='none'">
+           
             <div class="product-hover-overlay">
-              <a href="${pageContext.request.contextPath}prodotto?id=2"
+              <a href="${pageContext.request.contextPath}/prodotto?id=22"
                  class="product-quick-btn">Aggiungi al carrello</a>
             </div>
           </div>
           <div class="product-info">
-            <span class="product-brand">Speed Pro</span>
+            <span class="product-brand">Puma</span>
             <h3 class="product-name">
-              <a href="${pageContext.request.contextPath}prodotto?id=2">Scarpetta Firm Ground</a>
+              <a href="${pageContext.request.contextPath}/prodotto?id=22"><%=p2.getNome() %></a>
             </h3>
             <div class="product-footer">
-              <span class="product-price">&euro;126,65</span>
-              <span class="product-price-original">&euro;149,00</span>
+              <span class="product-price">&euro;<%= String.format("%.2f", p2.getPrezzoScontato()) %></span>
+              <span class="product-price-original">&euro;<%= String.format("%.2f", p2.getPrezzo()) %></span>
             </div>
           </div>
         </article>
 
         <!-- Card 3 -->
+        <%	Prodotto p3= new Prodotto();
+        	p3= prodottodao.doRetrieveByKey(25);
+        %>
         <article class="product-card">
           <div class="product-img-wrap">
-            <img src="<%= request.getContextPath() %>/images/prodotti/guantone-elite.jpg"
-                 alt="Guantone Portiere Elite"
+            <img src="<%= request.getContextPath() %>/images/prodotti/<%= imgdao.doRetrieveByProductKey(p3.getId()).get(0) %>"
+                 alt="<%=p3.getNome() %>"
                  class="product-img"
                  loading="lazy"
                  onerror="this.style.display='none'">
-            <div class="product-img-placeholder" aria-hidden="true">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                <ellipse cx="28" cy="30" rx="18" ry="14" fill="#333" opacity=".9"/>
-                <path d="M13 24 Q28 10 43 24" fill="none" stroke="#2f8f3a" stroke-width="2"/>
-                <ellipse cx="28" cy="30" rx="10" ry="8" fill="none" stroke="#2f8f3a" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <div class="product-hover-overlay">
-              <a href="${pageContext.request.contextPath}/prodotto?id=3"
+              <div class="product-hover-overlay">
+              <a href="${pageContext.request.contextPath}/prodotto?id=25"
                  class="product-quick-btn">Aggiungi al carrello</a>
             </div>
           </div>
           <div class="product-info">
-            <span class="product-brand">GK Pro</span>
+            <span class="product-brand">Adidas</span>
             <h3 class="product-name">
-              <a href="${pageContext.request.contextPath}/prodotto?id=3">Guantone Portiere Elite</a>
+              <a href="${pageContext.request.contextPath}/prodotto?id=25"><%=p3.getNome() %></a>
             </h3>
             <div class="product-footer">
-              <span class="product-price">&euro;129,00</span>
+              <span class="product-price">&euro;<%=p3.getPrezzo() %></span>
             </div>
           </div>
         </article>
 
         <!-- Card 4 -->
+        <% Prodotto p4= new Prodotto();
+    		p4= prodottodao.doRetrieveByKey(41);
+    	
+    	%>
         <article class="product-card">
           <div class="product-img-wrap">
             <span class="product-badge product-badge--new">Nuovo</span>
-            <img src="<%= request.getContextPath() %>/images/prodotti/completo-allenamento.jpg"
-                 alt="Completo Allenamento Pro"
+            <img src="<%= request.getContextPath() %>/images/prodotti/<%= imgdao.doRetrieveByProductKey(p4.getId()).get(0) %>"
+                 alt="<%=p4.getNome() %>"
                  class="product-img"
                  loading="lazy"
                  onerror="this.style.display='none'">
-            <div class="product-img-placeholder" aria-hidden="true">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                <rect x="16" y="4"  width="24" height="28" rx="4" fill="#1a5e22" opacity=".9"/>
-                <rect x="14" y="28" width="12" height="24" rx="3" fill="#1e6b27" opacity=".9"/>
-                <rect x="30" y="28" width="12" height="24" rx="3" fill="#1e6b27" opacity=".9"/>
-              </svg>
-            </div>
             <div class="product-hover-overlay">
-              <a href="${pageContext.request.contextPath}/prodotto?id=4"
+              <a href="${pageContext.request.contextPath}/prodotto?id=41"
                  class="product-quick-btn">Aggiungi al carrello</a>
             </div>
           </div>
           <div class="product-info">
             <span class="product-brand">Training</span>
             <h3 class="product-name">
-              <a href="${pageContext.request.contextPath}/prodotto?id=4">Completo Allenamento Pro</a>
+              <a href="${pageContext.request.contextPath}/prodotto?id=41"><%=p4.getNome() %></a>
             </h3>
             <div class="product-footer">
-              <span class="product-price">&euro;89,99</span>
+              <span class="product-price">&euro;<%=p4.getPrezzo() %></span>
             </div>
           </div>
         </article>
