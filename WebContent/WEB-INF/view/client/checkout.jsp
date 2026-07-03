@@ -137,8 +137,6 @@
 
           <div class="checkout-card">
             <h2 class="checkout-section-title">Dati di pagamento</h2>
-            <p class="checkout-fake-notice">Sito dimostrativo: nessuna transazione reale viene effettuata.</p>
-
             <div class="form-group">
               <label for="titolare">Titolare della carta</label>
               <input type="text" id="titolare" name="titolare" value="<%= titolareVal %>" placeholder="Mario Rossi" required autocomplete="cc-name">

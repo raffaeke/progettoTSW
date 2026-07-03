@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
 <%
   // Propaga l'eventuale intento (es. "checkout") cosi' dopo il login si torna dove serve
   String redirectParam = request.getParameter("redirect");
   if (redirectParam == null) redirectParam = "";
+
+  Object erroreAttr = request.getAttribute("errore");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -27,7 +30,7 @@
     </nav>
 
     <a href="<%= request.getContextPath() %>/" class="logo-link">
-      <img src="../images/logo.png" alt="Kick Off Logo">
+      <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off Logo">
     </a>
 
     <nav class="nav-right">
@@ -84,9 +87,17 @@
           <a href="${pageContext.request.contextPath}/view/registrazione" class="auth-link">Registrati</a>
         </p>
 
-        <% if (request.getAttribute("errore") != null) { %>
+        <% if (erroreAttr != null) { %>
           <div class="auth-error">
-            <%= request.getAttribute("errore") %>
+            <% if (erroreAttr instanceof List) { %>
+              <ul style="margin: 0; padding-left: 18px;">
+                <% for (String err : (List<String>) erroreAttr) { %>
+                  <li><%= err %></li>
+                <% } %>
+              </ul>
+            <% } else { %>
+              <%= erroreAttr %>
+            <% } %>
           </div>
         <% } %>
 

@@ -17,7 +17,7 @@
 
     <div class="footer-section footer-contact">
       <h4>Supporto</h4>
-      <p>📍 Via dello Sport, 10 - Milano</p>
+      <p>📍 Università degli Studi di Fisciano</p>
       <p>📧 support@kickoff.it</p>
       <p>🕒 Lun - Ven: 9:00 - 20:00</p>
     </div>

@@ -18,7 +18,7 @@
     </nav>
 
     <a href="<%= request.getContextPath() %>/" class="logo-link">
-      <img src="../images/logo.png" alt="Kick Off Logo">
+      <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off Logo">
     </a>
 
     <nav class="nav-right">

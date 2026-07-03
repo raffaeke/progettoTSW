@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet{
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String passwordHashata= PassCrypted.hashPassword(password);
-		RequestDispatcher dispatcherToLoginPage=request.getRequestDispatcher("login.jsp");
+		RequestDispatcher dispatcherToLoginPage=request.getRequestDispatcher("/view/login");
 		List<String> errors=new ArrayList<>();
 
 		if(email==null || email.trim().isEmpty()) {
@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet{
 		}
 		
 		if(!errors.isEmpty()) {
-			request.setAttribute("errors", errors);
+			request.setAttribute("errore", errors);
 			dispatcherToLoginPage.forward(request, response);
 			return;
 		}
@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet{
 				response.sendRedirect(request.getContextPath() + "/view/profilo");
 			}
 		}	else {
-			request.setAttribute("errors","Accesso fallita. Riprova");
+			request.setAttribute("errore","Email e/o password errati");
 			dispatcherToLoginPage.forward(request, response);
 		}
 
