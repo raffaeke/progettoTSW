@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="daoImpl.ImgDAOImpl" %>
 <%@ page import="model.Prodotto" %>
+<%@ page import="model.Spec_prodotto" %>
 <%@ page import="model.ItemCarrello" %>
 <%
   // Recuperiamo il carrello dalla sessione
@@ -97,9 +98,10 @@
         <%-- ── LISTA ELEMENTI CARRELLO ── --%>
         <div class="carrello-items">
           <% 
-            for (ItemCarrello item : carrello) { 
+            for (ItemCarrello item : carrello) {
               Prodotto prod = item.getP();
-              if (prod != null) {
+              Spec_prodotto spec = item.getSpec();
+              if (prod != null && spec != null) {
                   boolean haSconto = prod.getSconto() > 0;
                   float prezzoUnitario = haSconto ? (prod.getPrezzo() - (prod.getPrezzo() * prod.getSconto() / 100)) : prod.getPrezzo();
                   
@@ -112,7 +114,7 @@
                       imgPath += ".jpg";
                   }
           %>
-            <article class="carrello-card" data-prod-id="<%= prod.getId() %>">
+            <article class="carrello-card" data-spec-id="<%= spec.getId() %>">
               <div class="cart-img-wrap">
                 <% if(!imgPath.isEmpty()) { %>
                   <img src="<%= request.getContextPath() %>/images/prodotti/<%= imgPath %>" alt="<%= prod.getNome() %>" onerror="this.src='<%= request.getContextPath() %>/images/logo.png'">
@@ -127,21 +129,21 @@
                   <h2 class="cart-nome">
                     <a href="<%= request.getContextPath() %>/prodotto?id=<%= prod.getId() %>"><%= prod.getNome() %></a>
                   </h2>
-                  <p class="cart-meta">Categoria: <strong><%= prod.getCat() %></strong></p>
+                  <p class="cart-meta">Categoria: <strong><%= prod.getCat() %></strong> · Taglia: <strong><%= spec.getTaglia() %></strong></p>
                 </div>
-                
+
                 <%-- Controllo Quantità --%>
                 <div class="cart-qty-control">
                   <form action="<%= request.getContextPath() %>/CarrelloServlet" method="post" class="qty-form">
                     <input type="hidden" name="action" value="update">
-                    <input type="hidden" name="prodottoId" value="<%= prod.getId() %>">
-                    <label for="qty-<%= prod.getId() %>" class="sr-only">Quantità</label>
-                    <input type="number" id="qty-<%= prod.getId() %>" name="quantita" value="<%= item.getQuantita() %>" min="1" max="10" onchange="this.form.submit()" class="qty-input">
+                    <input type="hidden" name="specId" value="<%= spec.getId() %>">
+                    <label for="qty-<%= spec.getId() %>" class="sr-only">Quantità</label>
+                    <input type="number" id="qty-<%= spec.getId() %>" name="quantita" value="<%= item.getQuantita() %>" min="1" max="<%= spec.getQuantita() %>" onchange="this.form.submit()" class="qty-input">
                   </form>
-                  
+
                   <form action="<%= request.getContextPath() %>/CarrelloServlet" method="post" class="remove-form">
                     <input type="hidden" name="action" value="remove">
-                    <input type="hidden" name="prodottoId" value="<%= prod.getId() %>">
+                    <input type="hidden" name="specId" value="<%= spec.getId() %>">
                     <button type="submit" class="btn-remove" aria-label="Rimuovi <%= prod.getNome() %>">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
                       Rimuovi

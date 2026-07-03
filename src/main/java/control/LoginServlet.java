@@ -86,12 +86,12 @@ public class LoginServlet extends HttpServlet{
 				for (ItemCarrello itemOspite : carrelloOspite) {
 					int nuovaQuantita = itemOspite.getQuantita();
 					for (ItemCarrello itemDb : carrelloDb) {
-						if (itemDb.getP().getId() == itemOspite.getP().getId()) {
+						if (itemDb.getSpec().getId() == itemOspite.getSpec().getId()) {
 							nuovaQuantita += itemDb.getQuantita();
 							break;
 						}
 					}
-					carrelloDAO.doUpsert(logged.getId(), itemOspite.getP().getId(), nuovaQuantita);
+					carrelloDAO.doUpsert(logged.getId(), itemOspite.getSpec().getId(), nuovaQuantita);
 				}
 			}
 			session.setAttribute("carrello", new ArrayList<ItemCarrello>(carrelloDAO.doRetrieveByUtente(logged.getId())));

@@ -80,10 +80,9 @@
       return false;
     }
 
-    var ctx     = document.body.dataset.ctx || '';
-    var btnCarrello = document.getElementById('btnCarrello');
-    var prodId  = btnCarrello ? btnCarrello.dataset.prodId : '';
-    window.location.href = ctx + '/CarrelloServlet?action=aggiungi&id=' + prodId;
+    var ctx    = document.body.dataset.ctx || '';
+    var specId = selected.dataset.specId;
+    window.location.href = ctx + '/CarrelloServlet?action=aggiungi&specId=' + specId;
     return false;
   };
 

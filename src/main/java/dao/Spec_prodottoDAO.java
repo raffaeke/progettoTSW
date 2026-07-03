@@ -11,4 +11,5 @@ public interface Spec_prodottoDAO {
 	public List<String> doRetrieveDistinctTaglieByCategoria(Categoria c) throws SQLException;
 	public void doDeleteByProductKey(int id)throws SQLException;
 	public List<Spec_prodotto> doRetrieveByProductKey(int id)throws SQLException;
+	public Spec_prodotto doRetrieveByKey(int id)throws SQLException;
 }

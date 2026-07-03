@@ -9,26 +9,29 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import model.Prodotto;
+import model.Spec_prodotto;
 import model.ItemCarrello;
 import model.Utente;
 import dao.ProdottoDAO;
+import dao.Spec_prodottoDAO;
 import daoImpl.CarrelloDAOImpl;
 import daoImpl.ProdottoDAOImpl;
+import daoImpl.Spec_prodottoDAOImpl;
 
 @WebServlet("/CarrelloServlet")
 public class CarrelloServlet extends HttpServlet {
 
     private CarrelloDAOImpl carrelloDAO = new CarrelloDAOImpl();
 
-    // Se l'utente è loggato, sincronizza la quantità di un prodotto anche sul DB (carrello persistente)
-    private void sincronizzaProdotto(HttpSession session, int prodottoId, int quantita) {
+    // Se l'utente è loggato, sincronizza la quantità di una taglia anche sul DB (carrello persistente)
+    private void sincronizzaSpec(HttpSession session, int specId, int quantita) {
         Utente utente = (Utente) session.getAttribute("utente");
         if (utente == null) return;
         try {
             if (quantita > 0) {
-                carrelloDAO.doUpsert(utente.getId(), prodottoId, quantita);
+                carrelloDAO.doUpsert(utente.getId(), specId, quantita);
             } else {
-                carrelloDAO.doDelete(utente.getId(), prodottoId);
+                carrelloDAO.doDelete(utente.getId(), specId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,7 +42,7 @@ public class CarrelloServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Gestione preventiva dei parametri per evitare NullPointerException
-        String idStr = request.getParameter("id");
+        String specIdStr = request.getParameter("specId");
         String action = request.getParameter("action");
 
         if (action == null) action = "";
@@ -51,42 +54,49 @@ public class CarrelloServlet extends HttpServlet {
             session.setAttribute("carrello", carrello);
         }
 
-        ProdottoDAO dao = new ProdottoDAOImpl();
+        ProdottoDAO prodottoDao = new ProdottoDAOImpl();
+        Spec_prodottoDAO specDao = new Spec_prodottoDAOImpl();
 
         try {
-            if (idStr != null && !idStr.isEmpty()) {
-                int id = Integer.parseInt(idStr);
+            if (specIdStr != null && !specIdStr.isEmpty()) {
+                int specId = Integer.parseInt(specIdStr);
                 boolean trovato = false;
                 int quantitaFinale = 0;
 
                 if (action.equals("aggiungi")) {
                     for (ItemCarrello item : carrello) {
-                        if (item.getP().getId() == id) {
-                            item.setQuantita(item.getQuantita() + 1);
-                            quantitaFinale = item.getQuantita();
+                        if (item.getSpec().getId() == specId) {
+                            // Non si puo' mettere in carrello piu' di quanto disponibile in magazzino per questa taglia
+                            int nuovaQty = Math.min(item.getQuantita() + 1, item.getSpec().getQuantita());
+                            item.setQuantita(nuovaQty);
+                            quantitaFinale = nuovaQty;
                             trovato = true;
                             break;
                         }
                     }
                     if (!trovato) {
-                        Prodotto p = dao.doRetrieveByKey(id);
-                        // Un prodotto rimosso dal catalogo (cancellazione logica) non e' piu' acquistabile
-                        if (p != null && !p.isEliminato()) {
-                            ItemCarrello item = new ItemCarrello();
-                            item.setProdotto(p);
-                            item.setQuantita(1); // Imposta direttamente a 1
-                            carrello.add(item);
-                            quantitaFinale = 1;
+                        Spec_prodotto spec = specDao.doRetrieveByKey(specId);
+                        if (spec != null && spec.getQuantita() > 0) {
+                            Prodotto p = prodottoDao.doRetrieveByKey(spec.getProdottoId());
+                            // Un prodotto rimosso dal catalogo (cancellazione logica) non e' piu' acquistabile
+                            if (p != null && !p.isEliminato()) {
+                                ItemCarrello item = new ItemCarrello();
+                                item.setProdotto(p);
+                                item.setSpec(spec);
+                                item.setQuantita(1);
+                                carrello.add(item);
+                                quantitaFinale = 1;
+                            }
                         }
                     }
-                    sincronizzaProdotto(session, id, quantitaFinale);
+                    sincronizzaSpec(session, specId, quantitaFinale);
 
                 } else if (action.equals("remove")) {
                     // Usiamo l'Iterator per evitare il ConcurrentModificationException
                     Iterator<ItemCarrello> iterator = carrello.iterator();
                     while (iterator.hasNext()) {
                         ItemCarrello item = iterator.next();
-                        if (item.getP().getId() == id) {
+                        if (item.getSpec().getId() == specId) {
                             item.setQuantita(item.getQuantita() - 1);
                             quantitaFinale = item.getQuantita();
                             if (item.getQuantita() <= 0) {
@@ -95,7 +105,7 @@ public class CarrelloServlet extends HttpServlet {
                             break;
                         }
                     }
-                    sincronizzaProdotto(session, id, quantitaFinale);
+                    sincronizzaSpec(session, specId, quantitaFinale);
                 }
             }
 
@@ -124,22 +134,24 @@ public class CarrelloServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String idStr = request.getParameter("prodottoId");
+        String specIdStr = request.getParameter("specId");
         String action = request.getParameter("action");
         if (action == null) action = "";
 
         HttpSession session = request.getSession();
         ArrayList<ItemCarrello> carrello = (ArrayList<ItemCarrello>) session.getAttribute("carrello");
 
-        if (carrello != null && idStr != null && !idStr.isEmpty()) {
-            int id = Integer.parseInt(idStr);
+        if (carrello != null && specIdStr != null && !specIdStr.isEmpty()) {
+            int specId = Integer.parseInt(specIdStr);
 
             if (action.equals("update")) {
                 String qtyStr = request.getParameter("quantita");
                 if (qtyStr != null && !qtyStr.isEmpty()) {
                     int nuovaQty = Integer.parseInt(qtyStr);
                     for (ItemCarrello item : carrello) {
-                        if (item.getP().getId() == id) {
+                        if (item.getSpec().getId() == specId) {
+                            // Non si puo' impostare una quantita' superiore allo stock disponibile per la taglia
+                            nuovaQty = Math.min(nuovaQty, item.getSpec().getQuantita());
                             if (nuovaQty > 0) {
                                 item.setQuantita(nuovaQty);
                             } else {
@@ -149,7 +161,7 @@ public class CarrelloServlet extends HttpServlet {
                             break;
                         }
                     }
-                    sincronizzaProdotto(session, id, Math.max(nuovaQty, 0));
+                    sincronizzaSpec(session, specId, Math.max(nuovaQty, 0));
                 }
 
             } else if (action.equals("remove")) {
@@ -157,12 +169,12 @@ public class CarrelloServlet extends HttpServlet {
                 Iterator<ItemCarrello> iterator = carrello.iterator();
                 while (iterator.hasNext()) {
                     ItemCarrello item = iterator.next();
-                    if (item.getP().getId() == id) {
+                    if (item.getSpec().getId() == specId) {
                         iterator.remove();
                         break;
                     }
                 }
-                sincronizzaProdotto(session, id, 0);
+                sincronizzaSpec(session, specId, 0);
             }
         }
 

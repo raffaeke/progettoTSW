@@ -220,7 +220,7 @@
                  Prodotto p = prodottoDAOStorico.doRetrieveByKey(r.getProdottoId());
                  String nomeProdotto = (p != null) ? p.getNome() : "Prodotto non piu disponibile";
             %>
-              <li><span class="riga-nome"><%= nomeProdotto %> × <%= r.getQuantita() %></span> <span class="riga-prezzo">€<%= String.format("%.2f", r.getPrezzo() * r.getQuantita()) %></span></li>
+              <li><span class="riga-nome"><%= nomeProdotto %><% if (r.getTaglia() != null && !r.getTaglia().isEmpty()) { %> (taglia <%= r.getTaglia() %>)<% } %> × <%= r.getQuantita() %></span> <span class="riga-prezzo">€<%= String.format("%.2f", r.getPrezzo() * r.getQuantita()) %></span></li>
             <% } %>
           </ul>
         </div>

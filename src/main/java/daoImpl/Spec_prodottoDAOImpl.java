@@ -117,6 +117,19 @@ public class Spec_prodottoDAOImpl implements Spec_prodottoDAO{
 		return sp;
 		
 	}
+	public Spec_prodotto doRetrieveByKey(int id) throws SQLException {
+		String query = "SELECT * FROM spec_prodotto WHERE id=?";
+		try (Connection con = DriverManagerConnectionPool.getConnection();
+				PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return mapper(rs);
+			}
+		}
+		return null;
+	}
+
 	public List<Spec_prodotto> doRetrieveByProductKey(int id)throws SQLException{
 		List<Spec_prodotto> result=new ArrayList<>();
 		String query="SELECT * FROM spec_prodotto WHERE prodotto_id=?";

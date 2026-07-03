@@ -7,7 +7,8 @@ public class RigaOrdine implements Serializable{
 	private int ordine_id;
 	private int q;
 	private float prezzo;
-	
+	private String taglia;
+
 	public RigaOrdine() {}
 
 	public int getProdottoId() {
@@ -36,5 +37,12 @@ public class RigaOrdine implements Serializable{
 	}
 	public void setPrezzo(float p) {
 		prezzo=p;
+	}
+
+	public String getTaglia() {
+		return taglia;
+	}
+	public void setTaglia(String taglia) {
+		this.taglia = taglia;
 	}
 }

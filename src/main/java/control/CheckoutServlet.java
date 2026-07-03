@@ -16,11 +16,13 @@ import jakarta.servlet.http.HttpSession;
 import model.ItemCarrello;
 import model.Ordine;
 import model.RigaOrdine;
+import model.Spec_prodotto;
 import model.Stato;
 import model.Utente;
 import daoImpl.CarrelloDAOImpl;
 import daoImpl.OrdineDAOImpl;
 import daoImpl.RigaOrdineDAOImpl;
+import daoImpl.Spec_prodottoDAOImpl;
 
 @WebServlet("/CheckoutServlet")
 public class CheckoutServlet extends HttpServlet {
@@ -28,6 +30,7 @@ public class CheckoutServlet extends HttpServlet {
     private OrdineDAOImpl ordineDAO = new OrdineDAOImpl();
     private RigaOrdineDAOImpl rigaOrdineDAO = new RigaOrdineDAOImpl();
     private CarrelloDAOImpl carrelloDAO = new CarrelloDAOImpl();
+    private Spec_prodottoDAOImpl specDAO = new Spec_prodottoDAOImpl();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -96,6 +99,22 @@ public class CheckoutServlet extends HttpServlet {
         }
 
         try {
+            // Verifica lo stock aggiornato prima di creare l'ordine: rifiuta tutto se anche
+            // un solo articolo non è più disponibile nella quantità richiesta (niente stock negativo).
+            List<String> stockErrors = new ArrayList<>();
+            for (ItemCarrello item : carrello) {
+                Spec_prodotto specAggiornata = specDAO.doRetrieveByKey(item.getSpec().getId());
+                if (specAggiornata == null || specAggiornata.getQuantita() < item.getQuantita()) {
+                    stockErrors.add(item.getP().getNome() + " (taglia " + item.getSpec().getTaglia() + ") non è più disponibile nella quantità richiesta.");
+                }
+            }
+
+            if (!stockErrors.isEmpty()) {
+                request.setAttribute("errore", stockErrors);
+                dispatcherToCheckoutPage.forward(request, response);
+                return;
+            }
+
             Ordine ordine = new Ordine();
             ordine.setUtenteId(utente.getId());
             ordine.setData(LocalDate.now());
@@ -108,7 +127,11 @@ public class CheckoutServlet extends HttpServlet {
                 riga.setProdottoId(item.getP().getId());
                 riga.setQuantita(item.getQuantita());
                 riga.setPrezzo(item.getP().getPrezzoScontato());
+                riga.setTaglia(item.getSpec().getTaglia());
                 rigaOrdineDAO.doSave(riga);
+
+                // Scala lo stock disponibile per quella taglia
+                specDAO.doUpdate(item.getSpec().getProdottoId(), item.getSpec().getTaglia(), -item.getQuantita());
             }
 
             session.setAttribute("carrello", new ArrayList<ItemCarrello>());
