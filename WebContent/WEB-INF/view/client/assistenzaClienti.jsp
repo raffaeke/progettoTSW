@@ -90,6 +90,12 @@
     <% } else { %>
       <%-- Ticket aperto: cronologia stile WhatsApp --%>
       <div class="assistenza-panel">
+        <div class="assistenza-panel-header">
+          <div class="assistenza-panel-info">
+            <h4>Assistenza Kick Off</h4>
+            <span class="assistenza-status"><span class="status-dot"></span>Ticket #<%= miaChat.getId() %> aperto il <%= miaChat.getDataCreazione() %></span>
+          </div>
+        </div>
         <div class="wa-body" id="waBody">
           <% if (cronologiaMessaggi != null && !cronologiaMessaggi.isEmpty()) {
                for (Messaggio m : cronologiaMessaggi) {
