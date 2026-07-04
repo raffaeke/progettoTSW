@@ -39,9 +39,9 @@
       <div class="nav-left">
         <span class="admin-badge">PANNELLO AMMINISTRATORE</span>
       </div>
-      <a href="${pageContext.request.contextPath}/" class="logo-link">
+      
         <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
-      </a>
+      
       <div class="nav-right">
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-admin-logout">Esci</a>
          </div>

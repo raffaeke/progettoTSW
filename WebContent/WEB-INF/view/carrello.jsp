@@ -62,7 +62,7 @@
   <header class="main-header">
     <nav class="nav-left">
       <a href="<%= request.getContextPath() %>/Catalogo?tipo=MAGLIE">Maglie</a>
-      <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETI">Completi</a>
+      <a href="<%= request.getContextPath() %>/Catalogo?tipo=COMPLETO">Completi</a>
     </nav>
     <a href="<%= request.getContextPath() %>/" class="logo-link">
       <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off">
