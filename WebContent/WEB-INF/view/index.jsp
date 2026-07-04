@@ -81,7 +81,7 @@
               </svg>
             </div>
             <div class="slide-content">
-              <span class="slide-kicker">Nuova collezione 2025</span>
+              <span class="slide-kicker">Nuova collezione 26/27</span>
               <h2 class="slide-title">Vesti il tuo<br>gioco.</h2>
               <p class="slide-sub">Maglie ufficiali e da allenamento per chi vive il calcio ogni giorno.</p>
               <a href="<%= request.getContextPath() %>/Catalogo?tipo=MAGLIE"" class="slide-btn slide-btn--green">Scopri le maglie</a>
