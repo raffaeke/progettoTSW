@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 /* ==========================================================================
-   KICK OFF — carrello.css
-   Layout reattivo a due colonne, card e sidebar di riepilogo coordinate
+   carrello.css
+   Layout reattivo a due colonne, card e sidebar di riepilogo
    ========================================================================== */
 
 .carrello-main {
@@ -171,7 +171,7 @@
   color: #fff;
 }
 
-/* Bottone rimuovi coordinato alle icone */
+/* Bottone rimuovi */
 .btn-remove {
   background: none;
   border: none;
@@ -277,7 +277,7 @@
   font-weight: 700;
 }
 
-/* Avviso "honest pricing" per sbloccare la spedizione */
+/* Avviso per sbloccare la spedizione gratuita */
 .sped-avviso-mancante {
   font-size: 12px;
   background: rgba(47, 143, 58, 0.08);

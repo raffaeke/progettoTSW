@@ -1,5 +1,5 @@
 /**
- * Kick Off — profilo.js
+ *  profilo.js
  * Gestisce: toggle del form "Modifica informazioni", validazione dei campi
  */
 (function () {

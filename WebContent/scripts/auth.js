@@ -1,5 +1,5 @@
 /**
- * Kick Off — auth.js
+ * auth.js
  * Gestisce: validazione dei form di login e registrazione
  */
 (function () {
@@ -86,11 +86,11 @@
     var loginEmail    = loginForm.querySelector('#email');
     var loginPassword = loginForm.querySelector('#password');
 
-    // Validazione al termine dell'inserimento (evento change)
+    // Validazione al termine dell'inserimento
     loginEmail.addEventListener('change', function () { validaEmail(loginEmail); });
     loginPassword.addEventListener('change', function () { validaRichiesto(loginPassword, 'Password'); });
 
-    // Validazione al submit (seconda linea di difesa, blocca l'invio se non valido)
+    // Validazione al submit
     loginForm.addEventListener('submit', function (e) {
       var valido = true;
       valido = validaEmail(loginEmail) && valido;
@@ -114,7 +114,7 @@
     var indirizzo        = registrazioneForm.querySelector('#indirizzo');
     var provincia        = registrazioneForm.querySelector('#provincia');
 
-    // Validazione al termine dell'inserimento di ogni campo (evento change)
+    // Validazione al termine dell'inserimento di ogni campo 
     nome.addEventListener('change', function () { validaRichiesto(nome, 'Nome'); });
     cognome.addEventListener('change', function () { validaRichiesto(cognome, 'Cognome'); });
     email.addEventListener('change', function () { validaEmail(email); });
@@ -127,7 +127,7 @@
     indirizzo.addEventListener('change', function () { validaRichiesto(indirizzo, 'Indirizzo'); });
     provincia.addEventListener('change', function () { validaProvincia(provincia); });
 
-    // Validazione al submit (seconda linea di difesa, blocca l'invio se non valido)
+    // Validazione al submit 
     registrazioneForm.addEventListener('submit', function (e) {
       var valido = true;
       valido = validaRichiesto(nome, 'Nome') && valido;

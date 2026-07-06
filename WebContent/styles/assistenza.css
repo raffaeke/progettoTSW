@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
 /* ==========================================================================
-   KICK OFF — assistenza.css
-   Stile condiviso dalla chat di assistenza, sia lato admin (admin/assistenza.jsp)
-   che lato cliente (client/assistenzaClienti.jsp)
+   assistenza.css
+   Stile condiviso dalla chat di assistenza, sia lato admin
+   che lato cliente 
    ========================================================================== */
 
-/* ── Cronologia messaggi (comune) ── */
+/* ── Cronologia messaggi  */
 .wa-body {
   flex: 1;
   overflow-y: auto;
@@ -137,7 +137,7 @@
   }
 }
 
-/* ── Pannello cliente (singolo ticket, no inbox) ── */
+/* ── Pannello cliente (singolo ticket) ── */
 .assistenza-main {
   max-width: 720px;
 }

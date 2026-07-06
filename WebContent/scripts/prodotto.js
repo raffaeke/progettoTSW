@@ -1,5 +1,5 @@
 /**
- * Kick Off — prodotto.js
+ * prodotto.js
  * Gestisce: galleria immagini, selezione taglia, stelle recensione
  */
 (function () {

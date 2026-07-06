@@ -1,12 +1,12 @@
 /**
- * Kick Off — carousel.js
- * Gestisce il carosello hero e la barra di ricerca
+ * Kick Off — index.js
+ * Gestisce le slide e la barra di ricerca
  */
 (function () {
   'use strict';
 
   /* -----------------------------------------------
-     CAROSELLO
+     slides
      ----------------------------------------------- */
   var track    = document.getElementById('slidesTrack');
   var dots     = document.querySelectorAll('.carousel-dot');
@@ -40,7 +40,7 @@
     if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
   }
 
-  /* Frecce — type="button" previene submit accidentali in form JSP */
+  /* Frecce */
   btnPrev.addEventListener('click', function (e) {
     e.preventDefault();
     goTo(current - 1);
@@ -61,16 +61,16 @@
     });
   });
 
-  /* Pausa hover */
+  /* Pausa se il cursore è sopra la slide */
   carousel.addEventListener('mouseenter', stopAuto);
   carousel.addEventListener('mouseleave', startAuto);
 
-  /* Pausa se tab nascosta */
+  /* Pausa se la pagina è nascosta */
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) { stopAuto(); } else { startAuto(); }
   });
 
-  /* Swipe touch */
+  /* spostamento con scroll laterale */
   carousel.addEventListener('touchstart', function (e) {
     touchStartX = e.changedTouches[0].clientX;
   }, { passive: true });
@@ -79,7 +79,7 @@
     if (Math.abs(dx) > 50) { goTo(current + (dx > 0 ? 1 : -1)); startAuto(); }
   }, { passive: true });
 
-  /* Tastiera */
+  /* spostamento con tastiera */
   document.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowLeft')  { goTo(current - 1); startAuto(); }
     if (e.key === 'ArrowRight') { goTo(current + 1); startAuto(); }

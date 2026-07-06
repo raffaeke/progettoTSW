@@ -1,6 +1,6 @@
 /**
- * Kick Off — checkout.js
- * Gestisce: validazione lato client del form di checkout (indirizzo + carta finta)
+ * checkout.js
+ * Gestisce: validazione lato client del form di checkout
  */
 (function () {
   'use strict';
@@ -31,7 +31,7 @@
   }
 
   /* ──────────────────────────────────────────────
-     REGOLE DI VALIDAZIONE
+     VALIDAZIONE
      ────────────────────────────────────────────── */
   function validaRichiesto(input, label) {
     if (!input.value.trim()) {
@@ -95,7 +95,7 @@
   }
 
   /* ──────────────────────────────────────────────
-     VALIDAZIONE AL TERMINE DELL'INSERIMENTO (evento change) + AL SUBMIT
+     VALIDAZIONE AL TERMINE DELL'INSERIMENTO AL SUBMIT
      ────────────────────────────────────────────── */
   var indirizzo   = form.querySelector('#indirizzo');
   var paese       = form.querySelector('#paese');
@@ -124,7 +124,7 @@
     valido = validaCvv(cvv) && valido;
 
     if (!valido) {
-      e.preventDefault();
+      e.preventDefault(); //annulla le azioni associate agli eventi
     }
   });
 

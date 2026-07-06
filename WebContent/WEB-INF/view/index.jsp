@@ -58,7 +58,7 @@
 
   <main>
 
-    <!-- ===== HERO: SLIDES + RICERCA ===== -->
+    <!-- ===== SLIDES + RICERCA ===== -->
     <section class="hero-section">
 
       <!-- SLIDES -->
@@ -68,6 +68,7 @@
           <!-- Slide 1: Maglie -->
           <div class="slide slide--green">
             <div class="slide-deco">
+            <!--  Grafica  -->
               <svg width="340" height="260" viewBox="0 0 340 260" aria-hidden="true">
                 <rect x="0" y="0" width="340" height="130" fill="#1a5e22"/>
                 <rect x="0" y="130" width="340" height="130" fill="#1e6b27"/>
@@ -91,6 +92,7 @@
           <!-- Slide 2: Guantoni -->
           <div class="slide slide--blue">
             <div class="slide-deco">
+            <!--  Grafica  -->
               <svg width="300" height="260" viewBox="0 0 300 260" aria-hidden="true">
                 <ellipse cx="150" cy="130" rx="110" ry="80" fill="none" stroke="rgba(74,127,193,0.6)" stroke-width="2"/>
                 <ellipse cx="150" cy="130" rx="70" ry="50" fill="none" stroke="rgba(74,127,193,0.4)" stroke-width="1.5"/>
@@ -110,6 +112,7 @@
           <!-- Slide 3: Scarpette -->
           <div class="slide slide--red">
             <div class="slide-deco">
+            <!--  Grafica  -->
               <svg width="300" height="260" viewBox="0 0 300 260" aria-hidden="true">
                 <path d="M40 220 L90 60 L150 130 L210 30 L270 220Z" fill="none" stroke="rgba(193,74,74,0.45)" stroke-width="2"/>
                 <circle cx="90"  cy="60"  r="7" fill="rgba(193,74,74,0.55)"/>
@@ -119,7 +122,7 @@
               </svg>
             </div>
             <div class="slide-content">
-              <span class="slide-kicker">Offerta limitata</span>
+              <span class="slide-kicker">Offerte limitate</span>
               <h2 class="slide-title">Scarpe<br>a &minus;15%.</h2>
               <p class="slide-sub">Le migliori scarpe FG e SG in promozione questa settimana.</p>
               <a href="<%= request.getContextPath() %>/Catalogo?tipo=SCARPE" class="slide-btn slide-btn--red">Approfitta ora</a>
@@ -128,7 +131,7 @@
 
         </div><!-- /slides-track -->
 
-        <!-- Frecce navigazione -->
+        <!-- Frecce navigazione slide -->
         <button class="carousel-arrow carousel-arrow--prev" id="carouselPrev" aria-label="Slide precedente">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"/>
@@ -140,14 +143,14 @@
           </svg>
         </button>
 
-        <!-- Pallini -->
+        <!-- Pallini slide -->
         <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Navigazione slide">
           <button class="carousel-dot active" data-index="0" role="tab" aria-label="Slide 1" aria-selected="true"></button>
           <button class="carousel-dot" data-index="1" role="tab" aria-label="Slide 2" aria-selected="false"></button>
           <button class="carousel-dot" data-index="2" role="tab" aria-label="Slide 3" aria-selected="false"></button>
         </div>
 
-      </div><!-- /carousel -->
+      </div>
 
       <!-- BARRA DI RICERCA -->
       <div class="search-section">

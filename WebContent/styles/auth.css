@@ -4,10 +4,10 @@
 .auth-page {
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 90px); /* Copre tutto lo schermo come minimo */
+  min-height: calc(100vh - 90px); 
   display: flex;
-  flex-direction: column; /* Cambiato da 'align-items: center' per gestire i flussi lunghi */
-  justify-content: flex-start; /* Allinea il contenuto dall'alto */
+  flex-direction: column; 
+  justify-content: flex-start; 
   overflow-y: auto; /* Permette lo scrolling se il pannello è lungo */
   background: #0d2b12; 
 }
@@ -18,7 +18,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; /* Si adatta dinamicamente all'altezza totale di .auth-page */
+  height: 100%; 
   margin: 0;
   border-radius: 0;
   z-index: 1;
@@ -34,7 +34,7 @@
   background-size: 100% 120px; /* Forza la ripetizione corretta del pattern */
 }
 
-/* LINEE DEL CAMPO IN BACKGROUND (Prese dal tuo Index) */
+/* LINEE DEL CAMPO IN BACKGROUND*/
 .field--background .center-line {
   position: absolute;
   top: 50%;
@@ -92,7 +92,7 @@
 /* WRAPPER DEL FORM */
 .auth-wrapper {
   position: relative;
-  z-index: 2; /* Forza il form a stare SOPRA il campo da calcio */
+  z-index: 2; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,8 +104,8 @@
 .auth-card {
   width: 100%;
   max-width: 420px;
-  background: rgba(15, 15, 15, 0.75); /* Più trasparente per vedere il campo sotto */
-  backdrop-filter: blur(12px); /* Effetto sfocatura moderno */
+  background: rgba(15, 15, 15, 0.75); 
+  backdrop-filter: blur(12px); 
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 40px;
@@ -128,12 +128,12 @@
 
 .auth-sub {
   font-size: 13px;
-  color: #aaa; /* Schiarito per leggibilità sopra il verde */
+  color: #aaa;
   margin-bottom: 28px;
 }
 
 .auth-link {
-  color: #4ce25c; /* Verde più acceso per contrasto */
+  color: #4ce25c; 
   text-decoration: none;
   font-weight: 600;
 }
@@ -481,7 +481,7 @@
   flex-shrink: 0;
 }
 
-/* Badge di stato ordine (stessa palette di admin.css) */
+/* Badge di stato ordine*/
 .order-status-badge {
   padding: 4px 10px;
   border-radius: 20px;

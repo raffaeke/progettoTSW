@@ -10,6 +10,10 @@
 <%@ page import="java.util.ArrayList" %>
 <%
   // Se non loggato rimanda al login tramite la NavigationServlet
+  
+  
+  
+  
   if (session.getAttribute("utente") == null) {
       response.sendRedirect(request.getContextPath() + "/view/login");
       return;

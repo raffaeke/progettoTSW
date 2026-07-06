@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%
-  // Propaga l'eventuale intento (es. "checkout") cosi' dopo il login si torna dove serve
+  //Serve in caso di checkout/recensione/assistenza, dove è necessario l accesso, 
+  //cosi se uno ha richiesto il login da quelle pagine ritornerà li subito dopo
+  
   String redirectParam = request.getParameter("redirect");
   if (redirectParam == null) redirectParam = "";
 

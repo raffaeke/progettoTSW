@@ -20,7 +20,7 @@
   }
 
   // ════════════ LOGICA DI IMPAGINAZIONE ════════════
-  int prodottiPerPagina = 10; // Quanti prodotti vuoi vedere per pagina
+  int prodottiPerPagina = 10;
   int paginaCorrente = 1;
   
   String paramPagina = request.getParameter("page");

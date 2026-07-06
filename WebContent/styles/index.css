@@ -2,7 +2,7 @@
 
 /* ================================================
    KICK OFF — index.css
-   Hero: carosello + ricerca | Prodotti in evidenza
+   slide + ricerca | Prodotti in evidenza
    ================================================ */
 
 
@@ -15,10 +15,10 @@
 
 
 /* -----------------------------------------------
-   CAROSELLO
+   slide track
    ----------------------------------------------- */
 .carousel {
-  position: relative;   /* necessario per z-index frecce e pallini */
+  position: relative;   
   width: 100%;
   overflow: hidden;
   background: #0a0a0a;
@@ -231,7 +231,7 @@
   background: #1e1e1e;
 }
 
-/* Dropdown risultati ricerca (AJAX) */
+/* Dropdown risultati ricerca  */
 .search-results-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -435,7 +435,7 @@
 }
 .product-card:hover .product-img { transform: scale(1.04); }
 
-/* Placeholder SVG (mostrato quando l'img non carica) */
+/* Placeholder SVG (grafica mostrata se l'immagine non viene trovata) */
 .product-img-placeholder {
   position: absolute;
   inset: 0;

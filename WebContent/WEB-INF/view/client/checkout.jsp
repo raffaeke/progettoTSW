@@ -19,7 +19,7 @@
       return;
   }
 
-  // Calcolo dei totali (stessa logica di carrello.jsp)
+  // Calcolo dei totali 
   float totaleProdotti = 0;
   float totaleScontato = 0;
   float totaleRisparmiato = 0;

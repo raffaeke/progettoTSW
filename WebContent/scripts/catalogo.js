@@ -21,7 +21,6 @@
     min:    0,
     max:    500,
     marche: [],
-    //taglie: [],
     sconto: false,
     sort:   'default'
   };
@@ -39,17 +38,14 @@
     allCards.forEach(function (card) {
       var prezzo = parseFloat(card.dataset.prezzo) || 0;
       var marca  = (card.dataset.marca  || '').toLowerCase();
-     // var taglia = (card.dataset.taglia || '').toLowerCase();
       var sconto = card.dataset.sconto === 'true';
 
       var okPrezzo = prezzo >= state.min && (state.max >= 500 || prezzo <= state.max);
       var okMarca  = state.marche.length === 0 ||
                      state.marche.some(function(m){ return m === marca; });
-     /* var okTaglia = state.taglie.length === 0 ||
-                     state.taglie.some(function(t){ return t === taglia; });*/
       var okSconto = !state.sconto || sconto;
 
-      var show = okPrezzo && okMarca /*&& okTaglia */&& okSconto;
+      var show = okPrezzo && okMarca && okSconto;
       card.hidden = !show;
       if (show) visible.push(card);
     });
@@ -115,10 +111,7 @@
       } else if (filter === 'marca') {
         if (this.checked) { state.marche.push(val); }
         else { state.marche = state.marche.filter(function(m){ return m !== val; }); }
-      } /*else if (filter === 'taglia') {
-        if (this.checked) { state.taglie.push(val); }
-        else { state.taglie = state.taglie.filter(function(t){ return t !== val; }); }
-      }*/
+      } 
       applyFilters();
     });
   });

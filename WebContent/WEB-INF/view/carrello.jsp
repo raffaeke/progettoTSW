@@ -38,7 +38,7 @@
   
   totaleRisparmiato = totaleProdotti - totaleScontato;
 
-  // Spedizione gratuita sopra gli 80€ (Coerente con la politica del sito)
+  // Spedizione gratuita sopra gli 80€ 
   float sogliaSpedizione = 80.00f;
   float speseSpedizione = (totaleScontato >= sogliaSpedizione || carrello.isEmpty()) ? 0.00f : 4.99f;
   float totaleCompleto = totaleScontato + speseSpedizione;
@@ -109,7 +109,6 @@
                   List<String> immagini = imgDAO.doRetrieveByProductKey(prod.getId());
                   String imgPath = (immagini != null && !immagini.isEmpty()) ? immagini.get(0) : "";
                   
-                  // Gestione flessibile se nel DB salvi solo il nome del file (es. "scarpa1") o l'estensione inclusa
                   if(!imgPath.toLowerCase().endsWith(".jpg") && !imgPath.toLowerCase().endsWith(".png") && !imgPath.isEmpty()) {
                       imgPath += ".jpg";
                   }
@@ -204,7 +203,7 @@
               <span>€<%= String.format("%.2f", totaleCompleto) %></span>
             </div>
             
-            <%-- Il checkout richiede un account: agli ospiti mostriamo un CTA verso il login invece del bottone --%>
+            <%-- Il checkout richiede un account--%>
             <% if (session.getAttribute("utente") != null) { %>
               <a href="<%= request.getContextPath() %>/view/client/checkout" class="btn-checkout">
                 Procedi al Checkout

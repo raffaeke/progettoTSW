@@ -1,5 +1,5 @@
 /**
- * Kick Off — assistenzaClienti.js
+ * assistenzaClienti.js
  * Gestisce: validazione dei form di assistenza, auto-scroll della cronologia
  */
 (function () {
@@ -46,13 +46,13 @@
 
   function collegaValidazione(form, campo) {
     if (!form) return;
-    // Validazione al termine dell'inserimento (evento change)
+    // Validazione al termine dell'inserimento
     campo.addEventListener('change', function () { validaMessaggio(campo); });
-    // Validazione al submit (seconda linea di difesa)
+    // Validazione al submit
     form.addEventListener('submit', function (e) {
       if (!validaMessaggio(campo)) {
         e.preventDefault();
-        campo.focus();
+        campo.focus();	//settiamo la tastiera del cliente dove è stato trovato l errore
       }
     });
   }
