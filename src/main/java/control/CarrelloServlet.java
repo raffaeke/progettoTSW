@@ -23,7 +23,7 @@ public class CarrelloServlet extends HttpServlet {
 
     private CarrelloDAOImpl carrelloDAO = new CarrelloDAOImpl();
 
-    // Se l'utente è loggato, sincronizza la quantità di una taglia anche sul DB (carrello persistente)
+    // Se l'utente è loggato, sincronizza la quantità di una taglia anche sul DB
     private void sincronizzaSpec(HttpSession session, int specId, int quantita) {
         Utente utente = (Utente) session.getAttribute("utente");
         if (utente == null) return;
@@ -165,7 +165,7 @@ public class CarrelloServlet extends HttpServlet {
                 }
 
             } else if (action.equals("remove")) {
-                // RIMOZIONE TOTALE: Rimuove l'intero elemento dal carrello
+                //Rimuove l'intero elemento dal carrello
                 Iterator<ItemCarrello> iterator = carrello.iterator();
                 while (iterator.hasNext()) {
                     ItemCarrello item = iterator.next();
@@ -178,7 +178,6 @@ public class CarrelloServlet extends HttpServlet {
             }
         }
 
-        // Ricarica la pagina del carrello aggiornando l'interfaccia ed evitando il reinvio dei form
         response.sendRedirect(request.getContextPath() + "/view/carrello");
     }
 }

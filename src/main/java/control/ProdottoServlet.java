@@ -10,15 +10,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-// Importa i tuoi modelli e DAO corretti
 import model.Prodotto;
 import model.Spec_prodotto;
 import model.Recensione;
-import daoImpl.ProdottoDAOImpl;       // Sostituisci con il tuo pacchetto/nome reale del DAO prodotti
+import daoImpl.ProdottoDAOImpl;       
 import daoImpl.RecensioneDAOImpl;
-import daoImpl.ImgDAOImpl;            // Il tuo DAO per le immagini
-import daoImpl.Spec_prodottoDAOImpl;  // Il tuo DAO per le specifiche/taglie
-//import daoImpl.RecensioneDAOImpl;     // Il tuo DAO per le recensioni (se presente)
+import daoImpl.ImgDAOImpl;            
+import daoImpl.Spec_prodottoDAOImpl;  
 
 @WebServlet("/prodotto")
 public class ProdottoServlet extends HttpServlet {

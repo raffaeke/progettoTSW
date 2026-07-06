@@ -75,8 +75,7 @@ public class GestioneProdottiServlet extends HttpServlet{
 			response.sendRedirect(request.getContextPath() + "/");
 			return;
 		}
-		
-		// 1. Recupero dei parametri testuali del prodotto
+	
 	    String nome = request.getParameter("nome");
 	    String marca = request.getParameter("marca");
 	    String descr = request.getParameter("desc");
@@ -87,7 +86,7 @@ public class GestioneProdottiServlet extends HttpServlet{
 	    String taglia =  request.getParameter("taglia");
 	    int q= Integer.parseInt(request.getParameter("quantita"));
 
-	    // Crea l'oggetto Prodotto (senza ID se è un nuovo inserimento)
+	 
 	    Prodotto prod = new Prodotto();
 	    prod.setNome(nome);prod.setMarca(marca);prod.setDesc(descr);prod.setPrezzo(prezzo);prod.setCat(Categoria.valueOf(categoria));prod.setSconto(sconto);
 	    prod.setInEvidenza(inEvidenza);
@@ -95,24 +94,21 @@ public class GestioneProdottiServlet extends HttpServlet{
 	    ProdottoDAOImpl prodottoDao = new ProdottoDAOImpl();
 
 	    try {
-	        // 2. Salva il prodotto principale nel DB e ottieni l'ID autogenerato
+	        //  Salva il prodotto principale nel DB e ottieni l'ID autogenerato
 	        int nuovoProdottoId = prodottoDao.doSave(prod); 
-	        // 3. Gestione del File Upload (Foto)
-	        Part filePart = request.getPart("foto"); // Corrisponde a name="foto" nella JSP
+	        //  Gestione del File Upload (Foto)
+	        Part filePart = request.getPart("foto"); 
 	        
 	        if (filePart != null && filePart.getSize() > 0) {
-	            // Estrae il nome originale del file (es: "mercurial.png")
 	            String fileOriginalName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 	            
-	            // Per evitare conflitti di nomi (es. due utenti caricano "foto.png"), 
-	            // conviene rinominare il file usando l'ID del prodotto (es: "prod_37.png")
+	            // Per evitare conflitti di nomi rinomo il file usando l'ID del prodotto 
 	            String estensione = fileOriginalName.substring(fileOriginalName.lastIndexOf("."));
 	            String nomeFileFinale = "prod_" + nuovoProdottoId + estensione;
 
-	            // Definisci dove salvare il file fisicamente sul server.
-	            // getServletContext().getRealPath("") punta alla cartella 'webapp' o 'WebContent' distribuita sul server Tomcat
+	            // getServletContext().getRealPath("") punta alla cartella 'WebContent' 
 	            String uploadPath = getServletContext().getRealPath("") + "images" + File.separator + "prodotti";
-	            System.out.println("LA FOTO VIENE SALVATA QUI: " + uploadPath);
+	            //DEBUG System.out.println("LA FOTO VIENE SALVATA QUI: " + uploadPath);
 	            
 	            File uploadDir = new File(uploadPath);
 	            if (!uploadDir.exists()) {
@@ -123,8 +119,7 @@ public class GestioneProdottiServlet extends HttpServlet{
 	            String percorsoCompletoFile = uploadPath + File.separator + nomeFileFinale;
 	            filePart.write(percorsoCompletoFile);
 
-	            // 4. Salva il riferimento nel Database nella tabella `img_prodotto`
-	            // Passiamo il nome del file (es: "prod_37.png") e l'ID del prodotto a cui appartiene
+	            //  Salva il riferimento nel DB
 	            ImgDAOImpl imgDao = new ImgDAOImpl();
 	            imgDao.doSave(nomeFileFinale, nuovoProdottoId);
 	        }
@@ -136,7 +131,6 @@ public class GestioneProdottiServlet extends HttpServlet{
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        request.setAttribute("errore", "Errore nel salvataggio del prodotto.");
-	        // forward alla pagina di errore o alla stessa JSP...
 	    }
 	}
 

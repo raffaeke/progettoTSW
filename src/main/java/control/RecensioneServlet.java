@@ -35,19 +35,13 @@ public class RecensioneServlet extends HttpServlet {
         LocalDate data= LocalDate.now();
 
         Utente utente = (Utente) session.getAttribute("utente"); 
-        int utenteId = utente.getId(); // o come recuperi l'ID utente
+        int utenteId = utente.getId(); 
 
-        // 3. Validazione dei dati
-        /*if (prodottoIdStr == null || votoStr == null || testo == null || testo.trim().isEmpty()) {
-            response.sendRedirect(request.getContextPath() + "/errore.jsp?msg=Dati+mancanti");
-            return;
-        }*/
 
         try {
             int prodottoId = Integer.parseInt(prodottoIdStr);
             int voto = Integer.parseInt(votoStr);
 
-            // Validazione del voto (deve essere tra 1 e 5)
             if (voto < 1 || voto > 5) {
                 response.sendRedirect(request.getContextPath() + "/prodotto?id=" + prodottoId);
                 return;
@@ -62,8 +56,7 @@ public class RecensioneServlet extends HttpServlet {
              recensione.setData(data);
              recensioneDAO.doSave(recensione); 
 
-            // 5. Redirezione (Pattern Redirect-After-Post per evitare doppi invii col refresh)
-            // Reindirizziamo l'utente alla pagina del prodotto appena recensito
+            
             response.sendRedirect(request.getContextPath() + "/prodotto?id=" + prodottoId);
 
         } catch (NumberFormatException e) {
@@ -72,7 +65,6 @@ public class RecensioneServlet extends HttpServlet {
         } catch (Exception e) {
             
             e.printStackTrace();
-           //response.sendRedirect(request.getContextPath() + "/errore.jsp");
         }
     }
 
