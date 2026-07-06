@@ -39,7 +39,7 @@
       <div class="nav-left">
         <span class="admin-badge">PANNELLO AMMINISTRATORE</span>
       </div>
-      <a href="${pageContext.request.contextPath}/admin/dashboard" class="logo-link">
+      <a href="${pageContext.request.contextPath}/view/admin/dashboard" class="logo-link">
         <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
       </a>
       <div class="nav-right">
