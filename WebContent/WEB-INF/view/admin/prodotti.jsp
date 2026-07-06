@@ -84,7 +84,7 @@
       <div class="nav-left">
         <a href="<%= request.getContextPath() %>/view/admin/dashboard" class="admin-badge" style="text-decoration: none;">← TORNA ALLA DASHBOARD</a>
       </div>
-      <a href="<%= request.getContextPath() %>/" class="logo-link">
+      <a href="${pageContext.request.contextPath}/view/admin/dashboard" class="logo-link">
         <img src="<%= request.getContextPath() %>/images/logo.png" alt="Kick Off Logo">
       </a>
       <div class="nav-right">

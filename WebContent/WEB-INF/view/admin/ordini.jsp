@@ -50,7 +50,7 @@
       <div class="nav-left">
         <a href="${pageContext.request.contextPath}/view/admin/dashboard" class="admin-badge" style="text-decoration: none;">← TORNA ALLA DASHBOARD</a>
       </div>
-      <a href="${pageContext.request.contextPath}/" class="logo-link">
+      <a href="${pageContext.request.contextPath}/view/admin/dashboard" class="logo-link">
         <img src="${pageContext.request.contextPath}/images/logo.png" alt="Kick Off Logo">
       </a>
       <div class="nav-right">
