@@ -185,6 +185,8 @@
 }
 
 .form-group input {
+  width: 100%;
+  box-sizing: border-box;
   padding: 12px;
   background: rgba(10, 10, 10, 0.65); /* Input semi-trasparenti coordinati */
   border: 1px solid #444;
@@ -364,13 +366,9 @@
 }
 
 /* RESPONSIVE */
-@media (max-width: 560px) {
-  .auth-card {
-    padding: 28px 20px;
-  }
-  .auth-title {
-    font-size: 26px;
-  }
+@media (max-width: 768px) {
+  /* Le righe a più colonne (nome/cognome, paese/indirizzo/provincia) sono le prime
+     a diventare strette: le impiliamo prima ancora che si arrivi alla soglia telefono. */
   .form-row {
     flex-direction: column;
     gap: 18px;
@@ -381,6 +379,15 @@
   .form-row .form-group.row-provincia,
   .form-row .form-group.short {
     flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .auth-card {
+    padding: 28px 20px;
+  }
+  .auth-title {
+    font-size: 26px;
   }
   .profilo-actions-row {
     flex-direction: column;
