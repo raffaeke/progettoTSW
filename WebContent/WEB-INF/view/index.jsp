@@ -212,7 +212,7 @@
             </div>
           </div>
           <div class="product-info">
-            <span class="product-brand">PSG</span>
+            <span class="product-brand">Nike</span>
             <h3 class="product-name">
               <a href="${pageContext.request.contextPath}/prodotto?id=6"><%=p1.getNome() %></a>
             </h3>
@@ -299,7 +299,7 @@
             </div>
           </div>
           <div class="product-info">
-            <span class="product-brand">Training</span>
+            <span class="product-brand">Adidas</span>
             <h3 class="product-name">
               <a href="${pageContext.request.contextPath}/prodotto?id=41"><%=p4.getNome() %></a>
             </h3>
