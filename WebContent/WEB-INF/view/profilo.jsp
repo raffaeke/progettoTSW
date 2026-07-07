@@ -20,6 +20,7 @@
   }
   // Recupera i dati dell'utente dalla sessione
   Utente user = (Utente) session.getAttribute("utente");
+  boolean isAdmin = Boolean.TRUE.equals(session.getAttribute("isAdmin"));
 
   boolean editMode = request.getAttribute("editMode") != null;
   Object erroreAttr = request.getAttribute("errore");
@@ -187,6 +188,9 @@
         <div class="profilo-actions" id="profiloActions" style="margin-top: 24px; <% if (editMode) { %>display:none;<% } %>">
           <button type="button" class="btn-secondary" id="modificaProfiloBtn">Modifica informazioni</button>
           <a href="${pageContext.request.contextPath}/view/client/assistenzaClienti" class="btn-secondary">Contatta Assistenza</a>
+          <% if (isAdmin) { %>
+            <a href="${pageContext.request.contextPath}/view/admin/dashboard" class="btn-secondary">Vai alla Dashboard</a>
+          <% } %>
           <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-logout">Esci dall'account</a>
         </div>
 
